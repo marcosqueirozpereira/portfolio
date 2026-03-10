@@ -2,7 +2,7 @@
 
 Site pessoal com currículo, stack técnica, certificações e blog de dicas de tecnologia.
 
-🔗 **Acesse:** `https://SEU-USUARIO.github.io/portfolio`
+🔗 **Acesse:** `https://marcosqueirozpereira.github.io/portfolio/`
 
 ## Stack
 - HTML · CSS · JavaScript puro (sem dependências)
