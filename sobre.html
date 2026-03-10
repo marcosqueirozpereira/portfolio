@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre Mim | Senior Marketing Cloud Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06060f;
+  --surface: #0e0e1a;
+  --surface2: #161624;
+  --accent: #00d4ff;
+  --accent2: #8b5cf6;
+  --accent3: #f97316;
+  --text: #e2e2f0;
+  --muted: #64648a;
+  --border: rgba(255,255,255,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:-0.01em;text-decoration:none;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.07em;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+
+/* GLOW BG */
+.glow1{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,0.05) 0%,transparent 65%);top:-200px;right:-150px;pointer-events:none;animation:breathe 8s ease-in-out infinite;}
+.glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,0.05) 0%,transparent 65%);bottom:0;left:5%;pointer-events:none;animation:breathe 11s ease-in-out infinite reverse;}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+
+/* PAGE HERO */
+.page-hero{padding:140px 5% 60px;position:relative;z-index:1;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:0.76rem;color:var(--muted);margin-bottom:2rem;}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.3s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:var(--border);}
+.breadcrumb .current{color:var(--accent);}
+
+.section-label{font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent);display:block;}
+.page-title{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:800;line-height:1.06;letter-spacing:-0.03em;margin-bottom:1rem;}
+.page-title em{font-style:normal;background:linear-gradient(130deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.page-sub{font-size:1.05rem;color:var(--muted);max-width:600px;line-height:1.8;}
+
+/* MAIN CONTENT */
+.content{padding:0 5% 100px;position:relative;z-index:1;}
+
+/* BIO SECTION */
+.bio-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:3.5rem;align-items:start;padding:3.5rem 0;border-bottom:1px solid var(--border);}
+.bio-left{position:sticky;top:100px;}
+.avatar-wrap{position:relative;display:inline-block;margin-bottom:2rem;}
+.avatar{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;}
+.avatar-ring{position:absolute;inset:-4px;border-radius:50%;border:2px solid transparent;background:linear-gradient(135deg,var(--accent),var(--accent2)) border-box;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude;animation:spin 8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.bio-name{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.3rem;}
+.bio-role{font-size:0.85rem;color:var(--accent);margin-bottom:1.2rem;}
+.bio-pills{display:flex;flex-direction:column;gap:0.5rem;}
+.pill{display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--muted);padding:7px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;}
+.pill span:first-child{font-size:1rem;}
+
+.bio-text{padding-top:0.5rem;}
+.bio-intro{font-size:1.12rem;color:var(--text);line-height:1.85;margin-bottom:1.8rem;font-weight:400;}
+.bio-intro strong{color:var(--accent);font-weight:500;}
+.bio-block{margin-bottom:2rem;}
+.bio-block h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.8rem;display:flex;align-items:center;gap:8px;}
+.bio-block h3::after{content:'';flex:1;height:1px;background:var(--border);}
+.bio-block p{color:var(--muted);font-size:0.95rem;line-height:1.85;}
+
+/* PILARES */
+.pilares-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:3.5rem 0;background:var(--border);}
+.pilar{background:var(--surface);padding:2rem 1.8rem;transition:background 0.3s;position:relative;overflow:hidden;}
+.pilar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
+.pilar:hover::before{transform:scaleX(1);}
+.pilar:hover{background:var(--surface2);}
+.pilar-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+.pilar h3{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.6rem;}
+.pilar p{color:var(--muted);font-size:0.84rem;line-height:1.7;}
+.pilar-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:1rem;}
+.t{padding:3px 9px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px;font-size:0.72rem;color:var(--muted);}
+
+/* VALORES */
+.valores-section{padding:3.5rem 0;border-top:1px solid var(--border);}
+.valores-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2.5rem;}
+.valor-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:1.6rem;display:flex;gap:1rem;align-items:flex-start;transition:all 0.3s;}
+.valor-card:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-2px);}
+.valor-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--border);line-height:1;flex-shrink:0;width:40px;}
+.valor-title{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;}
+.valor-desc{font-size:0.84rem;color:var(--muted);line-height:1.7;}
+
+/* JORNADA */
+.jornada-section{padding:3.5rem 0;border-top:1px solid var(--border);}
+.timeline{position:relative;padding-left:1.8rem;margin-top:2.5rem;}
+.timeline::before{content:'';position:absolute;left:0;top:10px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);}
+.tj-item{position:relative;margin-bottom:2.5rem;padding-left:2rem;}
+.tj-item::before{content:'';position:absolute;left:-1.8rem;top:9px;width:8px;height:8px;border-radius:50%;background:var(--dot-color,var(--accent));box-shadow:0 0 0 3px var(--dot-glow,rgba(0,212,255,0.12));}
+.tj-year{font-size:0.76rem;color:var(--accent);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.3rem;}
+.tj-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.3rem;}
+.tj-desc{font-size:0.88rem;color:var(--muted);line-height:1.7;}
+
+/* CTA */
+.cta-strip{margin:3.5rem 0 0;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;}
+.cta-strip h3{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.4rem;}
+.cta-strip p{color:var(--muted);font-size:0.9rem;}
+.cta-btns{display:flex;gap:1rem;flex-shrink:0;flex-wrap:wrap;}
+.btn-p{padding:13px 26px;background:var(--accent);color:#000;font-weight:500;font-size:0.88rem;border-radius:8px;text-decoration:none;transition:all 0.3s;display:inline-flex;align-items:center;gap:7px;}
+.btn-p:hover{background:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,212,255,0.25);}
+.btn-o{padding:13px 26px;background:transparent;border:1px solid var(--border);color:var(--text);font-size:0.88rem;border-radius:8px;text-decoration:none;transition:all 0.3s;}
+.btn-o:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+
+/* FOOTER */
+footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem;position:relative;z-index:1;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:all 0.7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  .bio-grid{grid-template-columns:1fr;}
+  .bio-left{position:static;}
+  .pilares-grid{grid-template-columns:1fr;}
+  .valores-grid{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .nav-links{display:none;}
+  .cta-strip{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">MC · DEV</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="sobre.html" class="active">Sobre</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="index.html#exp">Experiência</a></li>
+    <li><a href="index.html#certs">Certificações</a></li>
+    <li><a href="index.html#blog">Blog</a></li>
+    <li><a href="index.html#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Início</a>
+    <span>/</span>
+    <span class="current">Sobre Mim</span>
+  </div>
+  <div class="section-label">Quem sou eu</div>
+  <h1 class="page-title">Sobre <em>Mim</em></h1>
+  <p class="page-sub">Desenvolvedor Sênior de Salesforce Marketing Cloud com atuação híbrida entre tecnologia e negócio.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- BIO -->
+  <div class="bio-grid reveal">
+
+    <!-- LEFT: perfil -->
+    <div class="bio-left">
+      <div class="avatar-wrap">
+        <div class="avatar">👨‍💻</div>
+        <div class="avatar-ring"></div>
+      </div>
+      <div class="bio-name">Senior MC Developer</div>
+      <div class="bio-role">Salesforce Marketing Cloud · Recife, PE</div>
+      <div class="bio-pills">
+        <div class="pill"><span>🎓</span> ADS — Análise e Dev. de Sistemas</div>
+        <div class="pill"><span>🤖</span> Pós-Grad. IA & Análise de Dados</div>
+        <div class="pill"><span>🏅</span> Salesforce Associate</div>
+        <div class="pill"><span>🇧🇷</span> PT nativo · <span style="margin-left:4px">🇪🇸</span> ES fluente · <span style="margin-left:4px">🇺🇸</span> EN intermediário</div>
+        <div class="pill"><span>🟢</span> Disponível para oportunidades</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: texto -->
+    <div class="bio-text">
+
+      <p class="bio-intro">
+        Sou <strong>Desenvolvedor Sênior de Salesforce Marketing Cloud</strong> com atuação híbrida entre desenvolvimento e análise funcional. Tenho experiência com jornadas, automações, segmentação de dados, <strong>AMPscript</strong>, <strong>SQL</strong> e integrações, apoiando áreas de negócio e tecnologia na construção de soluções escaláveis e orientadas a resultado.
+      </p>
+
+      <div class="bio-block">
+        <h3>Minha atuação no dia a dia</h3>
+        <p>Trabalho na interseção entre marketing e tecnologia — entendendo as necessidades de negócio, traduzindo em requisitos funcionais e entregando soluções técnicas dentro do ecossistema Salesforce Marketing Cloud. Esse perfil híbrido me permite ser o elo entre stakeholders de marketing e squads de desenvolvimento, reduzindo fricção e acelerando entregas.</p>
+      </div>
+
+      <div class="bio-block">
+        <h3>Evolução para IA & Dados</h3>
+        <p>Amplio minha atuação com estudos em <strong style="color:var(--accent3)">Inteligência Artificial e Análise de Dados</strong>, com foco na evolução do marketing orientado por dados, personalização e automação inteligente. Esse caminho se conecta diretamente ao futuro do Marketing Cloud — com Data Cloud, Einstein AI e personalização preditiva transformando a forma de construir jornadas.</p>
+      </div>
+
+      <div class="bio-block">
+        <h3>Alcance LATAM</h3>
+        <p>Com espanhol fluente, atuo com naturalidade em projetos e clientes de toda a América Latina — um diferencial real em consultorias globais e empresas multinacionais com operações no Brasil e no restante da região.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PILARES -->
+  <div class="reveal">
+    <div class="section-label" style="margin-top:3.5rem;">O que faço</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:0.5rem;">Três pilares de atuação</h2>
+    <p style="color:var(--muted);font-size:0.95rem;max-width:520px;margin-bottom:0;">A combinação que me diferencia no mercado de Marketing Cloud.</p>
+  </div>
+
+  <div class="pilares-grid reveal">
+    <div class="pilar" style="--grad:linear-gradient(90deg,#00d4ff,#8b5cf6);">
+      <span class="pilar-icon">⚡</span>
+      <h3>Desenvolvimento SFMC</h3>
+      <p>Construção de jornadas, automações e soluções técnicas dentro do ecossistema Salesforce Marketing Cloud. Do Journey Builder ao AMPscript.</p>
+      <div class="pilar-tags">
+        <span class="t">Journey Builder</span>
+        <span class="t">AMPscript</span>
+        <span class="t">Automation Studio</span>
+        <span class="t">Email Studio</span>
+        <span class="t">SQL</span>
+        <span class="t">HTML</span>
+        <span class="t">CSS</span>
+       
+      </div>
+    </div>
+    <div class="pilar" style="--grad:linear-gradient(90deg,#8b5cf6,#f97316);">
+      <span class="pilar-icon">📋</span>
+      <h3>Análise Funcional</h3>
+      <p>Levantamento de requisitos, documentação técnica e alinhamento entre times de negócio e tecnologia. Traduzindo problemas em soluções viáveis.</p>
+      <div class="pilar-tags">
+        <span class="t">BRD / FRD</span>
+        <span class="t">User Stories</span>
+        <span class="t">Agile</span>
+        <span class="t">Stakeholders</span>
+      </div>
+    </div>
+    <div class="pilar" style="--grad:linear-gradient(90deg,#f97316,#00d4ff);">
+      <span class="pilar-icon">🤖</span>
+      <h3>IA & Análise de Dados</h3>
+      <p>Estudos aplicados em inteligência artificial e análise de dados com foco em personalização, marketing preditivo e automação inteligente.</p>
+      <div class="pilar-tags">
+        <span class="t">Data Cloud</span>
+        <span class="t">Einstein AI</span>
+        <span class="t">Python</span>
+        <span class="t">Analytics</span>
+        <span class="t">Power BI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALORES -->
+  <div class="valores-section reveal">
+    <div class="section-label">Como trabalho</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;">Princípios que guiam meu trabalho</h2>
+    <div class="valores-grid">
+      <div class="valor-card">
+        <div class="valor-num">01</div>
+        <div>
+          <div class="valor-title">Entregas de Qualidade</div>
+          <div class="valor-desc">Entrego soluções com qualidade — não apenas código que roda. Open rate, conversão e retenção são meus critérios de sucesso.</div>
+        </div>
+      </div>
+      <div class="valor-card">
+        <div class="valor-num">02</div>
+        <div>
+          <div class="valor-title">Comunicação clara entre áreas</div>
+          <div class="valor-desc">Atuo apoiando o time de negócios e tecnologia. Busco ser uma ponte entre as duas áreas, eliminando o retrabalho.</div>
+        </div>
+      </div>
+      <div class="valor-card">
+        <div class="valor-num">03</div>
+        <div>
+          <div class="valor-title">Soluções escaláveis</div>
+          <div class="valor-desc">Projeto pensando no longo prazo. Uma jornada bem construída hoje economiza semanas de manutenção amanhã.</div>
+        </div>
+      </div>
+      <div class="valor-card">
+        <div class="valor-num">04</div>
+        <div>
+          <div class="valor-title">Aprendizado contínuo</div>
+          <div class="valor-desc">A pós-graduação em IA & Dados não é acidente — é movimento intencional em direção ao futuro do Marketing Cloud e demais CRMs e ferramentas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JORNADA -->
+  <div class="jornada-section reveal">
+    <div class="section-label">Trajetória</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;">Minha jornada</h2>
+    <div class="timeline">
+      <div class="tj-item" style="--dot-color:#00d4ff;--dot-glow:rgba(0,212,255,0.15);">
+        <div class="tj-year">Formação Base</div>
+        <div class="tj-title">Graduação em Análise e Desenvolvimento de Sistemas</div>
+        <div class="tj-desc">Base técnica sólida em lógica, banco de dados, desenvolvimento de software e arquitetura de sistemas — fundamento de toda atuação técnica que veio depois.</div>
+      </div>
+      <div class="tj-item" style="--dot-color:#8b5cf6;--dot-glow:rgba(139,92,246,0.15);">
+        <div class="tj-year">Início da carreira</div>
+        <div class="tj-title">Marketing Cloud Developer Pleno</div>
+        <div class="tj-desc">Primeiros anos construindo campanhas, automações e experiência prática no ecossistema Salesforce Marketing Cloud. Aprendizado intenso na plataforma.</div>
+      </div>
+      <div class="tj-item" style="--dot-color:#f97316;--dot-glow:rgba(249,115,22,0.15);">
+        <div class="tj-year">Evolução</div>
+        <div class="tj-title">Sênior Developer & Analista Funcional</div>
+        <div class="tj-desc">Expansão para atuação híbrida: além do desenvolvimento, passei a conduzir análises funcionais, levantar requisitos de negócio e ser referência técnica em projetos de maior complexidade.</div>
+      </div>
+      <div class="tj-item" style="--dot-color:#00d4ff;--dot-glow:rgba(0,212,255,0.15);">
+        <div class="tj-year">Agora</div>
+        <div class="tj-title">Pós-Graduação em IA & Análise de Dados</div>
+        <div class="tj-desc">Movimento intencional rumo ao futuro do marketing cloud: Data Cloud, Einstein AI, personalização preditiva e automação inteligente orientada a dados.</div>
+      </div>
+      <div class="tj-item" style="--dot-color:#8b5cf6;--dot-glow:rgba(139,92,246,0.15);opacity:0.6;">
+        <div class="tj-year">Em breve</div>
+        <div class="tj-title">MC Email Specialist · MC Developer · MC Consultant</div>
+        <div class="tj-desc">Trilha de certificações Salesforce mapeada e em execução — consolidando credenciais que validam a experiência prática acumulada.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip reveal">
+    <div>
+      <h3>Vamos trabalhar juntos?</h3>
+      <p>Estou disponível para oportunidades CLT. Atuo com SFMC, análise funcional e projetos LATAM.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="index.html#contato" class="btn-p">📩 Entrar em contato</a>
+      <a href="index.html" class="btn-o">Ver portfólio completo</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2024 · Senior Marketing Cloud Developer · Recife, PE · ADS + Pós IA & Dados · 🇧🇷🇪🇸</footer>
+
+<script>
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); }), {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
