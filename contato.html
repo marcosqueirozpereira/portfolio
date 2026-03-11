@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato | Senior Marketing Cloud Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06060f;
+  --surface: #0e0e1a;
+  --surface2: #161624;
+  --accent: #22d3ee;
+  --accent2: #a78bfa;
+  --accent3: #fb923c;
+  --text: #e8ecff;
+  --text-strong: #f8fbff;
+  --text-soft: #cdd6f4;
+  --muted: #8b90b5;
+  --border: rgba(255,255,255,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:-0.01em;text-decoration:none;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.07em;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+
+/* GLOW */
+.glow1{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,0.05) 0%,transparent 65%);top:-200px;right:-150px;pointer-events:none;animation:breathe 8s ease-in-out infinite;}
+.glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,0.05) 0%,transparent 65%);bottom:0;left:5%;pointer-events:none;animation:breathe 11s ease-in-out infinite reverse;}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+
+/* PAGE HERO */
+.page-hero{padding:140px 5% 60px;position:relative;z-index:1;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:0.76rem;color:var(--muted);margin-bottom:2rem;}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.3s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:rgba(255,255,255,0.12);}
+.breadcrumb .current{color:var(--accent);}
+.section-label{font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent);display:block;}
+.page-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.8rem,5vw,4.5rem);
+  font-weight:800;
+  line-height:1.06;
+  letter-spacing:-0.03em;
+  margin-bottom:1rem;
+  color:var(--text-strong);
+  text-shadow:0 0 18px rgba(34,211,238,0.08);
+}
+.page-title em{
+  font-style:normal;
+  background:linear-gradient(135deg,#67e8f9 0%,#22d3ee 35%,#a78bfa 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.page-sub{font-size:1.05rem;color:var(--muted);max-width:640px;line-height:1.85;}
+
+/* CONTENT */
+.content{padding:0 5% 100px;position:relative;z-index:1;}
+
+/* MAIN GRID */
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:3rem;margin-top:3.5rem;align-items:start;}
+
+/* LEFT — canais */
+.channels{display:flex;flex-direction:column;gap:1rem;}
+.channel-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:1.6rem 1.8rem;display:flex;align-items:center;gap:1.4rem;text-decoration:none;color:var(--text);transition:all 0.3s;position:relative;overflow:hidden;}
+.channel-card::before{content:'';position:absolute;inset:0;background:var(--hover-bg,rgba(34,211,238,0.04));opacity:0;transition:opacity 0.3s;}
+.channel-card:hover{border-color:var(--hover-border,rgba(34,211,238,0.3));transform:translateX(6px);box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.channel-card:hover::before{opacity:1;}
+.ch-icon{width:52px;height:52px;border-radius:12px;background:var(--icon-bg);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;position:relative;z-index:1;}
+.ch-info{position:relative;z-index:1;}
+.ch-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.2rem;}
+.ch-value{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:1rem;
+  margin-bottom:0.1rem;
+  color:var(--text-soft);
+}
+.ch-desc{font-size:0.8rem;color:var(--muted);}
+.ch-arrow{margin-left:auto;color:var(--muted);font-size:1.1rem;position:relative;z-index:1;transition:transform 0.3s,color 0.3s;}
+.channel-card:hover .ch-arrow{transform:translateX(4px);color:var(--accent);}
+
+/* STATUS BADGE */
+.status-wrap{margin-bottom:2rem;}
+.status-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(34,211,238,0.07);border:1px solid rgba(34,211,238,0.18);border-radius:100px;padding:10px 20px;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.2);animation:pulse-dot 2s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,0.2);}50%{box-shadow:0 0 0 6px rgba(34,197,94,0.08);}}
+.status-text{font-size:0.82rem;color:var(--text);}
+.status-text strong{color:#22c55e;}
+
+/* RIGHT — form */
+.form-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;}
+.form-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.2rem;
+  font-weight:800;
+  margin-bottom:0.4rem;
+  color:var(--text-strong);
+}
+.form-sub{font-size:0.85rem;color:var(--muted);margin-bottom:2rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.form-group{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
+.form-group label{font-size:0.76rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}
+.form-group input,.form-group textarea,.form-group select{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;transition:border-color 0.3s,box-shadow 0.3s;outline:none;width:100%;}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:rgba(34,211,238,0.45);box-shadow:0 0 0 3px rgba(34,211,238,0.08);}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--muted);}
+.form-group select option{background:var(--surface2);color:var(--text);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.btn-submit{width:100%;padding:14px;background:var(--accent);color:#000;font-weight:600;font-size:0.92rem;font-family:'Syne',sans-serif;border:none;border-radius:8px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:0.5rem;}
+.btn-submit:hover{background:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(34,211,238,0.25);}
+.btn-submit:active{transform:translateY(0);}
+
+/* SUCCESS STATE */
+.form-success{display:none;text-align:center;padding:2rem;}
+.success-icon{font-size:3.5rem;margin-bottom:1rem;animation:pop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;}
+@keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
+.success-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.3rem;
+  font-weight:800;
+  margin-bottom:0.5rem;
+  color:#67e8f9;
+}
+.success-sub{color:var(--muted);font-size:0.9rem;}
+
+/* TÓPICOS */
+.topics-section{margin-top:4rem;padding-top:3.5rem;border-top:1px solid var(--border);}
+.topics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem;}
+.topic-chip{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;transition:all 0.3s;}
+.topic-chip:hover{border-color:rgba(34,211,238,0.2);transform:translateY(-2px);}
+.topic-chip .ti{font-size:1.5rem;margin-bottom:0.5rem;}
+.topic-chip h4{
+  font-family:'Syne',sans-serif;
+  font-size:0.88rem;
+  font-weight:700;
+  margin-bottom:0.3rem;
+  color:var(--text-strong);
+}
+.topic-chip p{font-size:0.78rem;color:var(--muted);line-height:1.6;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:all 0.7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem;position:relative;z-index:1;}
+
+@media(max-width:900px){
+  .contact-grid{grid-template-columns:1fr;}
+  .topics-grid{grid-template-columns:1fr 1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .nav-links{display:none;}
+  .topics-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">MC · DEV</a>
+  <ul class="nav-links">
+    <li><a href="/portfolio/index">Início</a></li>
+    <li><a href="/portfolio/sobre">Sobre</a></li>
+    <li><a href="/portfolio/skills">Skills</a></li>
+    <li><a href="/portfolio/exp">Experiência</a></li>
+    <li><a href="/portfolio/certs">Certificações</a></li>
+    <li><a href="/portfolio/blog">Blog</a></li>
+    <li><a href="/portfolio/contato" class="active">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Início</a>
+    <span>/</span>
+    <span class="current">Contato</span>
+  </div>
+  <div class="section-label">Vamos conversar</div>
+  <h1 class="page-title">Entre em <em>Contato</em></h1>
+  <p class="page-sub">Estou aberto a oportunidades profissionais, projetos estratégicos e colaboração em iniciativas relacionadas a Salesforce Marketing Cloud, automação de marketing e análise de dados.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- STATUS -->
+  <div class="status-wrap reveal">
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      <span class="status-text"><strong>Disponível</strong> para novas oportunidades CLT · Respondo em até 24h</span>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="contact-grid">
+
+    <!-- CANAIS -->
+    <div class="channels reveal">
+
+      <a href="mailto:marcosqueirozpereira@gmail.com" class="channel-card"
+         style="--hover-border:rgba(34,211,238,0.3);--hover-bg:rgba(34,211,238,0.03);">
+        <div class="ch-icon" style="background:linear-gradient(135deg,rgba(34,211,238,0.15),rgba(34,211,238,0.05));">📧</div>
+        <div class="ch-info">
+          <div class="ch-label">E-mail</div>
+          <div class="ch-value">marcosqueirozpereira@gmail.com</div>
+          <div class="ch-desc">Preferência para oportunidades e projetos</div>
+        </div>
+        <div class="ch-arrow">→</div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/marcos-queiroz-pereira-2710a2169/" target="_blank" class="channel-card"
+         style="--hover-border:rgba(0,119,181,0.4);--hover-bg:rgba(0,119,181,0.04);">
+        <div class="ch-icon" style="background:linear-gradient(135deg,rgba(0,119,181,0.2),rgba(0,119,181,0.06));">💼</div>
+        <div class="ch-info">
+          <div class="ch-label">LinkedIn</div>
+          <div class="ch-value">https://www.linkedin.com/in/marcos-queiroz-pereira-2710a2169/</div>
+          <div class="ch-desc">Perfil profissional e histórico de experiência</div>
+        </div>
+        <div class="ch-arrow">→</div>
+      </a>
+
+      <a href="https://github.com/marcosqueirozpereira" target="_blank" class="channel-card"
+         style="--hover-border:rgba(139,92,246,0.4);--hover-bg:rgba(139,92,246,0.03);">
+        <div class="ch-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(139,92,246,0.06));">🐙</div>
+        <div class="ch-info">
+          <div class="ch-label">GitHub</div>
+          <div class="ch-value">github.com/marcosqueirozpereira</div>
+          <div class="ch-desc">Projetos, scripts e repositórios técnicos</div>
+        </div>
+        <div class="ch-arrow">→</div>
+      </a>
+
+      <!-- INFO EXTRA -->
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:1.6rem 1.8rem;margin-top:0.5rem;">
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:1rem;">Informações adicionais</div>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:0.86rem;">
+            <span>📍</span><span style="color:var(--muted);">Recife, PE — Brasil</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:0.86rem;">
+            <span>💼</span><span style="color:var(--muted);">Disponível para regime CLT</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:0.86rem;">
+            <span>🌎</span><span style="color:var(--muted);">Projetos LATAM — Espanhol fluente</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:0.86rem;">
+            <span>⏱️</span><span style="color:var(--muted);">Resposta em até 24 horas úteis</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div class="reveal" style="animation-delay:0.15s;">
+      <div class="form-wrap">
+        <div id="form-content">
+          <div class="form-title">Envie uma mensagem</div>
+          <div class="form-sub">Preencha o formulário e entrarei em contato em breve.</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nome</label>
+              <input type="text" id="f-nome" placeholder="Seu nome completo">
+            </div>
+            <div class="form-group">
+              <label>Empresa</label>
+              <input type="text" id="f-empresa" placeholder="Nome da empresa">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>E-mail para retorno</label>
+            <input type="email" id="f-email" placeholder="seu@email.com">
+          </div>
+
+          <div class="form-group">
+            <label>Assunto</label>
+            <select id="f-assunto">
+              <option value="" disabled selected>Selecione o motivo do contato</option>
+              <option>Oportunidade CLT</option>
+              <option>Projeto Freelance / PJ</option>
+              <option>Consultoria SFMC</option>
+              <option>Projeto LATAM</option>
+              <option>Parceria ou Colaboração</option>
+              <option>Outro assunto</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Mensagem</label>
+            <textarea id="f-msg" placeholder="Descreva brevemente a oportunidade ou projeto..."></textarea>
+          </div>
+
+          <button class="btn-submit" onclick="submitForm()">
+            <span>Enviar mensagem</span>
+            <span>→</span>
+          </button>
+
+          <p style="font-size:0.74rem;color:var(--muted);text-align:center;margin-top:1rem;">
+            Prefere contato direto? <a href="mailto:marcosqueirozpereira@gmail.com" style="color:var(--accent);text-decoration:none;">marcosqueirozpereira@gmail.com</a>
+          </p>
+        </div>
+
+        <div class="form-success" id="form-success">
+          <div class="success-icon">✅</div>
+          <div class="success-title">Mensagem enviada!</div>
+          <div class="success-sub">Obrigado pelo contato. Responderei em até 24 horas úteis.<br><br>
+            <a href="index.html" style="color:var(--accent);text-decoration:none;font-size:0.9rem;">← Voltar ao portfólio</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TÓPICOS DE INTERESSE -->
+  <div class="topics-section reveal">
+    <div class="section-label">Posso ajudar com</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;color:var(--text-strong);">Áreas de atuação e colaboração</h2>
+    <div class="topics-grid">
+      <div class="topic-chip">
+        <div class="ti">⚡</div>
+        <h4>Salesforce Marketing Cloud</h4>
+        <p>Desenvolvimento, implementação e otimização de jornadas, automações e integrações no ecossistema SFMC.</p>
+      </div>
+      <div class="topic-chip">
+        <div class="ti">🗺️</div>
+        <h4>Journey Builder & Automação</h4>
+        <p>Arquitetura de jornadas multicanal, Automation Studio e estratégias de comunicação orientadas a dado.</p>
+      </div>
+      <div class="topic-chip">
+        <div class="ti">📋</div>
+        <h4>Análise Funcional</h4>
+        <p>Levantamento de requisitos, documentação técnica e alinhamento entre áreas de marketing e tecnologia.</p>
+      </div>
+      <div class="topic-chip">
+        <div class="ti">🧬</div>
+        <h4>AMPscript & SQL</h4>
+        <p>Personalização dinâmica, segmentação avançada com Data Extensions e queries de alta performance.</p>
+      </div>
+      <div class="topic-chip">
+        <div class="ti">🤖</div>
+        <h4>IA & Análise de Dados</h4>
+        <p>Aplicação de análise de dados e inteligência artificial para personalização e marketing preditivo.</p>
+      </div>
+      <div class="topic-chip">
+        <div class="ti">🌎</div>
+        <h4>Projetos LATAM</h4>
+        <p>Atuação em projetos com clientes e equipes da América Latina com espanhol fluente.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2026 · Senior Marketing Cloud Developer · Recife, PE · 🇧🇷🇪🇸 ·
+  <a href="mailto:marcosqueirozpereira@gmail.com" style="color:var(--accent);text-decoration:none;">marcosqueirozpereira@gmail.com</a>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting) e.target.classList.add('in');
+}), {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Form submit (simulado — para integrar com Formspree, EmailJS ou similar)
+function submitForm() {
+  const nome = document.getElementById('f-nome').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const assunto = document.getElementById('f-assunto').value;
+  const msg = document.getElementById('f-msg').value.trim();
+
+  if (!nome || !email || !assunto || !msg) {
+    [['f-nome', nome], ['f-email', email], ['f-msg', msg]].forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (!val) {
+        el.style.borderColor = 'rgba(249,115,22,0.6)';
+        el.style.boxShadow = '0 0 0 3px rgba(249,115,22,0.08)';
+        el.addEventListener('input', () => {
+          el.style.borderColor = '';
+          el.style.boxShadow = '';
+        }, {once: true});
+      }
+    });
+    const sel = document.getElementById('f-assunto');
+    if (!assunto) {
+      sel.style.borderColor = 'rgba(249,115,22,0.6)';
+      sel.style.boxShadow = '0 0 0 3px rgba(249,115,22,0.08)';
+      sel.addEventListener('change', () => {
+        sel.style.borderColor = '';
+        sel.style.boxShadow = '';
+      }, {once: true});
+    }
+    return;
+  }
+
+  const subject = encodeURIComponent(`[Portfólio] ${assunto} — ${nome}`);
+  const body = encodeURIComponent(`Nome: ${nome}\nE-mail: ${email}\nAssunto: ${assunto}\n\nMensagem:\n${msg}`);
+  window.location.href = `mailto:marcosqueirozpereira@gmail.com?subject=${subject}&body=${body}`;
+
+  document.getElementById('form-content').style.display = 'none';
+  const suc = document.getElementById('form-success');
+  suc.style.display = 'block';
+}
+</script>
+</body>
+</html>
