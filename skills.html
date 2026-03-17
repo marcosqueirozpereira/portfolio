@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills | Senior Marketing Cloud Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06060f;
+  --surface: #0e0e1a;
+  --surface2: #161624;
+  --accent: #22d3ee;
+  --accent2: #a78bfa;
+  --accent3: #fb923c;
+  --text: #e8ecff;
+  --text-strong: #f8fbff;
+  --text-soft: #cdd6f4;
+  --muted: #8b90b5;
+  --border: rgba(255,255,255,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:-0.01em;text-decoration:none;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.07em;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+
+.glow1{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,0.05) 0%,transparent 65%);top:-200px;right:-150px;pointer-events:none;animation:breathe 8s ease-in-out infinite;}
+.glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,0.05) 0%,transparent 65%);bottom:0;left:5%;pointer-events:none;animation:breathe 11s ease-in-out infinite reverse;}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+
+.page-hero{padding:140px 5% 60px;position:relative;z-index:1;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:0.76rem;color:var(--muted);margin-bottom:2rem;}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.3s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:rgba(255,255,255,0.12);}
+.breadcrumb .current{color:var(--accent);}
+.section-label{font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent);display:block;}
+.page-title{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:800;line-height:1.06;letter-spacing:-0.03em;margin-bottom:1rem;color:var(--text-strong);}
+.page-title em{font-style:normal;background:linear-gradient(135deg,#67e8f9 0%,#22d3ee 35%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.page-sub{font-size:1.05rem;color:var(--muted);max-width:640px;line-height:1.85;}
+
+.content{padding:0 5% 100px;position:relative;z-index:1;}
+
+/* SKILL BLOCKS */
+.skill-block{margin-top:4rem;}
+.skill-block-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text-strong);margin-bottom:0.3rem;}
+.skill-block-sub{color:var(--muted);font-size:0.88rem;margin-bottom:1.8rem;}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);}
+.sk-card{background:var(--surface2);padding:2rem;transition:all 0.3s;position:relative;overflow:hidden;}
+.sk-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
+.sk-card:hover::after{transform:scaleX(1);}
+.sk-card:hover{background:#1c1c2e;}
+.sk-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+.sk-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:var(--text-strong);}
+.sk-card p{color:var(--muted);font-size:0.85rem;line-height:1.75;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem;}
+.tag{padding:4px 11px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px;font-size:0.72rem;color:var(--muted);}
+
+/* PROFICIENCY BARS */
+.prof-section{margin-top:4rem;padding-top:3.5rem;border-top:1px solid var(--border);}
+.prof-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 4rem;margin-top:2rem;}
+.prof-item{}
+.prof-header{display:flex;justify-content:space-between;margin-bottom:0.5rem;}
+.prof-name{font-size:0.88rem;font-weight:500;color:var(--text-soft);}
+.prof-pct{font-size:0.78rem;color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;}
+.prof-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;}
+.prof-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform 1s ease;}
+.prof-fill.animate{transform:scaleX(1);}
+
+/* TOOLS */
+.tools-section{margin-top:4rem;padding-top:3.5rem;border-top:1px solid var(--border);}
+.tools-grid{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:2rem;}
+.tool-pill{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:100px;font-size:0.84rem;color:var(--text-soft);transition:all 0.3s;}
+.tool-pill:hover{border-color:rgba(34,211,238,0.3);color:var(--accent);transform:translateY(-2px);}
+.tool-pill .dot{width:6px;height:6px;border-radius:50%;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all 0.7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem;position:relative;z-index:1;}
+
+@media(max-width:700px){
+  .nav-links{display:none;}
+  .prof-grid{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">MC · DEV</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="sobre.html">Sobre</a></li>
+    <li><a href="skills.html" class="active">Skills</a></li>
+    <li><a href="exp.html">Experiência</a></li>
+    <li><a href="certs.html">Certificações</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Início</a>
+    <span>/</span>
+    <span class="current">Skills</span>
+  </div>
+  <div class="section-label">Stack Técnica</div>
+  <h1 class="page-title">Habilidades &amp; <em>Tecnologias</em></h1>
+  <p class="page-sub">Expertise consolidada no ecossistema Salesforce Marketing Cloud com visão crescente em dados, IA e análise funcional.</p>
+</div>
+
+<div class="content">
+
+  <!-- SFMC CORE -->
+  <div class="skill-block reveal">
+    <div class="skill-block-title">Marketing Cloud Core</div>
+    <div class="skill-block-sub">Módulos e ferramentas nativas do ecossistema SFMC</div>
+    <div class="skills-grid">
+      <div class="sk-card">
+        <span class="sk-icon">⚡</span>
+        <h3>Journey Builder</h3>
+        <p>Arquitetura de jornadas multicanal complexas, split decisions, wait activities e otimização por comportamento do contato.</p>
+        <div class="tags"><span class="tag">Multi-step</span><span class="tag">Decision Splits</span><span class="tag">Engagement</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">📧</span>
+        <h3>Email Studio</h3>
+        <p>Criação de templates responsivos, dynamic content, A/B testing e gestão de deliverability e reputação de IP.</p>
+        <div class="tags"><span class="tag">Dynamic Content</span><span class="tag">A/B Test</span><span class="tag">Deliverability</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">🤖</span>
+        <h3>Automation Studio</h3>
+        <p>Automações de segmentação, disparos transacionais, importação de dados e pipelines de processamento agendados.</p>
+        <div class="tags"><span class="tag">SQL Activities</span><span class="tag">File Transfers</span><span class="tag">Scheduled</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">📱</span>
+        <h3>Mobile Studio</h3>
+        <p>Envio de SMS, push notifications e MobileConnect para comunicação mobile integrada às jornadas.</p>
+        <div class="tags"><span class="tag">SMS</span><span class="tag">Push</span><span class="tag">MobileConnect</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">🗂️</span>
+        <h3>Contact Builder</h3>
+        <p>Modelagem do data model, relacionamento de Data Extensions e configuração do Contact Key para identificação única.</p>
+        <div class="tags"><span class="tag">Data Model</span><span class="tag">Relationships</span><span class="tag">Contact Key</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">🎨</span>
+        <h3>Content Builder</h3>
+        <p>Gestão de assets, blocos de conteúdo reutilizáveis e organização de biblioteca de templates corporativos.</p>
+        <div class="tags"><span class="tag">Assets</span><span class="tag">Templates</span><span class="tag">Blocks</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESENVOLVIMENTO -->
+  <div class="skill-block reveal">
+    <div class="skill-block-title">Desenvolvimento & Linguagens</div>
+    <div class="skill-block-sub">Código e integrações para personalização avançada</div>
+    <div class="skills-grid">
+      <div class="sk-card">
+        <span class="sk-icon">🧬</span>
+        <h3>AMPscript</h3>
+        <p>Personalização dinâmica em e-mails e landing pages, lookups em Data Extensions, condicionais e formatação avançada de dados.</p>
+        <div class="tags"><span class="tag">Lookups</span><span class="tag">Conditionals</span><span class="tag">Dynamic Content</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">🗄️</span>
+        <h3>SQL</h3>
+        <p>Queries complexas no Automation Studio para segmentação, joins entre DEs, transformações e criação de audiências qualificadas.</p>
+        <div class="tags"><span class="tag">Segmentation</span><span class="tag">Joins</span><span class="tag">Data Transform</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">⚙️</span>
+        <h3>SSJS</h3>
+        <p>Server-Side JavaScript para lógicas avançadas em Cloud Pages, integrações HTTP e processamento de dados dinâmicos.</p>
+        <div class="tags"><span class="tag">Cloud Pages</span><span class="tag">HTTP Calls</span><span class="tag">Logic</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">🔌</span>
+        <h3>REST & SOAP API</h3>
+        <p>Integrações via API do SFMC para trigging de envios, gestão de contatos, Data Extensions e operações transacionais.</p>
+        <div class="tags"><span class="tag">REST API</span><span class="tag">SOAP</span><span class="tag">Postman</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">🐍</span>
+        <h3>Python <span style="font-size:0.65rem;color:var(--accent3);border:1px solid rgba(249,115,22,0.3);padding:1px 6px;border-radius:4px;vertical-align:middle;">Em formação</span></h3>
+        <p>Análise de dados, automação de processos e scripts para integração com plataformas de marketing e dados.</p>
+        <div class="tags"><span class="tag">Pandas</span><span class="tag">Data Analysis</span><span class="tag">Scripts</span></div>
+      </div>
+      <div class="sk-card">
+        <span class="sk-icon">🌐</span>
+        <h3>HTML & CSS</h3>
+        <p>Templates de e-mail responsivos, landing pages no Cloud Pages e estruturação de conteúdo para múltiplos clientes de e-mail.</p>
+        <div class="tags"><span class="tag">Email Templates</span><span class="tag">Responsive</span><span class="tag">Cloud Pages</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFICIENCY BARS -->
+  <div class="prof-section reveal">
+    <div class="section-label">Nível de Proficiência</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;color:var(--text-strong);">Domínio por área</h2>
+    <div class="prof-grid" id="prof-grid">
+      <div class="prof-item">
+        <div class="prof-header"><span class="prof-name">Journey Builder</span><span class="prof-pct">95%</span></div>
+        <div class="prof-bar"><div class="prof-fill" style="width:95%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-header"><span class="prof-name">AMPscript</span><span class="prof-pct">90%</span></div>
+        <div class="prof-bar"><div class="prof-fill" style="width:90%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-header"><span class="prof-name">Email Studio</span><span class="prof-pct">95%</span></div>
+        <div class="prof-bar"><div class="prof-fill" style="width:95%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-header"><span class="prof-name">SQL / Data Extensions</span><span class="prof-pct">85%</span></div>
+        <div class="prof-bar"><div class="prof-fill" style="width:85%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-header"><span class="prof-name">Automation Studio</span><span class="prof-pct">90%</span></div>
+        <div class="prof-bar"><div class="prof-fill" style="width:90%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-header"><span class="prof-name">REST / SOAP API</span><span class="prof-pct">80%</span></div>
+        <div class="prof-bar"><div class="prof-fill" style="width:80%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-header"><span class="prof-name">Análise Funcional</span><span class="prof-pct">88%</span></div>
+        <div class="prof-bar"><div class="prof-fill" style="width:88%"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-header"><span class="prof-name">Python / Data Analysis</span><span class="prof-pct">55%</span></div>
+        <div class="prof-bar"><div class="prof-fill" style="width:55%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FERRAMENTAS -->
+  <div class="tools-section reveal">
+    <div class="section-label">Ferramentas & Plataformas</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;color:var(--text-strong);">Ecossistema completo</h2>
+    <div class="tools-grid">
+      <div class="tool-pill"><span class="dot" style="background:#00adef;"></span>Salesforce CRM</div>
+      <div class="tool-pill"><span class="dot" style="background:#22d3ee;"></span>Marketing Cloud</div>
+      <div class="tool-pill"><span class="dot" style="background:#a78bfa;"></span>Data Cloud</div>
+      <div class="tool-pill"><span class="dot" style="background:#fb923c;"></span>Einstein AI</div>
+      <div class="tool-pill"><span class="dot" style="background:#22c55e;"></span>Postman</div>
+      <div class="tool-pill"><span class="dot" style="background:#f59e0b;"></span>Jira / Confluence</div>
+      <div class="tool-pill"><span class="dot" style="background:#ec4899;"></span>Git / GitHub</div>
+      <div class="tool-pill"><span class="dot" style="background:#3b82f6;"></span>VS Code</div>
+      <div class="tool-pill"><span class="dot" style="background:#10b981;"></span>Trailhead</div>
+      <div class="tool-pill"><span class="dot" style="background:#8b5cf6;"></span>Agile / Scrum</div>
+      <div class="tool-pill"><span class="dot" style="background:#06b6d4;"></span>Google Analytics</div>
+      <div class="tool-pill"><span class="dot" style="background:#f97316;"></span>Power BI</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2026 · Senior Marketing Cloud Developer · Recife, PE · 🇧🇷🇪🇸 ·
+  <a href="mailto:marcosqueirozpereira@gmail.com" style="color:var(--accent);text-decoration:none;">marcosqueirozpereira@gmail.com</a>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.prof-fill').forEach(bar => bar.classList.add('animate'));
+  }
+}), {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

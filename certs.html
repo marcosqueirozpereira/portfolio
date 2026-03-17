@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificações | Senior Marketing Cloud Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06060f;
+  --surface: #0e0e1a;
+  --surface2: #161624;
+  --accent: #22d3ee;
+  --accent2: #a78bfa;
+  --accent3: #fb923c;
+  --text: #e8ecff;
+  --text-strong: #f8fbff;
+  --text-soft: #cdd6f4;
+  --muted: #8b90b5;
+  --border: rgba(255,255,255,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:-0.01em;text-decoration:none;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.07em;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+
+.glow1{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,0.05) 0%,transparent 65%);top:-200px;right:-150px;pointer-events:none;animation:breathe 8s ease-in-out infinite;}
+.glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,0.05) 0%,transparent 65%);bottom:0;left:5%;pointer-events:none;animation:breathe 11s ease-in-out infinite reverse;}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+
+.page-hero{padding:140px 5% 60px;position:relative;z-index:1;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:0.76rem;color:var(--muted);margin-bottom:2rem;}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.3s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:rgba(255,255,255,0.12);}
+.breadcrumb .current{color:var(--accent);}
+.section-label{font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent);display:block;}
+.page-title{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:800;line-height:1.06;letter-spacing:-0.03em;margin-bottom:1rem;color:var(--text-strong);}
+.page-title em{font-style:normal;background:linear-gradient(135deg,#67e8f9 0%,#22d3ee 35%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.page-sub{font-size:1.05rem;color:var(--muted);max-width:640px;line-height:1.85;}
+
+.content{padding:0 5% 100px;position:relative;z-index:1;}
+
+/* CERT DESTAQUE */
+.cert-hero{margin-top:3.5rem;background:linear-gradient(135deg,rgba(34,211,238,0.08),rgba(167,139,250,0.06));border:1px solid rgba(34,211,238,0.2);border-radius:20px;padding:3rem;display:flex;gap:2.5rem;align-items:center;flex-wrap:wrap;}
+.cert-hero-badge{width:100px;height:100px;border-radius:20px;background:linear-gradient(135deg,rgba(34,211,238,0.2),rgba(0,128,255,0.15));display:flex;align-items:center;justify-content:center;font-size:3.5rem;flex-shrink:0;border:1px solid rgba(34,211,238,0.25);}
+.cert-hero-info{}
+.cert-hero-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.5rem;}
+.cert-hero-name{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--text-strong);margin-bottom:0.4rem;}
+.cert-hero-iss{color:var(--muted);font-size:0.92rem;margin-bottom:1rem;}
+.cert-status{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:100px;font-size:0.82rem;color:#4ade80;}
+.cert-status::before{content:'';width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.2);}
+
+/* ROADMAP */
+.roadmap-section{margin-top:4rem;}
+.roadmap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:2rem;}
+
+.cert-card{border-radius:16px;padding:2rem;border:1px solid var(--border);transition:all 0.3s;position:relative;overflow:hidden;}
+.cert-card.done{background:linear-gradient(135deg,rgba(34,211,238,0.05),rgba(0,128,255,0.03));border-color:rgba(34,211,238,0.2);}
+.cert-card.next{background:var(--surface2);border-color:rgba(167,139,250,0.15);border-style:dashed;}
+.cert-card.future{background:var(--surface2);opacity:0.55;border-style:dashed;}
+.cert-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
+.cert-card.done:hover{border-color:rgba(34,211,238,0.4);}
+.cert-card.next:hover{border-color:rgba(167,139,250,0.4);opacity:1;}
+.cert-card.future:hover{opacity:0.8;}
+
+.cert-step{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:1rem;}
+.cert-icon-wrap{width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:1.2rem;}
+.cert-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;color:var(--text-strong);margin-bottom:0.3rem;}
+.cert-iss{font-size:0.8rem;color:var(--muted);margin-bottom:1rem;}
+.cert-desc{font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem;}
+.cert-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;font-size:0.74rem;font-weight:500;}
+.pill-done{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);color:#4ade80;}
+.pill-next{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:#c4b5fd;}
+.pill-future{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--muted);}
+
+/* TRAILHEAD */
+.trail-section{margin-top:4rem;padding-top:3.5rem;border-top:1px solid var(--border);}
+.trail-card{background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(167,139,250,0.04));border:1px solid rgba(249,115,22,0.15);border-radius:16px;padding:2.5rem;display:flex;gap:2rem;align-items:center;flex-wrap:wrap;margin-top:2rem;}
+.trail-icon{font-size:3.5rem;flex-shrink:0;}
+.trail-info{}
+.trail-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text-strong);margin-bottom:0.4rem;}
+.trail-desc{color:var(--muted);font-size:0.9rem;max-width:520px;margin-bottom:1.2rem;}
+.trail-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--accent3);color:#000;font-weight:600;font-size:0.86rem;border-radius:8px;text-decoration:none;transition:all 0.3s;}
+.trail-btn:hover{background:#fff;transform:translateY(-2px);box-shadow:0 8px 24px rgba(249,115,22,0.25);}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all 0.7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem;position:relative;z-index:1;}
+
+@media(max-width:700px){
+  .nav-links{display:none;}
+  .cert-hero{flex-direction:column;}
+  .trail-card{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">MC · DEV</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="sobre.html">Sobre</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="exp.html">Experiência</a></li>
+    <li><a href="certs.html" class="active">Certificações</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Início</a>
+    <span>/</span>
+    <span class="current">Certificações</span>
+  </div>
+  <div class="section-label">Credenciais</div>
+  <h1 class="page-title">Certificações <em>Salesforce</em></h1>
+  <p class="page-sub">Trilha estruturada de certificações no ecossistema Salesforce, com credencial obtida e roadmap claro de evolução profissional.</p>
+</div>
+
+<div class="content">
+
+  <!-- CERT DESTAQUE -->
+  <div class="cert-hero reveal">
+    <div class="cert-hero-badge">🏅</div>
+    <div class="cert-hero-info">
+      <div class="cert-hero-label">Certificação obtida · Salesforce</div>
+      <div class="cert-hero-name">Salesforce Associate</div>
+      <div class="cert-hero-iss">Emitido por Salesforce · Verificado no Trailhead</div>
+      <div class="cert-status">Certificado · Ativo</div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="roadmap-section">
+    <div class="section-label reveal" style="margin-top:3.5rem;">Trilha completa</div>
+    <h2 class="reveal" style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;color:var(--text-strong);">Roadmap de certificações</h2>
+    <div class="roadmap-grid">
+
+      <div class="cert-card done reveal">
+        <div class="cert-step">Etapa 1 · Concluída</div>
+        <div class="cert-icon-wrap" style="background:linear-gradient(135deg,rgba(34,211,238,0.2),rgba(0,128,255,0.1));">🏅</div>
+        <div class="cert-name">Salesforce Associate</div>
+        <div class="cert-iss">Salesforce</div>
+        <div class="cert-desc">Fundamentos do ecossistema Salesforce, navegação na plataforma, CRM e conceitos de cloud computing.</div>
+        <span class="cert-pill pill-done">✓ Certificado</span>
+      </div>
+
+      <div class="cert-card next reveal">
+        <div class="cert-step">Etapa 2 · Próxima meta</div>
+        <div class="cert-icon-wrap" style="background:linear-gradient(135deg,rgba(167,139,250,0.2),rgba(109,40,217,0.1));">✉️</div>
+        <div class="cert-name">Marketing Cloud Email Specialist</div>
+        <div class="cert-iss">Salesforce</div>
+        <div class="cert-desc">Especialização em e-mail marketing, deliverability, automações e estratégias avançadas no Email Studio.</div>
+        <span class="cert-pill pill-next">→ Próxima meta</span>
+      </div>
+
+      <div class="cert-card future reveal">
+        <div class="cert-step">Etapa 3 · Roadmap</div>
+        <div class="cert-icon-wrap" style="background:linear-gradient(135deg,rgba(249,115,22,0.2),rgba(220,38,38,0.1));">🛠️</div>
+        <div class="cert-name">Marketing Cloud Developer</div>
+        <div class="cert-iss">Salesforce</div>
+        <div class="cert-desc">Desenvolvimento avançado com AMPscript, SSJS, APIs e integrações técnicas no ecossistema SFMC.</div>
+        <span class="cert-pill pill-future">Roadmap 2025</span>
+      </div>
+
+      <div class="cert-card future reveal">
+        <div class="cert-step">Etapa 4 · Roadmap</div>
+        <div class="cert-icon-wrap" style="background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(5,150,105,0.1));">🎯</div>
+        <div class="cert-name">Marketing Cloud Consultant</div>
+        <div class="cert-iss">Salesforce</div>
+        <div class="cert-desc">Visão estratégica e consultiva para implementações complexas, arquitetura de soluções e gestão de projetos SFMC.</div>
+        <span class="cert-pill pill-future">Roadmap 2026</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TRAILHEAD -->
+  <div class="trail-section reveal">
+    <div class="section-label">Trailhead</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;color:var(--text-strong);">Perfil Trailblazer</h2>
+    <div class="trail-card">
+      <div class="trail-icon">🏆</div>
+      <div class="trail-info">
+        <div class="trail-title">Trailblazer Profile</div>
+        <div class="trail-desc">Acompanhe badges, superbadges e o progresso completo da trilha de aprendizagem no Salesforce Trailhead. Perfil público com histórico verificável de evolução contínua.</div>
+        <a href="https://trailhead.salesforce.com" target="_blank" class="trail-btn">🏆 Ver no Trailhead →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2026 · Senior Marketing Cloud Developer · Recife, PE · 🇧🇷🇪🇸 ·
+  <a href="mailto:marcosqueirozpereira@gmail.com" style="color:var(--accent);text-decoration:none;">marcosqueirozpereira@gmail.com</a>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting) e.target.classList.add('in');
+}), {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

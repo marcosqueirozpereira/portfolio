@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experiência | Senior Marketing Cloud Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06060f;
+  --surface: #0e0e1a;
+  --surface2: #161624;
+  --accent: #22d3ee;
+  --accent2: #a78bfa;
+  --accent3: #fb923c;
+  --text: #e8ecff;
+  --text-strong: #f8fbff;
+  --text-soft: #cdd6f4;
+  --muted: #8b90b5;
+  --border: rgba(255,255,255,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:-0.01em;text-decoration:none;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.07em;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+
+.glow1{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,0.05) 0%,transparent 65%);top:-200px;right:-150px;pointer-events:none;animation:breathe 8s ease-in-out infinite;}
+.glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,0.05) 0%,transparent 65%);bottom:0;left:5%;pointer-events:none;animation:breathe 11s ease-in-out infinite reverse;}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+
+.page-hero{padding:140px 5% 60px;position:relative;z-index:1;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:0.76rem;color:var(--muted);margin-bottom:2rem;}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.3s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:rgba(255,255,255,0.12);}
+.breadcrumb .current{color:var(--accent);}
+.section-label{font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent);display:block;}
+.page-title{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:800;line-height:1.06;letter-spacing:-0.03em;margin-bottom:1rem;color:var(--text-strong);}
+.page-title em{font-style:normal;background:linear-gradient(135deg,#67e8f9 0%,#22d3ee 35%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.page-sub{font-size:1.05rem;color:var(--muted);max-width:640px;line-height:1.85;}
+
+.content{padding:0 5% 100px;position:relative;z-index:1;}
+
+/* STATS ROW */
+.stats-row{display:flex;gap:2rem;flex-wrap:wrap;margin-top:3rem;padding:2rem;background:var(--surface2);border:1px solid var(--border);border-radius:16px;}
+.stat-item{flex:1;min-width:120px;text-align:center;}
+.stat-n{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--accent);display:block;}
+.stat-l{font-size:0.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;}
+
+/* TIMELINE */
+.timeline-section{margin-top:4rem;}
+.timeline{position:relative;padding-left:2rem;max-width:820px;}
+.timeline::before{content:'';position:absolute;left:0;top:10px;bottom:0;width:1px;background:linear-gradient(180deg,var(--accent),var(--accent2),transparent);}
+
+.exp-card{position:relative;margin-bottom:3.5rem;padding-left:2.5rem;animation-fill-mode:both;}
+.exp-card::before{content:'';position:absolute;left:-2rem;top:12px;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(34,211,238,0.12),0 0 16px rgba(34,211,238,0.2);}
+.exp-card.past::before{background:var(--accent2);box-shadow:0 0 0 4px rgba(167,139,250,0.12);}
+
+.exp-inner{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:2rem;transition:all 0.3s;}
+.exp-inner:hover{border-color:rgba(34,211,238,0.2);transform:translateX(4px);box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:1.2rem;}
+.exp-period{display:inline-flex;align-items:center;gap:6px;font-size:0.74rem;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;background:rgba(34,211,238,0.07);border:1px solid rgba(34,211,238,0.15);padding:4px 12px;border-radius:100px;}
+.exp-period.past{color:var(--accent2);background:rgba(167,139,250,0.07);border-color:rgba(167,139,250,0.15);}
+.exp-badge{font-size:0.72rem;padding:4px 10px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:6px;color:var(--muted);}
+
+.exp-role{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:var(--text-strong);margin-bottom:0.3rem;}
+.exp-co{color:var(--muted);font-size:0.9rem;margin-bottom:1.4rem;display:flex;align-items:center;gap:8px;}
+.exp-co::before{content:'';width:18px;height:1px;background:var(--muted);}
+
+.exp-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
+.exp-list li{font-size:0.88rem;color:var(--text-soft);padding-left:1.4rem;position:relative;line-height:1.7;}
+.exp-list li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:0.8rem;}
+
+.exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--border);}
+.exp-tag{padding:3px 10px;background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.12);border-radius:4px;font-size:0.72rem;color:var(--accent);}
+
+/* COMPETÊNCIAS */
+.comp-section{margin-top:4rem;padding-top:3.5rem;border-top:1px solid var(--border);}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem;}
+.comp-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all 0.3s;}
+.comp-card:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-2px);}
+.comp-emoji{font-size:1.6rem;margin-bottom:0.7rem;}
+.comp-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;color:var(--text-strong);}
+.comp-desc{font-size:0.8rem;color:var(--muted);line-height:1.7;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all 0.7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem;position:relative;z-index:1;}
+
+@media(max-width:700px){
+  .nav-links{display:none;}
+  .stats-row{gap:1rem;}
+  .exp-header{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">MC · DEV</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="sobre.html">Sobre</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="exp.html" class="active">Experiência</a></li>
+    <li><a href="certs.html">Certificações</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Início</a>
+    <span>/</span>
+    <span class="current">Experiência</span>
+  </div>
+  <div class="section-label">Trajetória</div>
+  <h1 class="page-title">Experiência <em>Profissional</em></h1>
+  <p class="page-sub">Histórico de entregas em projetos de marketing cloud de médio e grande porte, combinando visão técnica e funcional.</p>
+</div>
+
+<div class="content">
+
+  <!-- STATS -->
+  <div class="stats-row reveal">
+    <div class="stat-item">
+      <span class="stat-n">5+</span>
+      <span class="stat-l">Anos em SFMC</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">1M+</span>
+      <span class="stat-l">Contatos em jornadas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">2</span>
+      <span class="stat-l">Empresas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">CLT</span>
+      <span class="stat-l">Regime de trabalho</span>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline-section">
+    <div class="section-label reveal" style="margin-top:3rem;">Histórico</div>
+    <h2 class="reveal" style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;color:var(--text-strong);margin-bottom:2.5rem;">Linha do tempo</h2>
+
+    <div class="timeline">
+
+      <!-- JOB 1 -->
+      <div class="exp-card reveal">
+        <div class="exp-inner">
+          <div class="exp-header">
+            <span class="exp-period">● 2021 — 2024</span>
+            <span class="exp-badge">CLT · Recife, PE</span>
+          </div>
+          <div class="exp-role">Senior Marketing Cloud Developer / Analista Funcional</div>
+          <div class="exp-co">Empresa · Recife, PE</div>
+          <ul class="exp-list">
+            <li>Arquitetura e implementação de jornadas no Journey Builder para bases de +1M contatos com múltiplos canais e decisões de engajamento</li>
+            <li>Desenvolvimento de templates dinâmicos com AMPscript e personalização avançada por segmento comportamental e demográfico</li>
+            <li>Integração do SFMC com Salesforce CRM via API REST e conectores nativos, garantindo sincronização em tempo real</li>
+            <li>Levantamento de requisitos e documentação funcional (BRD/FRD) para squads multidisciplinares de marketing e tecnologia</li>
+            <li>Mentoria de desenvolvedores júnior e condução de treinamentos internos sobre a plataforma SFMC</li>
+            <li>Análise de KPIs de campanha (open rate, CTR, conversão) e produção de relatórios executivos e dashboards</li>
+            <li>Modelagem de Data Extensions e queries SQL para segmentação avançada no Automation Studio</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Journey Builder</span>
+            <span class="exp-tag">AMPscript</span>
+            <span class="exp-tag">SQL</span>
+            <span class="exp-tag">REST API</span>
+            <span class="exp-tag">Salesforce CRM</span>
+            <span class="exp-tag">Análise Funcional</span>
+            <span class="exp-tag">Mentoria</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOB 2 -->
+      <div class="exp-card past reveal">
+        <div class="exp-inner">
+          <div class="exp-header">
+            <span class="exp-period past">● 2019 — 2021</span>
+            <span class="exp-badge">CLT · Recife, PE</span>
+          </div>
+          <div class="exp-role">Marketing Cloud Developer Pleno</div>
+          <div class="exp-co">Empresa · Recife, PE</div>
+          <ul class="exp-list">
+            <li>Criação e gestão de campanhas de e-mail marketing com foco em alta taxa de entregabilidade e reputação de IP</li>
+            <li>Automações no Automation Studio para disparos transacionais, segmentados e campanhas recorrentes</li>
+            <li>Implementação de testes A/B e otimização contínua de métricas de engajamento (open rate, CTR)</li>
+            <li>Desenvolvimento de templates HTML responsivos para múltiplos clientes de e-mail e dispositivos</li>
+            <li>Configuração de Data Extensions e segmentações SQL para audiências qualificadas</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Email Studio</span>
+            <span class="exp-tag">Automation Studio</span>
+            <span class="exp-tag">A/B Testing</span>
+            <span class="exp-tag">HTML Templates</span>
+            <span class="exp-tag">Deliverability</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMPETÊNCIAS -->
+  <div class="comp-section reveal">
+    <div class="section-label">Soft Skills</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;color:var(--text-strong);">Competências comportamentais</h2>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-emoji">🔀</div>
+        <div class="comp-title">Perfil Híbrido</div>
+        <div class="comp-desc">Transito com naturalidade entre reuniões de negócio e implementação técnica, reduzindo atrito entre áreas.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-emoji">🗣️</div>
+        <div class="comp-title">Comunicação Clara</div>
+        <div class="comp-desc">Capacidade de traduzir requisitos técnicos complexos para stakeholders não técnicos de forma objetiva.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-emoji">👥</div>
+        <div class="comp-title">Mentoria & Liderança</div>
+        <div class="comp-desc">Experiência em desenvolver talentos júnior e conduzir treinamentos internos sobre SFMC e boas práticas.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-emoji">📈</div>
+        <div class="comp-title">Orientação a Resultados</div>
+        <div class="comp-desc">Foco em métricas de campanha, entregabilidade e conversão para garantir impacto real nas estratégias de marketing.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2026 · Senior Marketing Cloud Developer · Recife, PE · 🇧🇷🇪🇸 ·
+  <a href="mailto:marcosqueirozpereira@gmail.com" style="color:var(--accent);text-decoration:none;">marcosqueirozpereira@gmail.com</a>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting) e.target.classList.add('in');
+}), {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

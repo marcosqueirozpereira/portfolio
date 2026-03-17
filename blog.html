@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | Senior Marketing Cloud Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06060f;
+  --surface: #0e0e1a;
+  --surface2: #161624;
+  --accent: #22d3ee;
+  --accent2: #a78bfa;
+  --accent3: #fb923c;
+  --text: #e8ecff;
+  --text-strong: #f8fbff;
+  --text-soft: #cdd6f4;
+  --muted: #8b90b5;
+  --border: rgba(255,255,255,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:-0.01em;text-decoration:none;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.07em;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+
+.glow1{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,0.05) 0%,transparent 65%);top:-200px;right:-150px;pointer-events:none;animation:breathe 8s ease-in-out infinite;}
+.glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,0.05) 0%,transparent 65%);bottom:0;left:5%;pointer-events:none;animation:breathe 11s ease-in-out infinite reverse;}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+
+.page-hero{padding:140px 5% 60px;position:relative;z-index:1;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:0.76rem;color:var(--muted);margin-bottom:2rem;}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.3s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:rgba(255,255,255,0.12);}
+.breadcrumb .current{color:var(--accent);}
+.section-label{font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent);display:block;}
+.page-title{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:800;line-height:1.06;letter-spacing:-0.03em;margin-bottom:1rem;color:var(--text-strong);}
+.page-title em{font-style:normal;background:linear-gradient(135deg,#67e8f9 0%,#22d3ee 35%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.page-sub{font-size:1.05rem;color:var(--muted);max-width:640px;line-height:1.85;}
+
+.content{padding:0 5% 100px;position:relative;z-index:1;}
+
+/* FILTROS */
+.filter-bar{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:3rem;margin-bottom:2.5rem;}
+.filter-btn{padding:7px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:100px;font-size:0.78rem;color:var(--muted);cursor:pointer;transition:all 0.3s;}
+.filter-btn:hover,.filter-btn.active{background:rgba(34,211,238,0.08);border-color:rgba(34,211,238,0.3);color:var(--accent);}
+
+/* UPLOAD */
+.upload-zone{border:2px dashed rgba(34,211,238,0.15);border-radius:16px;padding:2.5rem;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(34,211,238,0.02);margin-bottom:2.5rem;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(34,211,238,0.05);}
+.up-icon{font-size:2.4rem;margin-bottom:0.7rem;}
+.upload-zone p{color:var(--muted);font-size:0.88rem;}
+.upload-zone strong{color:var(--accent);}
+#fileinput{display:none;}
+
+/* POSTS GRID */
+.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.4rem;}
+.post-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all 0.3s;}
+.post-card:hover{border-color:rgba(34,211,238,0.2);transform:translateY(-5px);box-shadow:0 20px 48px rgba(0,0,0,0.4);}
+.post-bar{height:3px;}
+.post-body{padding:1.6rem;}
+.post-cat{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.7rem;}
+.post-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.6rem;line-height:1.4;color:var(--text-strong);}
+.post-desc{font-size:0.83rem;color:var(--muted);line-height:1.75;margin-bottom:1.2rem;}
+.post-foot{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);}
+.post-date{font-size:0.72rem;color:var(--muted);}
+.post-type{font-size:0.68rem;padding:3px 10px;background:rgba(34,211,238,0.08);color:var(--accent);border-radius:5px;text-transform:uppercase;letter-spacing:0.05em;}
+
+/* FEATURED */
+.post-card.featured{grid-column:1/-1;}
+.post-card.featured .post-body{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;}
+.post-card.featured .post-title{font-size:1.4rem;}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(14px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+.overlay.open{display:flex;}
+.modal{background:var(--surface2);border:1px solid var(--border);border-radius:18px;padding:2.8rem;max-width:600px;width:100%;position:relative;animation:modalIn 0.3s ease both;}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(16px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-x{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--muted);font-size:1.6rem;cursor:pointer;transition:color 0.3s;line-height:1;}
+.modal-x:hover{color:var(--text);}
+.modal-cat{font-size:0.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;}
+.modal h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text-strong);margin-bottom:0.4rem;}
+.modal-meta{color:var(--muted);font-size:0.82rem;margin-bottom:1.5rem;}
+.modal-desc{color:var(--text-soft);font-size:0.92rem;line-height:1.85;}
+.modal-dl{margin-top:2rem;display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--accent);color:#000;border-radius:8px;font-size:0.88rem;font-weight:600;border:none;cursor:pointer;transition:all 0.3s;}
+.modal-dl:hover{background:#fff;transform:translateY(-2px);}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all 0.7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+@keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem;position:relative;z-index:1;}
+
+@media(max-width:700px){
+  .nav-links{display:none;}
+  .posts-grid{grid-template-columns:1fr;}
+  .post-card.featured .post-body{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">MC · DEV</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="sobre.html">Sobre</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="exp.html">Experiência</a></li>
+    <li><a href="certs.html">Certificações</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Início</a>
+    <span>/</span>
+    <span class="current">Blog</span>
+  </div>
+  <div class="section-label">Conhecimento</div>
+  <h1 class="page-title">Blog &amp; <em>Conteúdo</em></h1>
+  <p class="page-sub">Tutoriais, guias e artigos técnicos sobre Salesforce Marketing Cloud, automação de marketing e IA aplicada.</p>
+</div>
+
+<div class="content">
+
+  <!-- FILTROS -->
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" onclick="filterPosts('all', this)">Todos</button>
+    <button class="filter-btn" onclick="filterPosts('Tutorial', this)">Tutoriais</button>
+    <button class="filter-btn" onclick="filterPosts('Boas Práticas', this)">Boas Práticas</button>
+    <button class="filter-btn" onclick="filterPosts('IA & Marketing', this)">IA & Marketing</button>
+    <button class="filter-btn" onclick="filterPosts('Técnico', this)">Técnico</button>
+  </div>
+
+  <!-- UPLOAD -->
+  <div class="upload-zone reveal" id="dropzone" onclick="document.getElementById('fileinput').click()">
+    <div class="up-icon">📁</div>
+    <p><strong>Clique para fazer upload</strong> ou arraste arquivos aqui</p>
+    <p style="margin-top:6px;font-size:0.78rem;">PDF, DOCX, PPTX, MD — Tutoriais, guias e artigos técnicos</p>
+    <input type="file" id="fileinput" multiple accept=".pdf,.doc,.docx,.pptx,.md,.txt">
+  </div>
+
+  <!-- POSTS -->
+  <div class="posts-grid" id="posts-grid">
+
+    <div class="post-card" data-cat="Tutorial" onclick="openModal('AMPscript: Personalização Dinâmica no SFMC','Tutorial · SFMC','Mar 2024','PDF','Guia completo sobre variáveis, condicionais, loops e funções do AMPscript para criar e-mails verdadeiramente personalizados com dados em tempo real das Data Extensions. Inclui exemplos práticos de lookup, IF/ELSE, formatação de datas e strings.')">
+      <div class="post-bar" style="background:linear-gradient(90deg,#22d3ee,#a78bfa)"></div>
+      <div class="post-body">
+        <div class="post-cat">Tutorial · SFMC</div>
+        <div class="post-title">AMPscript: Personalização Dinâmica no SFMC</div>
+        <div class="post-desc">Guia completo sobre variáveis, condicionais e loops para e-mails inteligentes e altamente personalizados.</div>
+        <div class="post-foot"><span class="post-date">Mar 2024</span><span class="post-type">PDF</span></div>
+      </div>
+    </div>
+
+    <div class="post-card" data-cat="Boas Práticas" onclick="openModal('Journey Builder: 10 Práticas Essenciais','Boas Práticas · Journey Builder','Fev 2024','Artigo','Um guia detalhado com as 10 melhores práticas para construir jornadas robustas, escaláveis e eficientes no Salesforce Marketing Cloud. Aborda desde a estruturação de entry sources até estratégias de reentrada e gestão de erros.')">
+      <div class="post-bar" style="background:linear-gradient(90deg,#a78bfa,#fb923c)"></div>
+      <div class="post-body">
+        <div class="post-cat">Boas Práticas · Journey Builder</div>
+        <div class="post-title">Journey Builder: 10 Práticas Essenciais</div>
+        <div class="post-desc">Como estruturar jornadas robustas, escaláveis e fáceis de manter no longo prazo.</div>
+        <div class="post-foot"><span class="post-date">Fev 2024</span><span class="post-type">Artigo</span></div>
+      </div>
+    </div>
+
+    <div class="post-card" data-cat="Técnico" onclick="openModal('SQL em Data Extensions: Do Básico ao Avançado','Técnico · SQL','Jan 2024','Tutorial','Domine as queries SQL dentro do Automation Studio para segmentação, transformações e criação de audiências altamente qualificadas no SFMC. Cobre JOINs, funções de data, CTEs e otimização de performance.')">
+      <div class="post-bar" style="background:linear-gradient(90deg,#fb923c,#22d3ee)"></div>
+      <div class="post-body">
+        <div class="post-cat">Técnico · SQL</div>
+        <div class="post-title">SQL em Data Extensions: Do Básico ao Avançado</div>
+        <div class="post-desc">Queries SQL no SFMC para segmentação e transformação de dados com alta performance.</div>
+        <div class="post-foot"><span class="post-date">Jan 2024</span><span class="post-type">Tutorial</span></div>
+      </div>
+    </div>
+
+    <div class="post-card" data-cat="IA & Marketing" onclick="openModal('Einstein AI no Marketing Cloud: O que muda?','IA & Marketing Cloud','Dez 2023','Artigo','Como a IA generativa está transformando o Marketing Cloud: Engagement Scoring, Send Time Optimization e o futuro da personalização com Data Cloud + Einstein. Uma análise das principais funcionalidades e como aplicá-las estrategicamente.')">
+      <div class="post-bar" style="background:linear-gradient(90deg,#a78bfa,#22d3ee)"></div>
+      <div class="post-body">
+        <div class="post-cat">IA & Marketing Cloud</div>
+        <div class="post-title">Einstein AI no Marketing Cloud: O que muda?</div>
+        <div class="post-desc">Como IA generativa transforma personalização, Send Time Optimization e segmentação preditiva.</div>
+        <div class="post-foot"><span class="post-date">Dez 2023</span><span class="post-type">Artigo</span></div>
+      </div>
+    </div>
+
+    <div class="post-card" data-cat="Tutorial" onclick="openModal('Automation Studio: Guia Completo','Tutorial · Automation','Nov 2023','PDF','Tudo sobre o Automation Studio: File Transfers, SQL Activities, agendamentos, boas práticas de organização de automações e estratégias para disparos transacionais e batch.')">
+      <div class="post-bar" style="background:linear-gradient(90deg,#22d3ee,#22c55e)"></div>
+      <div class="post-body">
+        <div class="post-cat">Tutorial · Automation</div>
+        <div class="post-title">Automation Studio: Guia Completo</div>
+        <div class="post-desc">File transfers, SQL activities, agendamentos e boas práticas de organização de automações.</div>
+        <div class="post-foot"><span class="post-date">Nov 2023</span><span class="post-type">PDF</span></div>
+      </div>
+    </div>
+
+    <div class="post-card" data-cat="Técnico" onclick="openModal('SFMC REST API: Integrações na Prática','Técnico · API','Out 2023','Tutorial','Como usar a API REST do Salesforce Marketing Cloud para trigging de envios, gestão de contatos em Data Extensions e operações transacionais. Exemplos com Postman e cURL.')">
+      <div class="post-bar" style="background:linear-gradient(90deg,#fb923c,#a78bfa)"></div>
+      <div class="post-body">
+        <div class="post-cat">Técnico · API</div>
+        <div class="post-title">SFMC REST API: Integrações na Prática</div>
+        <div class="post-desc">Como integrar sistemas externos ao SFMC via API REST com exemplos práticos em Postman.</div>
+        <div class="post-foot"><span class="post-date">Out 2023</span><span class="post-type">Tutorial</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="modal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">×</button>
+    <div class="modal-cat" id="m-cat"></div>
+    <h3 id="m-title"></h3>
+    <div class="modal-meta" id="m-meta"></div>
+    <p class="modal-desc" id="m-desc"></p>
+    <button class="modal-dl">⬇️ Baixar Arquivo</button>
+  </div>
+</div>
+
+<footer>© 2026 · Senior Marketing Cloud Developer · Recife, PE · 🇧🇷🇪🇸 ·
+  <a href="mailto:marcosqueirozpereira@gmail.com" style="color:var(--accent);text-decoration:none;">marcosqueirozpereira@gmail.com</a>
+</footer>
+
+<script>
+// Reveal
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting) e.target.classList.add('in');
+}), {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Modal
+function openModal(t,c,d,tp,desc){
+  document.getElementById('m-title').textContent = t;
+  document.getElementById('m-cat').textContent = c;
+  document.getElementById('m-meta').textContent = d + ' · ' + tp;
+  document.getElementById('m-desc').textContent = desc;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// Filtro
+function filterPosts(cat, btn){
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.post-card[data-cat]').forEach(card => {
+    if(cat === 'all' || card.dataset.cat === cat){
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Upload
+const dz = document.getElementById('dropzone');
+const fi = document.getElementById('fileinput');
+const pg = document.getElementById('posts-grid');
+const grad = [
+  'linear-gradient(90deg,#22d3ee,#a78bfa)',
+  'linear-gradient(90deg,#a78bfa,#fb923c)',
+  'linear-gradient(90deg,#fb923c,#22d3ee)',
+  'linear-gradient(90deg,#22c55e,#22d3ee)'
+];
+
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); handleFiles(e.dataTransfer.files); });
+fi.addEventListener('change', () => handleFiles(fi.files));
+
+function handleFiles(files){
+  Array.from(files).forEach((f, i) => {
+    const ext = f.name.split('.').pop().toUpperCase();
+    const d = new Date().toLocaleDateString('pt-BR', {month:'short', year:'numeric'});
+    const name = f.name.replace(/\.[^/.]+$/, '');
+    const card = document.createElement('div');
+    card.className = 'post-card';
+    card.dataset.cat = 'Upload';
+    card.style.animation = 'up 0.5s ease both';
+    card.innerHTML = `
+      <div class="post-bar" style="background:${grad[i % grad.length]}"></div>
+      <div class="post-body">
+        <div class="post-cat">Conteúdo Enviado</div>
+        <div class="post-title">${name}</div>
+        <div class="post-desc">Arquivo ${ext} enviado em ${d}.</div>
+        <div class="post-foot"><span class="post-date">${d}</span><span class="post-type">${ext}</span></div>
+      </div>`;
+    card.onclick = () => openModal(name, 'Conteúdo Enviado', d, ext, `Arquivo ${ext} enviado por você em ${d}.`);
+    pg.prepend(card);
+  });
+}
+</script>
+</body>
+</html>
