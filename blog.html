@@ -81,15 +81,66 @@ nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;jus
 /* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(14px);z-index:200;align-items:center;justify-content:center;padding:20px;}
 .overlay.open{display:flex;}
-.modal{background:var(--surface2);border:1px solid var(--border);border-radius:18px;padding:2.8rem;max-width:600px;width:100%;position:relative;animation:modalIn 0.3s ease both;}
+.modal{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:2.8rem;
+  max-width:800px;
+  width:100%;
+  max-height:85vh;
+  overflow-y:auto;
+  position:relative;
+  animation:modalIn 0.3s ease both;
+}
 @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(16px);}to{opacity:1;transform:scale(1) translateY(0);}}
 .modal-x{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--muted);font-size:1.6rem;cursor:pointer;transition:color 0.3s;line-height:1;}
 .modal-x:hover{color:var(--text);}
 .modal-cat{font-size:0.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;}
 .modal h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text-strong);margin-bottom:0.4rem;}
 .modal-meta{color:var(--muted);font-size:0.82rem;margin-bottom:1.5rem;}
-.modal-desc{color:var(--text-soft);font-size:0.92rem;line-height:1.85;}
-.modal-dl{margin-top:2rem;display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--accent);color:#000;border-radius:8px;font-size:0.88rem;font-weight:600;border:none;cursor:pointer;transition:all 0.3s;}
+.modal-desc{color:var(--text-soft);font-size:0.92rem;line-height:1.85;margin-bottom:1.5rem;}
+
+.modal-content{
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.9;
+  white-space: pre-line;
+}
+
+.modal-content h4{
+  color: var(--text-strong);
+  font-family:'Syne',sans-serif;
+  font-size: 1.05rem;
+  margin: 1.4rem 0 0.6rem;
+}
+
+.modal-content p{
+  margin-bottom: 1rem;
+}
+
+.modal-actions{
+  margin-top:2rem;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.modal-dl{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 22px;
+  background:var(--accent);
+  color:#000;
+  border-radius:8px;
+  font-size:0.88rem;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+  transition:all 0.3s;
+  text-decoration:none;
+}
 .modal-dl:hover{background:#fff;transform:translateY(-2px);}
 
 .reveal{opacity:0;transform:translateY(24px);transition:all 0.7s ease;}
@@ -102,6 +153,7 @@ footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);colo
   .nav-links{display:none;}
   .posts-grid{grid-template-columns:1fr;}
   .post-card.featured .post-body{grid-template-columns:1fr;}
+  .modal{padding:2rem 1.3rem;}
 }
 </style>
 </head>
@@ -135,8 +187,6 @@ footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);colo
 </div>
 
 <div class="content">
-
-  <!-- FILTROS -->
   <div class="filter-bar reveal">
     <button class="filter-btn active" onclick="filterPosts('all', this)">Todos</button>
     <button class="filter-btn" onclick="filterPosts('Tutorial', this)">Tutoriais</button>
@@ -145,7 +195,6 @@ footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);colo
     <button class="filter-btn" onclick="filterPosts('Técnico', this)">Técnico</button>
   </div>
 
-  <!-- UPLOAD -->
   <div class="upload-zone reveal" id="dropzone" onclick="document.getElementById('fileinput').click()">
     <div class="up-icon">📁</div>
     <p><strong>Clique para fazer upload</strong> ou arraste arquivos aqui</p>
@@ -153,10 +202,33 @@ footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);colo
     <input type="file" id="fileinput" multiple accept=".pdf,.doc,.docx,.pptx,.md,.txt">
   </div>
 
-  <!-- POSTS -->
   <div class="posts-grid" id="posts-grid">
 
-    <div class="post-card" data-cat="Tutorial" onclick="openModal('AMPscript: Personalização Dinâmica no SFMC','Tutorial · SFMC','Mar 2024','PDF','Guia completo sobre variáveis, condicionais, loops e funções do AMPscript para criar e-mails verdadeiramente personalizados com dados em tempo real das Data Extensions. Inclui exemplos práticos de lookup, IF/ELSE, formatação de datas e strings.')">
+    <div class="post-card" data-cat="Tutorial"
+      onclick='openModal(
+        "AMPscript: Personalização Dinâmica no SFMC",
+        "Tutorial · SFMC",
+        "Mar 2024",
+        "PDF",
+        "Guia completo sobre variáveis, condicionais, loops e funções do AMPscript para criar e-mails verdadeiramente personalizados com dados em tempo real das Data Extensions.",
+        `<h4>Introdução</h4>
+        <p>O AMPscript é uma das linguagens mais poderosas dentro do Salesforce Marketing Cloud para personalização de conteúdo em e-mails, landing pages e jornadas.</p>
+        <h4>Principais recursos</h4>
+        <p>• Variáveis com SET</p>
+        <p>• Condicionais com IF / ELSEIF / ELSE</p>
+        <p>• Funções de lookup em Data Extensions</p>
+        <p>• Manipulação de datas, textos e números</p>
+        <h4>Exemplo</h4>
+        <p>%%[
+        SET @nome = AttributeValue("FirstName")
+        IF EMPTY(@nome) THEN
+          SET @nome = "cliente"
+        ENDIF
+        ]%%</p>
+        <p>Olá, %%=v(@nome)=%%</p>
+        <h4>Conclusão</h4>
+        <p>Com AMPscript, você consegue criar experiências muito mais relevantes e aumentar a personalização real das comunicações.</p>`
+      )'>
       <div class="post-bar" style="background:linear-gradient(90deg,#22d3ee,#a78bfa)"></div>
       <div class="post-body">
         <div class="post-cat">Tutorial · SFMC</div>
@@ -166,7 +238,22 @@ footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);colo
       </div>
     </div>
 
-    <div class="post-card" data-cat="Boas Práticas" onclick="openModal('Journey Builder: 10 Práticas Essenciais','Boas Práticas · Journey Builder','Fev 2024','Artigo','Um guia detalhado com as 10 melhores práticas para construir jornadas robustas, escaláveis e eficientes no Salesforce Marketing Cloud. Aborda desde a estruturação de entry sources até estratégias de reentrada e gestão de erros.')">
+    <div class="post-card" data-cat="Boas Práticas"
+      onclick='openModal(
+        "Journey Builder: 10 Práticas Essenciais",
+        "Boas Práticas · Journey Builder",
+        "Fev 2024",
+        "Artigo",
+        "Um guia detalhado com as 10 melhores práticas para construir jornadas robustas, escaláveis e eficientes no Salesforce Marketing Cloud.",
+        `<h4>1. Planeje a entrada</h4>
+        <p>Defina claramente de onde os contatos entram e qual critério garante qualidade na audiência.</p>
+        <h4>2. Evite complexidade desnecessária</h4>
+        <p>Jornadas muito longas e difíceis de manter tendem a gerar mais erros operacionais.</p>
+        <h4>3. Estruture saídas e reentradas</h4>
+        <p>Tenha regras claras para encerramento, reprocessamento e controle de duplicidade.</p>
+        <h4>4. Monitore performance</h4>
+        <p>Crie rotina de acompanhamento de métricas e falhas para manter a jornada saudável.</p>`
+      )'>
       <div class="post-bar" style="background:linear-gradient(90deg,#a78bfa,#fb923c)"></div>
       <div class="post-body">
         <div class="post-cat">Boas Práticas · Journey Builder</div>
@@ -176,7 +263,23 @@ footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);colo
       </div>
     </div>
 
-    <div class="post-card" data-cat="Técnico" onclick="openModal('SQL em Data Extensions: Do Básico ao Avançado','Técnico · SQL','Jan 2024','Tutorial','Domine as queries SQL dentro do Automation Studio para segmentação, transformações e criação de audiências altamente qualificadas no SFMC. Cobre JOINs, funções de data, CTEs e otimização de performance.')">
+    <div class="post-card" data-cat="Técnico"
+      onclick='openModal(
+        "SQL em Data Extensions: Do Básico ao Avançado",
+        "Técnico · SQL",
+        "Jan 2024",
+        "Tutorial",
+        "Domine as queries SQL dentro do Automation Studio para segmentação, transformações e criação de audiências altamente qualificadas no SFMC.",
+        `<h4>Fundamentos</h4>
+        <p>No Marketing Cloud, SQL é essencial para segmentar públicos, limpar dados e preparar bases para jornadas e disparos.</p>
+        <h4>Tópicos importantes</h4>
+        <p>• SELECT, JOIN e WHERE</p>
+        <p>• Funções de data</p>
+        <p>• Deduplicação</p>
+        <p>• Otimização de performance</p>
+        <h4>Boas práticas</h4>
+        <p>Prefira queries objetivas, valide índices lógicos e evite trazer colunas desnecessárias.</p>`
+      )'>
       <div class="post-bar" style="background:linear-gradient(90deg,#fb923c,#22d3ee)"></div>
       <div class="post-body">
         <div class="post-cat">Técnico · SQL</div>
@@ -186,40 +289,9 @@ footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);colo
       </div>
     </div>
 
-    <div class="post-card" data-cat="IA & Marketing" onclick="openModal('Einstein AI no Marketing Cloud: O que muda?','IA & Marketing Cloud','Dez 2023','Artigo','Como a IA generativa está transformando o Marketing Cloud: Engagement Scoring, Send Time Optimization e o futuro da personalização com Data Cloud + Einstein. Uma análise das principais funcionalidades e como aplicá-las estrategicamente.')">
-      <div class="post-bar" style="background:linear-gradient(90deg,#a78bfa,#22d3ee)"></div>
-      <div class="post-body">
-        <div class="post-cat">IA & Marketing Cloud</div>
-        <div class="post-title">Einstein AI no Marketing Cloud: O que muda?</div>
-        <div class="post-desc">Como IA generativa transforma personalização, Send Time Optimization e segmentação preditiva.</div>
-        <div class="post-foot"><span class="post-date">Dez 2023</span><span class="post-type">Artigo</span></div>
-      </div>
-    </div>
-
-    <div class="post-card" data-cat="Tutorial" onclick="openModal('Automation Studio: Guia Completo','Tutorial · Automation','Nov 2023','PDF','Tudo sobre o Automation Studio: File Transfers, SQL Activities, agendamentos, boas práticas de organização de automações e estratégias para disparos transacionais e batch.')">
-      <div class="post-bar" style="background:linear-gradient(90deg,#22d3ee,#22c55e)"></div>
-      <div class="post-body">
-        <div class="post-cat">Tutorial · Automation</div>
-        <div class="post-title">Automation Studio: Guia Completo</div>
-        <div class="post-desc">File transfers, SQL activities, agendamentos e boas práticas de organização de automações.</div>
-        <div class="post-foot"><span class="post-date">Nov 2023</span><span class="post-type">PDF</span></div>
-      </div>
-    </div>
-
-    <div class="post-card" data-cat="Técnico" onclick="openModal('SFMC REST API: Integrações na Prática','Técnico · API','Out 2023','Tutorial','Como usar a API REST do Salesforce Marketing Cloud para trigging de envios, gestão de contatos em Data Extensions e operações transacionais. Exemplos com Postman e cURL.')">
-      <div class="post-bar" style="background:linear-gradient(90deg,#fb923c,#a78bfa)"></div>
-      <div class="post-body">
-        <div class="post-cat">Técnico · API</div>
-        <div class="post-title">SFMC REST API: Integrações na Prática</div>
-        <div class="post-desc">Como integrar sistemas externos ao SFMC via API REST com exemplos práticos em Postman.</div>
-        <div class="post-foot"><span class="post-date">Out 2023</span><span class="post-type">Tutorial</span></div>
-      </div>
-    </div>
-
   </div>
 </div>
 
-<!-- MODAL -->
 <div class="overlay" id="modal">
   <div class="modal">
     <button class="modal-x" onclick="closeModal()">×</button>
@@ -227,7 +299,11 @@ footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);colo
     <h3 id="m-title"></h3>
     <div class="modal-meta" id="m-meta"></div>
     <p class="modal-desc" id="m-desc"></p>
-    <button class="modal-dl">⬇️ Baixar Arquivo</button>
+    <div class="modal-content" id="m-content"></div>
+
+    <div class="modal-actions">
+      <a href="#" class="modal-dl" id="m-download" style="display:none;">⬇️ Baixar Arquivo</a>
+    </div>
   </div>
 </div>
 
@@ -243,20 +319,38 @@ const obs = new IntersectionObserver(es => es.forEach(e => {
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
 // Modal
-function openModal(t,c,d,tp,desc){
+function openModal(t,c,d,tp,desc,content,downloadUrl=''){
   document.getElementById('m-title').textContent = t;
   document.getElementById('m-cat').textContent = c;
   document.getElementById('m-meta').textContent = d + ' · ' + tp;
   document.getElementById('m-desc').textContent = desc;
+  document.getElementById('m-content').innerHTML = content || '<p>Conteúdo em breve.</p>';
+
+  const downloadBtn = document.getElementById('m-download');
+  if(downloadUrl){
+    downloadBtn.href = downloadUrl;
+    downloadBtn.style.display = 'inline-flex';
+  } else {
+    downloadBtn.style.display = 'none';
+    downloadBtn.removeAttribute('href');
+  }
+
   document.getElementById('modal').classList.add('open');
 }
-function closeModal(){ document.getElementById('modal').classList.remove('open'); }
-document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+}
+
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
 
 // Filtro
 function filterPosts(cat, btn){
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+
   document.querySelectorAll('.post-card[data-cat]').forEach(card => {
     if(cat === 'all' || card.dataset.cat === cat){
       card.style.display = '';
@@ -279,7 +373,11 @@ const grad = [
 
 dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
 dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
-dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); handleFiles(e.dataTransfer.files); });
+dz.addEventListener('drop', e => {
+  e.preventDefault();
+  dz.classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+});
 fi.addEventListener('change', () => handleFiles(fi.files));
 
 function handleFiles(files){
@@ -287,6 +385,8 @@ function handleFiles(files){
     const ext = f.name.split('.').pop().toUpperCase();
     const d = new Date().toLocaleDateString('pt-BR', {month:'short', year:'numeric'});
     const name = f.name.replace(/\.[^/.]+$/, '');
+    const fileUrl = URL.createObjectURL(f);
+
     const card = document.createElement('div');
     card.className = 'post-card';
     card.dataset.cat = 'Upload';
@@ -299,7 +399,49 @@ function handleFiles(files){
         <div class="post-desc">Arquivo ${ext} enviado em ${d}.</div>
         <div class="post-foot"><span class="post-date">${d}</span><span class="post-type">${ext}</span></div>
       </div>`;
-    card.onclick = () => openModal(name, 'Conteúdo Enviado', d, ext, `Arquivo ${ext} enviado por você em ${d}.`);
+
+    if (f.type.startsWith('text/') || ext === 'MD' || ext === 'TXT') {
+      const reader = new FileReader();
+      reader.onload = function(e){
+        const textContent = String(e.target.result)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/\n/g, '<br>');
+
+        card.onclick = () => openModal(
+          name,
+          'Conteúdo Enviado',
+          d,
+          ext,
+          `Arquivo ${ext} enviado por você em ${d}.`,
+          `<p>${textContent}</p>`,
+          fileUrl
+        );
+      };
+      reader.readAsText(f);
+    } else if (ext === 'PDF') {
+      card.onclick = () => openModal(
+        name,
+        'Conteúdo Enviado',
+        d,
+        ext,
+        `Arquivo ${ext} enviado por você em ${d}.`,
+        `<iframe src="${fileUrl}" width="100%" height="500" style="border:none;border-radius:10px;"></iframe>`,
+        fileUrl
+      );
+    } else {
+      card.onclick = () => openModal(
+        name,
+        'Conteúdo Enviado',
+        d,
+        ext,
+        `Arquivo ${ext} enviado por você em ${d}.`,
+        `<p>Este tipo de arquivo não possui visualização inline nativa no navegador, mas o download continua disponível.</p>`,
+        fileUrl
+      );
+    }
+
     pg.prepend(card);
   });
 }
