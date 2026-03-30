@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artigo | Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06060f;
+      --surface: #0e0e1a;
+      --surface2: #161624;
+      --accent: #22d3ee;
+      --accent2: #a78bfa;
+      --text: #e8ecff;
+      --text-strong: #f8fbff;
+      --text-soft: #cdd6f4;
+      --muted: #8b90b5;
+      --border: rgba(255,255,255,0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(6,6,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .glow1 {
+      position: fixed;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(34,211,238,0.05) 0%, transparent 65%);
+      top: -200px;
+      right: -150px;
+      pointer-events: none;
+      animation: breathe 8s ease-in-out infinite;
+    }
+
+    .glow2 {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 65%);
+      bottom: 0;
+      left: 5%;
+      pointer-events: none;
+      animation: breathe 11s ease-in-out infinite reverse;
+    }
+
+    @keyframes breathe {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+
+    .article-wrap {
+      padding: 140px 5% 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .article-container {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: rgba(255,255,255,0.12); }
+    .breadcrumb .current { color: var(--accent); }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .article-cat {
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .article-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 4.2vw, 4rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--text-strong);
+      margin-bottom: 0.8rem;
+    }
+
+    .article-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-desc {
+      color: var(--text-soft);
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 2rem;
+      max-width: 760px;
+    }
+
+    .article-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2rem;
+      color: var(--text-soft);
+      font-size: 1rem;
+      line-height: 1.95;
+    }
+
+    .article-content h2,
+    .article-content h3,
+    .article-content h4 {
+      font-family: 'Syne', sans-serif;
+      color: var(--text-strong);
+      margin: 1.8rem 0 0.8rem;
+      line-height: 1.25;
+    }
+
+    .article-content h2:first-child,
+    .article-content h3:first-child,
+    .article-content h4:first-child {
+      margin-top: 0;
+    }
+
+    .article-content p {
+      margin-bottom: 1rem;
+    }
+
+    .article-content ul,
+    .article-content ol {
+      margin: 0 0 1rem 1.4rem;
+    }
+
+    .article-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .article-content code {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+
+    .article-content pre {
+      background: #0b0b14;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0 1.4rem;
+    }
+
+    .article-content pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    .not-found {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2rem;
+      color: var(--text-soft);
+    }
+
+    footer {
+      padding: 2rem 5%;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media(max-width:700px){
+      .nav-links { display: none; }
+      .article-content { padding: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow1"></div>
+  <div class="glow2"></div>
+
+  <nav>
+    <a href="index.html" class="nav-logo">MC · DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="exp.html">Experiência</a></li>
+      <li><a href="certs.html">Certificações</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="article-wrap">
+    <div class="article-container">
+      <div class="breadcrumb">
+        <a href="index.html">Início</a>
+        <span>/</span>
+        <a href="blog.html">Blog</a>
+        <span>/</span>
+        <span class="current" id="breadcrumb-title">Artigo</span>
+      </div>
+
+      <a href="blog.html" class="back-link">← Voltar para o blog</a>
+
+      <div id="article-area">
+        <div class="article-cat" id="article-cat"></div>
+        <h1 class="article-title" id="article-title"></h1>
+        <div class="article-meta" id="article-meta"></div>
+        <div class="article-desc" id="article-desc"></div>
+        <div class="article-content" id="article-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 · Senior Marketing Cloud Developer · Recife, PE · 🇧🇷🇪🇸 ·
+    <a href="mailto:marcosqueirozpereira@gmail.com" style="color:var(--accent);text-decoration:none;">marcosqueirozpereira@gmail.com</a>
+  </footer>
+
+  <script src="artigos.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const articleId = params.get("id");
+    const article = getArticleById(articleId);
+
+    const breadcrumbTitle = document.getElementById("breadcrumb-title");
+    const articleArea = document.getElementById("article-area");
+
+    if (article) {
+      document.getElementById("article-cat").textContent = article.categoryLabel;
+      document.getElementById("article-title").textContent = article.title;
+      document.getElementById("article-meta").textContent = `${article.date} · ${article.type}`;
+      document.getElementById("article-desc").textContent = article.description;
+      document.getElementById("article-content").innerHTML = article.content;
+      breadcrumbTitle.textContent = article.title;
+      document.title = `${article.title} | Blog`;
+    } else {
+      breadcrumbTitle.textContent = "Artigo não encontrado";
+      document.title = "Artigo não encontrado | Blog";
+      articleArea.innerHTML = `
+        <div class="not-found">
+          <h1 style="font-family:'Syne',sans-serif;color:var(--text-strong);margin-bottom:1rem;">Artigo não encontrado</h1>
+          <p>O conteúdo que você tentou acessar não existe ou ainda não foi cadastrado.</p>
+          <p style="margin-top:1rem;"><a href="blog.html" style="color:var(--accent);text-decoration:none;">Voltar para o blog</a></p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
