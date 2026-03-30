@@ -117,6 +117,7 @@
       font-size: 0.76rem;
       color: var(--muted);
       margin-bottom: 2rem;
+      flex-wrap: wrap;
     }
 
     .breadcrumb a {
@@ -373,7 +374,6 @@
   </div>
 
   <div class="content">
-
     <div class="filter-bar reveal">
       <button class="filter-btn active" onclick="filterPosts('all', this)">Todos</button>
       <button class="filter-btn" onclick="filterPosts('Tutorial', this)">Tutoriais</button>
@@ -397,40 +397,8 @@
     <a href="mailto:marcosqueirozpereira@gmail.com" style="color:var(--accent);text-decoration:none;">marcosqueirozpereira@gmail.com</a>
   </footer>
 
+  <script src="artigos.js"></script>
   <script>
-    const articles = [
-      {
-        id: "ampscript-personalizacao",
-        title: "AMPscript: Personalização Dinâmica no SFMC",
-        category: "Tutorial",
-        categoryLabel: "Tutorial · SFMC",
-        date: "Mar 2024",
-        type: "PDF",
-        description: "Guia completo sobre variáveis, condicionais e loops para e-mails inteligentes e altamente personalizados.",
-        color: "linear-gradient(90deg,#22d3ee,#a78bfa)"
-      },
-      {
-        id: "journey-builder-praticas",
-        title: "Journey Builder: 10 Práticas Essenciais",
-        category: "Boas Práticas",
-        categoryLabel: "Boas Práticas · Journey Builder",
-        date: "Fev 2024",
-        type: "Artigo",
-        description: "Como estruturar jornadas robustas, escaláveis e fáceis de manter no longo prazo.",
-        color: "linear-gradient(90deg,#a78bfa,#fb923c)"
-      },
-      {
-        id: "sql-data-extensions",
-        title: "SQL em Data Extensions: Do Básico ao Avançado",
-        category: "Técnico",
-        categoryLabel: "Técnico · SQL",
-        date: "Jan 2024",
-        type: "Tutorial",
-        description: "Queries SQL no SFMC para segmentação e transformação de dados com alta performance.",
-        color: "linear-gradient(90deg,#fb923c,#22d3ee)"
-      }
-    ];
-
     const uploadGradients = [
       "linear-gradient(90deg,#22d3ee,#a78bfa)",
       "linear-gradient(90deg,#a78bfa,#fb923c)",
@@ -519,15 +487,15 @@
       button.classList.add("active");
 
       if (category === "all") {
-        renderPosts(articles);
+        renderPosts(ARTICLES);
         return;
       }
 
-      const filtered = articles.filter(article => article.category === category);
+      const filtered = ARTICLES.filter(article => article.category === category);
       renderPosts(filtered);
     }
 
-    renderPosts(articles);
+    renderPosts(ARTICLES);
 
     const dropzone = document.getElementById("dropzone");
     const fileinput = document.getElementById("fileinput");
