@@ -286,7 +286,7 @@ Olá, %%=v(@nome)=%%</code></pre>
 },
   {
   id: "sql-data-extensions",
-  title: "SQL em Data Extensions: Do Básico ao Avançado",
+  title: "SQL em Data Extensions: Noções Básicas",
   category: "Técnico",
   categoryLabel: "Técnico · SQL",
   date: "Mar 2026",
@@ -432,6 +432,1143 @@ Olá, %%=v(@nome)=%%</code></pre>
     <p>Dominar esse processo significa ganhar mais controle sobre a operação, mais previsibilidade nos resultados e mais capacidade de escalar campanhas com segurança.</p>
   `
 }
+ {
+  <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL no Marketing Cloud | MC · DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --bg2: #111827;
+      --bg3: #1a2235;
+      --accent: #00d4ff;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --text: #e2e8f0;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --border: rgba(0,212,255,0.15);
+      --code-bg: #0d1117;
+      --tag-bg: rgba(0,212,255,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .breadcrumb {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb span { margin: 0 0.4rem; }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      max-width: 680px;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* LAYOUT */
+    .page-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: sticky;
+      top: 80px;
+    }
+    .sidebar-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+    .sidebar-nav {
+      list-style: none;
+      border-left: 1px solid var(--border);
+    }
+    .sidebar-nav li a {
+      display: block;
+      padding: 0.4rem 0 0.4rem 1rem;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      margin-left: -1px;
+      transition: all 0.2s;
+      line-height: 1.4;
+    }
+    .sidebar-nav li a:hover {
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+    .sidebar-nav .sub a {
+      padding-left: 1.8rem;
+      font-size: 0.77rem;
+      color: var(--text-muted);
+    }
+    .sidebar-nav .sub a:hover { color: var(--accent); }
+
+    /* CONTENT */
+    .content { min-width: 0; }
+
+    /* SECTION TITLES */
+    .content h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+    }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 2rem 0 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .content p {
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+    .content strong { color: var(--text); font-weight: 600; }
+
+    /* DIVIDER */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* CALLOUT BOX */
+    .callout {
+      background: var(--bg3);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .callout.warning { border-left-color: #f59e0b; }
+    .callout.tip { border-left-color: var(--accent3); }
+    .callout-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .callout.warning .callout-title { color: #f59e0b; }
+    .callout.tip .callout-title { color: var(--accent3); }
+    .callout p { margin-bottom: 0; }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+    }
+    .code-lang {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .copy-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.2rem 0.6rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .copy-btn.copied { color: var(--accent3); border-color: var(--accent3); }
+    pre {
+      padding: 1.2rem 1.4rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+    .kw { color: #c792ea; } /* keywords */
+    .fn { color: #82aaff; } /* functions */
+    .str { color: #c3e88d; } /* strings */
+    .cm { color: #546e7a; font-style: italic; } /* comments */
+    .num { color: #f78c6c; } /* numbers */
+    .col { color: #ffcb6b; } /* columns */
+    .tbl { color: #89ddff; } /* tables */
+    .op { color: #89ddff; } /* operators */
+
+    /* LEVEL CARD */
+    .level-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.8rem;
+      margin: 1.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .level-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .level-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 3px;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8rem;
+    }
+    .level-card h3 {
+      color: var(--text);
+      font-size: 1.1rem;
+      margin: 0 0 0.8rem;
+      font-family: 'Sora', sans-serif;
+    }
+    .level-card p { margin-bottom: 0; }
+
+    /* INLINE CODE */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.15);
+      color: var(--accent);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+
+    /* TABLE */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.87rem;
+    }
+    .data-table th {
+      background: var(--bg3);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.8rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text-dim);
+      vertical-align: top;
+    }
+    .data-table td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: 0.82rem;
+    }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* REFS */
+    .refs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .ref-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: block;
+    }
+    .ref-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .ref-source {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .ref-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .ref-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .page-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="index.html">MC · DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="exp.html">Experiência</a></li>
+      <li><a href="certs.html">Certificações</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="breadcrumb">
+      <a href="index.html">Início</a>
+      <span>/</span>
+      <a href="blog.html">Blog</a>
+      <span>/</span>
+      SQL no Marketing Cloud
+    </div>
+    <div class="hero-tag">Técnico · SQL · Tutorial</div>
+    <h1>SQL no <em>Marketing Cloud</em></h1>
+    <p class="hero-desc">
+      Aprenda a usar SQL no Salesforce Marketing Cloud para ir além dos filtros de arrastar e soltar — e ter controle total sobre segmentação, transformação e qualidade de dados.
+    </p>
+    <div class="hero-meta">
+      <span>📅 Mai 2025</span>
+      <span>⏱ ~15 min de leitura</span>
+      <span>🎯 Iniciante → Avançado</span>
+      <span>✍ Marcos Queiroz</span>
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="page-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <p class="sidebar-title">Neste artigo</p>
+      <ul class="sidebar-nav">
+        <li><a href="#o-que-e-sql">O que é SQL no SFMC?</a></li>
+        <li><a href="#onde-usar">Onde usar SQL</a></li>
+        <li><a href="#limitacoes">Limitações importantes</a></li>
+        <li><a href="#anatomia">Anatomia de uma query</a></li>
+        <li class="sub"><a href="#select">SELECT</a></li>
+        <li class="sub"><a href="#from">FROM</a></li>
+        <li class="sub"><a href="#where">WHERE</a></li>
+        <li class="sub"><a href="#join">JOIN</a></li>
+        <li class="sub"><a href="#case">CASE</a></li>
+        <li class="sub"><a href="#funcoes-data">Funções de data</a></li>
+        <li class="sub"><a href="#funcoes-texto">Funções de texto</a></li>
+        <li class="sub"><a href="#agregacao">Agregação</a></li>
+        <li><a href="#data-views">System Data Views</a></li>
+        <li><a href="#exemplos-praticos">Exemplos práticos</a></li>
+        <li><a href="#boas-praticas">Boas práticas</a></li>
+        <li><a href="#referencias">Referências</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- INTRO -->
+      <section id="o-que-e-sql">
+        <h2>O que é SQL no Salesforce Marketing Cloud?</h2>
+        <p>
+          O <strong>SQL (Structured Query Language)</strong> é uma das formas mais poderosas de trabalhar com dados relacionais — e o Marketing Cloud, com suas Data Extensions e System Data Views, é essencialmente um banco de dados relacional. Por isso, o SQL é a ferramenta ideal para segmentação avançada, transformação de dados e automação de processos de marketing.
+        </p>
+        <p>
+          No SFMC, o SQL é utilizado principalmente dentro do <strong>Automation Studio</strong> via <em>Query Activity</em>. O resultado de uma query sempre precisa ser salvo em uma Data Extension de destino, que pode ser criada previamente ou gerada automaticamente.
+        </p>
+        <div class="callout tip">
+          <div class="callout-title">💡 Dica</div>
+          <p>O SFMC utiliza uma versão próxima do <strong>SQL Server (T-SQL)</strong>, com algumas limitações específicas da plataforma. Se você já conhece SQL padrão, a curva de aprendizado é pequena.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- ONDE USAR -->
+      <section id="onde-usar">
+        <h2>Onde usar SQL no SFMC</h2>
+        <p>O SQL pode ser utilizado em dois contextos principais:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Local</th>
+              <th>Uso</th>
+              <th>Quando usar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Automation Studio → Query Activity</td>
+              <td>Segmentação agendada, transformação de dados, ETL</td>
+              <td>Produção e automações recorrentes</td>
+            </tr>
+            <tr>
+              <td>Query Studio (AppExchange)</td>
+              <td>Exploração e validação de dados ad-hoc</td>
+              <td>Desenvolvimento e debugging</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          O <strong>Query Studio</strong> é uma extensão gratuita disponível no AppExchange, desenvolvida pela Salesforce. É altamente recomendada para quem está aprendendo SQL no SFMC, pois permite ver os resultados em tempo real sem precisar criar Data Extensions manualmente para cada teste.
+        </p>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- LIMITAÇÕES -->
+      <section id="limitacoes">
+        <h2>Limitações importantes</h2>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Atenção — AutoKill</div>
+          <p>O SFMC encerra automaticamente qualquer query que exceda <strong>30 minutos de execução</strong>. Pense sempre em performance e em como a query se comportará conforme o volume de dados crescer.</p>
+        </div>
+
+        <p>Outras limitações que você precisa conhecer:</p>
+        <ul style="color: var(--text-dim); font-size:0.95rem; font-weight:300; padding-left:1.5rem; margin-bottom:1rem;">
+          <li style="margin-bottom:0.5rem">Apenas o comando <code>SELECT</code> é suportado — sem <code>INSERT</code>, <code>UPDATE</code> ou <code>DELETE</code> direto</li>
+          <li style="margin-bottom:0.5rem">Apenas dados de <strong>Data Extensions</strong> e <strong>System Data Views</strong> são acessíveis</li>
+          <li style="margin-bottom:0.5rem">O resultado deve sempre ser salvo em uma Data Extension</li>
+          <li style="margin-bottom:0.5rem">Sem suporte a stored procedures ou triggers</li>
+        </ul>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- ANATOMIA -->
+      <section id="anatomia">
+        <h2>Anatomia de uma query</h2>
+        <p>Toda query SQL no SFMC segue esta estrutura base:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="kw">SELECT</span>   <span class="cm">-- quais colunas você quer no resultado</span>
+    <span class="col">Coluna1</span>,
+    <span class="col">Coluna2</span>
+<span class="kw">FROM</span>     <span class="cm">-- de qual tabela/data extension</span>
+    <span class="tbl">NomeDaDataExtension</span>
+<span class="kw">WHERE</span>    <span class="cm">-- filtros opcionais</span>
+    <span class="col">Status</span> <span class="op">=</span> <span class="str">'active'</span></pre>
+        </div>
+      </section>
+
+      <!-- SELECT -->
+      <section id="select">
+        <h3>SELECT — O que trazer</h3>
+        <p>O <code>SELECT</code> define quais colunas aparecerão no resultado. Você pode selecionar colunas específicas, renomeá-las com <code>AS</code> ou criar valores calculados.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="cm">-- Selecionar colunas específicas com alias</span>
+<span class="kw">SELECT</span>
+    <span class="col">SubscriberKey</span>,
+    <span class="col">EmailAddress</span>                   <span class="kw">AS</span> <span class="col">Email</span>,
+    <span class="col">FirstName</span> <span class="op">+</span> <span class="str">' '</span> <span class="op">+</span> <span class="col">LastName</span>     <span class="kw">AS</span> <span class="col">NomeCompleto</span>,
+    <span class="str">'ativo'</span>                        <span class="kw">AS</span> <span class="col">StatusFixo</span>
+<span class="kw">FROM</span>
+    <span class="tbl">DE_Clientes</span></pre>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">💡 Boas práticas de SELECT</div>
+          <p>Evite usar <code>SELECT *</code> em produção. Selecione apenas as colunas que você realmente precisa — isso melhora a performance e evita trazer dados desnecessários para a DE destino.</p>
+        </div>
+      </section>
+
+      <!-- FROM -->
+      <section id="from">
+        <h3>FROM — De onde vem</h3>
+        <p>O <code>FROM</code> aponta para a Data Extension de origem. Você pode usar o nome da DE ou seu External Key.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="cm">-- Por nome da Data Extension</span>
+<span class="kw">FROM</span> <span class="tbl">MinhaDe</span>
+
+<span class="cm">-- Por External Key (necessário quando o nome tem espaços ou caracteres especiais)</span>
+<span class="kw">FROM</span> <span class="tbl">[Minha DE com Espaços]</span>
+
+<span class="cm">-- Com alias para usar em JOINs</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span> <span class="kw">AS</span> <span class="tbl">cli</span></pre>
+        </div>
+      </section>
+
+      <!-- WHERE -->
+      <section id="where">
+        <h3>WHERE — Filtros</h3>
+        <p>O <code>WHERE</code> filtra os registros. Você pode combinar condições com <code>AND</code>, <code>OR</code> e <code>NOT</code>.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="cm">-- Operadores de comparação</span>
+<span class="kw">WHERE</span> <span class="col">Status</span> <span class="op">=</span> <span class="str">'active'</span>
+  <span class="kw">AND</span> <span class="col">Idade</span> <span class="op">&gt;=</span> <span class="num">18</span>
+  <span class="kw">AND</span> <span class="col">Estado</span> <span class="op">IN</span> (<span class="str">'SP'</span>, <span class="str">'RJ'</span>, <span class="str">'MG'</span>)
+
+<span class="cm">-- BETWEEN para intervalos</span>
+<span class="kw">WHERE</span> <span class="col">DataCadastro</span> <span class="kw">BETWEEN</span> <span class="str">'2024-01-01'</span> <span class="kw">AND</span> <span class="str">'2024-12-31'</span>
+
+<span class="cm">-- LIKE para padrões de texto</span>
+<span class="kw">WHERE</span> <span class="col">EmailAddress</span> <span class="kw">LIKE</span> <span class="str">'%@gmail.com'</span>
+
+<span class="cm">-- IS NULL / IS NOT NULL</span>
+<span class="kw">WHERE</span> <span class="col">Telefone</span> <span class="kw">IS NOT NULL</span></pre>
+        </div>
+      </section>
+
+      <!-- JOIN -->
+      <section id="join">
+        <h3>JOIN — Cruzando dados</h3>
+        <p>O <code>JOIN</code> permite combinar dados de duas ou mais Data Extensions. É um dos recursos mais poderosos do SQL no SFMC.</p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Retorna</th>
+              <th>Uso típico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>INNER JOIN</td>
+              <td>Apenas registros com correspondência nas duas tabelas</td>
+              <td>Quem comprou E está ativo</td>
+            </tr>
+            <tr>
+              <td>LEFT JOIN</td>
+              <td>Todos da tabela esquerda + correspondência da direita (NULL se não existir)</td>
+              <td>Todos os clientes, com dados de compra se existirem</td>
+            </tr>
+            <tr>
+              <td>RIGHT JOIN</td>
+              <td>Todos da tabela direita + correspondência da esquerda</td>
+              <td>Menos comum no SFMC</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="cm">-- INNER JOIN: clientes que abriram algum e-mail</span>
+<span class="kw">SELECT</span>
+    <span class="tbl">cli</span>.<span class="col">SubscriberKey</span>,
+    <span class="tbl">cli</span>.<span class="col">EmailAddress</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span>       <span class="kw">AS</span> <span class="tbl">cli</span>
+    <span class="kw">INNER JOIN</span> <span class="tbl">_Open</span>    <span class="kw">AS</span> <span class="tbl">op</span>
+        <span class="kw">ON</span> <span class="tbl">op</span>.<span class="col">SubscriberKey</span> <span class="op">=</span> <span class="tbl">cli</span>.<span class="col">SubscriberKey</span>
+<span class="kw">WHERE</span> <span class="tbl">cli</span>.<span class="col">Status</span> <span class="op">=</span> <span class="str">'active'</span>
+
+<span class="cm">-- LEFT JOIN: todos os clientes, identificando quem nunca recebeu e-mail</span>
+<span class="kw">SELECT</span>
+    <span class="tbl">cli</span>.<span class="col">SubscriberKey</span>,
+    <span class="tbl">cli</span>.<span class="col">EmailAddress</span>,
+    <span class="kw">CASE</span>
+        <span class="kw">WHEN</span> <span class="tbl">env</span>.<span class="col">SubscriberKey</span> <span class="kw">IS NULL</span> <span class="kw">THEN</span> <span class="str">'Nunca enviado'</span>
+        <span class="kw">ELSE</span> <span class="str">'Já recebeu'</span>
+    <span class="kw">END</span> <span class="kw">AS</span> <span class="col">StatusEnvio</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span>       <span class="kw">AS</span> <span class="tbl">cli</span>
+    <span class="kw">LEFT JOIN</span> <span class="tbl">_Sent</span>     <span class="kw">AS</span> <span class="tbl">env</span>
+        <span class="kw">ON</span> <span class="tbl">env</span>.<span class="col">SubscriberKey</span> <span class="op">=</span> <span class="tbl">cli</span>.<span class="col">SubscriberKey</span></pre>
+        </div>
+      </section>
+
+      <!-- CASE -->
+      <section id="case">
+        <h3>CASE — Lógica condicional</h3>
+        <p>O <code>CASE</code> funciona como um <em>if/else</em> dentro do SQL. Permite criar colunas calculadas com base em condições.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="kw">SELECT</span>
+    <span class="col">SubscriberKey</span>,
+    <span class="col">TotalCompras</span>,
+    <span class="kw">CASE</span>
+        <span class="kw">WHEN</span> <span class="col">TotalCompras</span> <span class="op">&gt;=</span> <span class="num">10</span>   <span class="kw">THEN</span> <span class="str">'VIP'</span>
+        <span class="kw">WHEN</span> <span class="col">TotalCompras</span> <span class="op">&gt;=</span> <span class="num">3</span>    <span class="kw">THEN</span> <span class="str">'Recorrente'</span>
+        <span class="kw">WHEN</span> <span class="col">TotalCompras</span> <span class="op">=</span>  <span class="num">1</span>    <span class="kw">THEN</span> <span class="str">'Primeira compra'</span>
+        <span class="kw">ELSE</span>                          <span class="str">'Sem compras'</span>
+    <span class="kw">END</span> <span class="kw">AS</span> <span class="col">Segmento</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span></pre>
+        </div>
+      </section>
+
+      <!-- FUNÇÕES DE DATA -->
+      <section id="funcoes-data">
+        <h3>Funções de data</h3>
+        <p>Filtros por data são essenciais em campanhas de marketing. O SFMC trabalha com <code>GETDATE()</code> para data/hora atual e <code>DATEADD()</code> para cálculos relativos.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="cm">-- Clientes cadastrados nos últimos 30 dias</span>
+<span class="kw">WHERE</span> <span class="col">DataCadastro</span> <span class="op">&gt;=</span> <span class="fn">DATEADD</span>(<span class="str">DAY</span>, <span class="op">-</span><span class="num">30</span>, <span class="fn">GETDATE</span>())
+
+<span class="cm">-- Clientes com aniversário este mês</span>
+<span class="kw">WHERE</span> <span class="fn">MONTH</span>(<span class="col">DataNascimento</span>) <span class="op">=</span> <span class="fn">MONTH</span>(<span class="fn">GETDATE</span>())
+
+<span class="cm">-- Conversão de texto para data</span>
+<span class="kw">WHERE</span> <span class="col">DataEvento</span> <span class="op">&gt;=</span> <span class="fn">CONVERT</span>(<span class="kw">DATE</span>, <span class="str">'2024-01-01'</span>)
+
+<span class="cm">-- Formato de data no SELECT</span>
+<span class="kw">SELECT</span>
+    <span class="fn">FORMAT</span>(<span class="col">DataCadastro</span>, <span class="str">'dd/MM/yyyy'</span>) <span class="kw">AS</span> <span class="col">DataFormatada</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span></pre>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Função</th><th>Descrição</th><th>Exemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>GETDATE()</td><td>Data e hora atual</td><td><code>GETDATE()</code></td></tr>
+            <tr><td>GETUTCDATE()</td><td>Data/hora em UTC</td><td><code>GETUTCDATE()</code></td></tr>
+            <tr><td>DATEADD()</td><td>Adiciona intervalo a uma data</td><td><code>DATEADD(DAY, -7, GETDATE())</code></td></tr>
+            <tr><td>DATEDIFF()</td><td>Diferença entre duas datas</td><td><code>DATEDIFF(DAY, DataCadastro, GETDATE())</code></td></tr>
+            <tr><td>DAY / MONTH / YEAR</td><td>Extrai parte da data</td><td><code>MONTH(DataNascimento)</code></td></tr>
+            <tr><td>CONVERT()</td><td>Converte tipos de dados</td><td><code>CONVERT(DATE, '2024-01-01')</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- FUNÇÕES DE TEXTO -->
+      <section id="funcoes-texto">
+        <h3>Funções de texto</h3>
+        <p>Manipulação de strings é frequente no dia a dia: padronizar dados, extrair domínios de e-mail, formatar campos e muito mais.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="cm">-- Extrair domínio do e-mail</span>
+<span class="kw">SELECT</span>
+    <span class="col">EmailAddress</span>,
+    <span class="fn">SUBSTRING</span>(
+        <span class="col">EmailAddress</span>,
+        <span class="fn">CHARINDEX</span>(<span class="str">'@'</span>, <span class="col">EmailAddress</span>) <span class="op">+</span> <span class="num">1</span>,
+        <span class="fn">LEN</span>(<span class="col">EmailAddress</span>)
+    ) <span class="kw">AS</span> <span class="col">Dominio</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span>
+
+<span class="cm">-- Padronizar: primeira letra maiúscula (simulado)</span>
+<span class="kw">SELECT</span>
+    <span class="fn">UPPER</span>(<span class="fn">LEFT</span>(<span class="col">FirstName</span>, <span class="num">1</span>)) <span class="op">+</span> <span class="fn">LOWER</span>(<span class="fn">SUBSTRING</span>(<span class="col">FirstName</span>, <span class="num">2</span>, <span class="fn">LEN</span>(<span class="col">FirstName</span>))) <span class="kw">AS</span> <span class="col">Nome</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span>
+
+<span class="cm">-- Limpar espaços extras</span>
+<span class="kw">SELECT</span> <span class="fn">LTRIM</span>(<span class="fn">RTRIM</span>(<span class="col">Nome</span>)) <span class="kw">AS</span> <span class="col">NomeLimpo</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span></pre>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Função</th><th>Descrição</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>LEFT(str, n)</td><td>Retorna os primeiros N caracteres</td></tr>
+            <tr><td>RIGHT(str, n)</td><td>Retorna os últimos N caracteres</td></tr>
+            <tr><td>LEN(str)</td><td>Tamanho da string</td></tr>
+            <tr><td>UPPER / LOWER</td><td>Converte para maiúsculas / minúsculas</td></tr>
+            <tr><td>LTRIM / RTRIM</td><td>Remove espaços à esquerda / direita</td></tr>
+            <tr><td>REPLACE(str, old, new)</td><td>Substitui texto</td></tr>
+            <tr><td>CHARINDEX(substr, str)</td><td>Posição de um caractere na string</td></tr>
+            <tr><td>SUBSTRING(str, start, len)</td><td>Extrai trecho da string</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- AGREGAÇÃO -->
+      <section id="agregacao">
+        <h3>Agregação — GROUP BY, COUNT, SUM</h3>
+        <p>Funções de agregação permitem sumarizar dados: contar registros, somar valores, calcular médias. Fundamentais para relatórios e análises.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="cm">-- Contagem por domínio de e-mail</span>
+<span class="kw">SELECT</span>
+    <span class="fn">SUBSTRING</span>(<span class="col">EmailAddress</span>, <span class="fn">CHARINDEX</span>(<span class="str">'@'</span>, <span class="col">EmailAddress</span>) <span class="op">+</span> <span class="num">1</span>, <span class="fn">LEN</span>(<span class="col">EmailAddress</span>)) <span class="kw">AS</span> <span class="col">Dominio</span>,
+    <span class="fn">COUNT</span>(<span class="op">*</span>)  <span class="kw">AS</span> <span class="col">TotalContatos</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span>
+<span class="kw">GROUP BY</span>
+    <span class="fn">SUBSTRING</span>(<span class="col">EmailAddress</span>, <span class="fn">CHARINDEX</span>(<span class="str">'@'</span>, <span class="col">EmailAddress</span>) <span class="op">+</span> <span class="num">1</span>, <span class="fn">LEN</span>(<span class="col">EmailAddress</span>))
+<span class="kw">HAVING</span> <span class="fn">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="num">100</span>
+<span class="kw">ORDER BY</span> <span class="col">TotalContatos</span> <span class="kw">DESC</span></pre>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">📌 Nota</div>
+          <p><code>HAVING</code> é usado para filtrar resultados <em>após</em> a agregação — ao contrário do <code>WHERE</code>, que filtra antes. Use <code>HAVING</code> quando quiser filtrar por um valor calculado (ex: <code>COUNT(*) > 100</code>).</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- SYSTEM DATA VIEWS -->
+      <section id="data-views">
+        <h2>System Data Views</h2>
+        <p>
+          O SFMC possui Data Views de sistema que armazenam dados de engajamento das suas campanhas. Elas são prefixadas com <code>_</code> (underscore) e são somente leitura — você não pode modificá-las, apenas consultá-las.
+        </p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Data View</th>
+              <th>O que contém</th>
+              <th>Chave principal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>_Subscribers</td><td>Todos os assinantes da All Subscribers List</td><td>SubscriberKey</td></tr>
+            <tr><td>_Sent</td><td>Todos os envios de e-mail</td><td>SubscriberKey, JobID</td></tr>
+            <tr><td>_Open</td><td>Aberturas de e-mail</td><td>SubscriberKey, JobID</td></tr>
+            <tr><td>_Click</td><td>Cliques em links de e-mails</td><td>SubscriberKey, JobID</td></tr>
+            <tr><td>_Bounce</td><td>Devoluções (bounces)</td><td>SubscriberKey, JobID</td></tr>
+            <tr><td>_Unsubscribe</td><td>Descadastramentos</td><td>SubscriberKey</td></tr>
+            <tr><td>_Journey</td><td>Jornadas ativas e históricas</td><td>VersionID</td></tr>
+            <tr><td>_JourneyActivity</td><td>Atividades dentro de jornadas</td><td>JourneyActivityObjectID</td></tr>
+          </tbody>
+        </table>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">SQL — Exemplo com _Subscribers</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+          </div>
+          <pre><span class="cm">-- Todos os assinantes ativos</span>
+<span class="kw">SELECT</span>
+    <span class="col">SubscriberKey</span>,
+    <span class="col">EmailAddress</span>,
+    <span class="col">Status</span>,
+    <span class="col">DateJoined</span>
+<span class="kw">FROM</span> <span class="tbl">_Subscribers</span>
+<span class="kw">WHERE</span> <span class="col">Status</span> <span class="op">=</span> <span class="str">'active'</span></pre>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- EXEMPLOS PRÁTICOS -->
+      <section id="exemplos-praticos">
+        <h2>Exemplos práticos</h2>
+
+        <div class="level-card">
+          <div class="level-badge">Exemplo 1 — Básico</div>
+          <h3>Assinantes ativos do Gmail</h3>
+          <p>Segmenta todos os assinantes ativos que usam Gmail — útil para testes de entregabilidade ou personalização por provedor.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header">
+              <span class="code-lang">SQL</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+            </div>
+            <pre><span class="kw">SELECT</span>
+    <span class="col">SubscriberKey</span>,
+    <span class="col">EmailAddress</span>
+<span class="kw">FROM</span> <span class="tbl">_Subscribers</span>
+<span class="kw">WHERE</span>
+    <span class="col">Status</span> <span class="op">=</span> <span class="str">'active'</span>
+    <span class="kw">AND</span> <span class="col">Domain</span> <span class="op">=</span> <span class="str">'gmail.com'</span></pre>
+          </div>
+        </div>
+
+        <div class="level-card">
+          <div class="level-badge">Exemplo 2 — Intermediário</div>
+          <h3>Clientes ativos que nunca abriram um e-mail (Win-back)</h3>
+          <p>Identifica assinantes ativos que nunca registraram uma abertura — segmento clássico para campanhas de reengajamento.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header">
+              <span class="code-lang">SQL</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+            </div>
+            <pre><span class="kw">SELECT</span>
+    <span class="tbl">sub</span>.<span class="col">SubscriberKey</span>,
+    <span class="tbl">sub</span>.<span class="col">EmailAddress</span>
+<span class="kw">FROM</span> <span class="tbl">_Subscribers</span>        <span class="kw">AS</span> <span class="tbl">sub</span>
+    <span class="kw">LEFT JOIN</span> <span class="tbl">_Open</span>        <span class="kw">AS</span> <span class="tbl">op</span>
+        <span class="kw">ON</span> <span class="tbl">op</span>.<span class="col">SubscriberKey</span> <span class="op">=</span> <span class="tbl">sub</span>.<span class="col">SubscriberKey</span>
+<span class="kw">WHERE</span>
+    <span class="tbl">sub</span>.<span class="col">Status</span> <span class="op">=</span> <span class="str">'active'</span>
+    <span class="kw">AND</span> <span class="tbl">op</span>.<span class="col">SubscriberKey</span> <span class="kw">IS NULL</span></pre>
+          </div>
+        </div>
+
+        <div class="level-card">
+          <div class="level-badge">Exemplo 3 — Intermediário</div>
+          <h3>Segmentação por aniversário do mês</h3>
+          <p>Busca clientes que fazem aniversário no mês atual — base para campanhas de birthday trigger.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header">
+              <span class="code-lang">SQL</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+            </div>
+            <pre><span class="kw">SELECT</span>
+    <span class="col">SubscriberKey</span>,
+    <span class="col">EmailAddress</span>,
+    <span class="col">NomeCliente</span>,
+    <span class="col">DataNascimento</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Clientes</span>
+<span class="kw">WHERE</span>
+    <span class="fn">MONTH</span>(<span class="col">DataNascimento</span>) <span class="op">=</span> <span class="fn">MONTH</span>(<span class="fn">GETDATE</span>())
+    <span class="kw">AND</span> <span class="fn">DAY</span>(<span class="col">DataNascimento</span>) <span class="op">=</span> <span class="fn">DAY</span>(<span class="fn">GETDATE</span>())</pre>
+          </div>
+        </div>
+
+        <div class="level-card">
+          <div class="level-badge">Exemplo 4 — Avançado</div>
+          <h3>Segmentação RFM — Recência, Frequência e Valor</h3>
+          <p>Classifica clientes com base em comportamento de compra para campanhas de alta precisão.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header">
+              <span class="code-lang">SQL</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+            </div>
+            <pre><span class="kw">SELECT</span>
+    <span class="col">SubscriberKey</span>,
+    <span class="col">EmailAddress</span>,
+    <span class="fn">MAX</span>(<span class="col">DataCompra</span>)         <span class="kw">AS</span> <span class="col">UltimaCompra</span>,
+    <span class="fn">COUNT</span>(<span class="col">PedidoID</span>)         <span class="kw">AS</span> <span class="col">TotalPedidos</span>,
+    <span class="fn">SUM</span>(<span class="col">ValorPedido</span>)        <span class="kw">AS</span> <span class="col">ValorTotal</span>,
+    <span class="kw">CASE</span>
+        <span class="kw">WHEN</span> <span class="fn">MAX</span>(<span class="col">DataCompra</span>) <span class="op">&gt;=</span> <span class="fn">DATEADD</span>(<span class="str">DAY</span>, <span class="op">-</span><span class="num">30</span>, <span class="fn">GETDATE</span>()) <span class="kw">THEN</span> <span class="str">'Recente'</span>
+        <span class="kw">WHEN</span> <span class="fn">MAX</span>(<span class="col">DataCompra</span>) <span class="op">&gt;=</span> <span class="fn">DATEADD</span>(<span class="str">DAY</span>, <span class="op">-</span><span class="num">90</span>, <span class="fn">GETDATE</span>()) <span class="kw">THEN</span> <span class="str">'Em risco'</span>
+        <span class="kw">ELSE</span>                                                              <span class="str">'Inativo'</span>
+    <span class="kw">END</span>                        <span class="kw">AS</span> <span class="col">SegmentoRecencia</span>
+<span class="kw">FROM</span> <span class="tbl">DE_Pedidos</span>
+<span class="kw">GROUP BY</span> <span class="col">SubscriberKey</span>, <span class="col">EmailAddress</span>
+<span class="kw">HAVING</span> <span class="fn">COUNT</span>(<span class="col">PedidoID</span>) <span class="op">&gt;=</span> <span class="num">1</span></pre>
+          </div>
+        </div>
+
+        <div class="level-card">
+          <div class="level-badge">Exemplo 5 — Avançado</div>
+          <h3>Bounces recentes por provedor</h3>
+          <p>Identifica assinantes com bounces nos últimos 7 dias segmentados por provedor de e-mail — útil para higiene de base.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header">
+              <span class="code-lang">SQL</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+            </div>
+            <pre><span class="kw">SELECT</span>
+    <span class="tbl">sub</span>.<span class="col">SubscriberKey</span>,
+    <span class="tbl">sub</span>.<span class="col">EmailAddress</span>,
+    <span class="tbl">b</span>.<span class="col">BounceCategory</span>,
+    <span class="tbl">b</span>.<span class="col">SMTPBounceReason</span>,
+    <span class="kw">CASE</span>
+        <span class="kw">WHEN</span> <span class="tbl">b</span>.<span class="col">Domain</span> <span class="kw">IN</span> (<span class="str">'gmail.com'</span>)                           <span class="kw">THEN</span> <span class="str">'Google'</span>
+        <span class="kw">WHEN</span> <span class="tbl">b</span>.<span class="col">Domain</span> <span class="kw">IN</span> (<span class="str">'outlook.com'</span>, <span class="str">'hotmail.com'</span>, <span class="str">'live.com'</span>) <span class="kw">THEN</span> <span class="str">'Microsoft'</span>
+        <span class="kw">WHEN</span> <span class="tbl">b</span>.<span class="col">Domain</span> <span class="kw">IN</span> (<span class="str">'yahoo.com'</span>, <span class="str">'yahoo.com.br'</span>)            <span class="kw">THEN</span> <span class="str">'Yahoo'</span>
+        <span class="kw">ELSE</span>                                                             <span class="str">'Outros'</span>
+    <span class="kw">END</span> <span class="kw">AS</span> <span class="col">Provedor</span>
+<span class="kw">FROM</span> <span class="tbl">_Subscribers</span>        <span class="kw">AS</span> <span class="tbl">sub</span>
+    <span class="kw">INNER JOIN</span> <span class="tbl">_Bounce</span>    <span class="kw">AS</span> <span class="tbl">b</span>
+        <span class="kw">ON</span> <span class="tbl">b</span>.<span class="col">SubscriberKey</span> <span class="op">=</span> <span class="tbl">sub</span>.<span class="col">SubscriberKey</span>
+<span class="kw">WHERE</span>
+    <span class="tbl">b</span>.<span class="col">EventDate</span> <span class="op">&gt;=</span> <span class="fn">DATEADD</span>(<span class="str">DAY</span>, <span class="op">-</span><span class="num">7</span>, <span class="fn">GETDATE</span>())
+    <span class="kw">AND</span> <span class="tbl">b</span>.<span class="col">BounceCategory</span> <span class="op">=</span> <span class="str">'HardBounce'</span></pre>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- BOAS PRÁTICAS -->
+      <section id="boas-praticas">
+        <h2>Boas práticas</h2>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Use aliases em tabelas com JOIN</div>
+          <p>Sempre use aliases (<code>AS cli</code>, <code>AS sub</code>) quando fizer JOINs. Além de deixar o código mais legível, evita ambiguidade quando duas tabelas têm colunas com o mesmo nome.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Implemente períodos de retenção</div>
+          <p>Data Extensions usadas em queries recorrentes devem ter um período de retenção definido. Isso limita o volume de dados processados e reduz o risco de AutoKill.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Teste no Query Studio antes de automatizar</div>
+          <p>Sempre valide sua query no Query Studio antes de movê-la para uma Automation. Isso economiza tempo e evita erros silenciosos em produção.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Evite SELECT * em produção</div>
+          <p>Trazer todas as colunas é ineficiente e pode trazer dados desnecessários para a DE de destino. Sempre selecione apenas o que precisa.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Cuidado com dados das System Data Views</div>
+          <p>As System Data Views como <code>_Sent</code> e <code>_Open</code> retêm dados por apenas <strong>6 meses</strong>. Para históricos mais longos, você precisa persistir os dados em suas próprias Data Extensions via automações periódicas.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- REFERÊNCIAS -->
+      <section id="referencias">
+        <h2>Referências</h2>
+        <div class="refs-grid">
+          <a class="ref-card" href="https://trailhead.salesforce.com/pt-BR/content/learn/modules/marketing-cloud-data-management/query-data-with-sql" target="_blank" rel="noopener">
+            <div class="ref-source">Salesforce Trailhead</div>
+            <div class="ref-title">Query Data with SQL</div>
+            <div class="ref-desc">Módulo oficial Trailhead em português sobre SQL no Marketing Cloud</div>
+          </a>
+          <a class="ref-card" href="https://handsonsfmc.com/2024/12/26/how-to-sql-marketing-cloud-from/" target="_blank" rel="noopener">
+            <div class="ref-source">Hands-on SFMC</div>
+            <div class="ref-title">How to SQL in Marketing Cloud</div>
+            <div class="ref-desc">Guia prático com exemplos reais de uso de SQL no SFMC</div>
+          </a>
+          <a class="ref-card" href="https://www.martechnotes.com/50-salesforce-marketing-cloud-sql-examples/" target="_blank" rel="noopener">
+            <div class="ref-source">MarTech Notes</div>
+            <div class="ref-title">50 SFMC SQL Examples</div>
+            <div class="ref-desc">Biblioteca de 50 exemplos prontos para uso no dia a dia</div>
+          </a>
+          <a class="ref-card" href="https://mateuszdabrowski.pl/docs/salesforce/marketing-cloud-engagement/sql/sql-basics/" target="_blank" rel="noopener">
+            <div class="ref-source">Mateusz Dabrowski</div>
+            <div class="ref-title">SFMC SQL Basics</div>
+            <div class="ref-desc">Referência técnica aprofundada sobre SQL no SFMC (em inglês)</div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    © 2025 · Senior Marketing Cloud Developer · Recife, PE · marcosqueirozpereira@gmail.com
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Smooth scroll for sidebar links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Highlight active sidebar item on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sidebarLinks.forEach(l => l.style.color = '');
+          const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+          if (active) {
+            active.style.color = 'var(--accent)';
+            active.style.borderLeftColor = 'var(--accent)';
+          }
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
+ }
 ];
 
 function getArticleById(id) {
