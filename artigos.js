@@ -11,6 +11,17 @@ const ARTICLES = [
     externalUrl: "ampscript-mc.html"
   },
   {
+    id: "hubspot-marketing-hub",
+    title: "HubSpot Marketing Hub: Guia Prático",
+    category: "Tutorial",
+    categoryLabel: "Tutorial · HubSpot",
+    date: "Mai 2026",
+    type: "Tutorial",
+    description: "Workflows, Listas, Personalization Tokens, Smart Content e Lead Scoring — guia completo de HubSpot Marketing Hub em português com exemplos práticos de automação.",
+    color: "linear-gradient(90deg,#ff7a59,#f5c26b)",
+    externalUrl: "hubspot-mc.html"
+  },
+  {
     id: "journey-builder-praticas",
     title: "Journey Builder: 10 Práticas Essenciais",
     category: "Boas Práticas",
