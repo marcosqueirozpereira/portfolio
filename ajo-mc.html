@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adobe Journey Optimizer (AJO) | MC · DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --bg2: #111827;
+      --bg3: #1a2235;
+      --accent: #eb1000;
+      --accent2: #fa6400;
+      --accent3: #10b981;
+      --text: #e2e8f0;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --border: rgba(235,16,0,0.18);
+      --code-bg: #0d1117;
+      --tag-bg: rgba(235,16,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-brand { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent2); text-decoration: none; font-size: 1rem; letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .hero { padding: 5rem 2rem 3rem; max-width: 900px; margin: 0 auto; }
+    .breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .breadcrumb a { color: var(--accent2); text-decoration: none; }
+    .breadcrumb span { margin: 0 0.4rem; }
+    .hero-tag { display: inline-block; background: var(--tag-bg); border: 1px solid var(--border); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; padding: 0.3rem 0.8rem; border-radius: 2px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.2rem; }
+    h1 em { font-style: normal; color: var(--accent2); }
+    .hero-desc { font-size: 1.05rem; color: var(--text-dim); max-width: 680px; margin-bottom: 2rem; font-weight: 300; }
+    .hero-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    .page-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; display: grid; grid-template-columns: 240px 1fr; gap: 3rem; align-items: start; }
+
+    .sidebar { position: sticky; top: 80px; }
+    .sidebar-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .sidebar-nav { list-style: none; border-left: 1px solid var(--border); }
+    .sidebar-nav li a { display: block; padding: 0.4rem 0 0.4rem 1rem; font-size: 0.82rem; color: var(--text-dim); text-decoration: none; border-left: 2px solid transparent; margin-left: -1px; transition: all 0.2s; line-height: 1.4; }
+    .sidebar-nav li a:hover { color: var(--accent); border-left-color: var(--accent); }
+    .sidebar-nav .sub a { padding-left: 1.8rem; font-size: 0.77rem; color: var(--text-muted); }
+
+    .content { min-width: 0; }
+    .content h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); margin: 3rem 0 1rem; padding-top: 1rem; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.1rem; font-weight: 600; color: var(--accent2); margin: 2rem 0 0.8rem; font-family: 'JetBrains Mono', monospace; }
+    .content p { color: var(--text-dim); margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content ul, .content ol { color: var(--text-dim); font-size: 0.95rem; font-weight: 300; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .content li { margin-bottom: 0.4rem; }
+
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+    .callout { background: var(--bg3); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+    .callout.warning { border-left-color: #f59e0b; }
+    .callout.tip    { border-left-color: var(--accent3); }
+    .callout.info   { border-left-color: #60a5fa; }
+    .callout-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--accent2); }
+    .callout.warning .callout-title { color: #f59e0b; }
+    .callout.tip     .callout-title { color: var(--accent3); }
+    .callout.info    .callout-title { color: #60a5fa; }
+    .callout p { margin-bottom: 0; }
+
+    code { font-family: 'JetBrains Mono', monospace; background: rgba(235,16,0,0.08); border: 1px solid rgba(235,16,0,0.18); color: var(--accent2); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.85em; }
+
+    /* ARCHITECTURE FLOW */
+    .arch { display: flex; flex-direction: column; gap: 0.5rem; margin: 1.5rem 0; }
+    .arch-row { display: flex; align-items: stretch; gap: 0.5rem; }
+    .arch-box { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1rem; font-size: 0.82rem; color: var(--text-dim); }
+    .arch-box strong { display: block; color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .arch-box.highlight { border-color: rgba(235,16,0,0.4); }
+    .arch-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1rem; padding: 0 0.3rem; }
+
+    /* CHANNEL GRID */
+    .channels { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; margin: 1.2rem 0; }
+    .channel-pill { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1rem; text-align: center; font-size: 0.82rem; color: var(--text-dim); transition: border-color 0.2s; }
+    .channel-pill:hover { border-color: var(--accent2); }
+    .channel-pill .ch-icon { font-size: 1.4rem; display: block; margin-bottom: 0.4rem; }
+    .channel-pill strong { display: block; color: var(--text); font-size: 0.8rem; }
+
+    /* JOURNEY CARD */
+    .journey-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem; margin: 1.5rem 0; position: relative; overflow: hidden; }
+    .journey-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .journey-badge { display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 3px; letter-spacing: 0.08em; margin-bottom: 0.8rem; }
+    .journey-card h3 { color: var(--text); font-size: 1.05rem; margin: 0 0 0.6rem; font-family: 'Sora', sans-serif; }
+    .journey-steps { margin-top: 1rem; }
+    .journey-step { display: flex; gap: 0.8rem; align-items: flex-start; margin-bottom: 0.6rem; }
+    .journey-step-num { background: rgba(235,16,0,0.1); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .journey-step-text { font-size: 0.88rem; color: var(--text-dim); }
+
+    /* INTEGRATION STEPS */
+    .int-steps { counter-reset: step; margin: 1.5rem 0; }
+    .int-step { display: flex; gap: 1rem; margin-bottom: 1.2rem; }
+    .int-step-num { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .int-step-content { flex: 1; }
+    .int-step-content strong { display: block; color: var(--text); margin-bottom: 0.3rem; font-size: 0.92rem; }
+    .int-step-content p { margin: 0; font-size: 0.88rem; }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.87rem; }
+    .data-table th { background: var(--bg3); color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-dim); vertical-align: top; }
+    .data-table td:first-child { font-family: 'JetBrains Mono', monospace; color: var(--accent2); font-size: 0.82rem; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .refs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .ref-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; text-decoration: none; transition: all 0.2s; display: block; }
+    .ref-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+    .ref-source { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .ref-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+    .ref-desc  { font-size: 0.8rem; color: var(--text-muted); }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .page-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .nav-links { display: none; }
+      .arch-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="index.html">MC · DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="exp.html">Experiência</a></li>
+      <li><a href="certs.html">Certificações</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="breadcrumb">
+      <a href="index.html">Início</a><span>/</span>
+      <a href="blog.html">Blog</a><span>/</span>
+      Adobe Journey Optimizer
+    </div>
+    <div class="hero-tag">Tutorial · AJO · Adobe Experience Platform</div>
+    <h1>Adobe <em>Journey Optimizer</em></h1>
+    <p class="hero-desc">
+      Guia prático de AJO em português: arquitetura sobre a AEP, Journeys, Campaigns, personalização com expressões, canais suportados, integração com Salesforce Marketing Cloud e plano de estudo para certificação.
+    </p>
+    <div class="hero-meta">
+      <span>📅 Mai 2026</span>
+      <span>⏱ ~20 min de leitura</span>
+      <span>🎯 Iniciante → Avançado</span>
+      <span>✍ Marcos Queiroz</span>
+    </div>
+  </div>
+
+  <div class="page-layout">
+
+    <aside class="sidebar">
+      <p class="sidebar-title">Neste artigo</p>
+      <ul class="sidebar-nav">
+        <li><a href="#o-que-e">O que é o AJO?</a></li>
+        <li><a href="#aep">Base: Adobe Experience Platform</a></li>
+        <li class="sub"><a href="#perfil-unificado">Real-Time Customer Profile</a></li>
+        <li class="sub"><a href="#audiences">Audiences e segmentos</a></li>
+        <li><a href="#canais">Canais suportados</a></li>
+        <li><a href="#journeys">Journeys</a></li>
+        <li class="sub"><a href="#eventos">Eventos (triggers)</a></li>
+        <li class="sub"><a href="#conditions">Condições e branches</a></li>
+        <li class="sub"><a href="#acoes">Ações e esperas</a></li>
+        <li><a href="#campaigns">Campaigns</a></li>
+        <li><a href="#personalizacao">Personalização</a></li>
+        <li class="sub"><a href="#expression-editor">Expression Editor</a></li>
+        <li class="sub"><a href="#decisioning">Offer Decisioning</a></li>
+        <li><a href="#integracao-sfmc">Integração com SFMC</a></li>
+        <li class="sub"><a href="#source-connector">Source Connector</a></li>
+        <li class="sub"><a href="#destination">Destination para SFMC</a></li>
+        <li class="sub"><a href="#estrategia">Estratégia de coexistência</a></li>
+        <li><a href="#sfmc-vs-ajo">SFMC vs AJO</a></li>
+        <li><a href="#boas-praticas">Boas práticas</a></li>
+        <li><a href="#referencias">Referências</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+
+      <!-- O QUE É -->
+      <section id="o-que-e">
+        <h2>O que é o Adobe Journey Optimizer?</h2>
+        <p>
+          O <strong>Adobe Journey Optimizer (AJO)</strong> é a plataforma de orquestração de jornadas de clientes da Adobe, construída nativamente sobre a <strong>Adobe Experience Platform (AEP)</strong>. Diferente de ferramentas de e-mail marketing tradicionais, o AJO combina comunicações em batch (campanhas agendadas) com jornadas em tempo real disparadas por eventos — tudo a partir de um único canvas.
+        </p>
+        <p>
+          Lançado em 2021 como sucessor do Adobe Campaign Standard, o AJO herdou as capacidades de orquestração e as expandiu com perfil unificado em tempo real, suporte a múltiplos canais nativos, decisioning com IA e uma arquitetura API-first baseada em AEP.
+        </p>
+
+        <div class="callout info">
+          <div class="callout-title">📌 AJO vs Adobe Campaign vs SFMC</div>
+          <p>O AJO não é simplesmente um "Adobe Campaign moderno" — é uma plataforma diferente em arquitetura. Enquanto o Campaign Classic/Standard opera sobre bancos de dados proprietários, o AJO opera sobre o <strong>Real-Time Customer Profile da AEP</strong>, o que muda fundamentalmente como os dados fluem e como a personalização acontece.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- AEP -->
+      <section id="aep">
+        <h2>Base: Adobe Experience Platform</h2>
+        <p>O AJO não é uma ferramenta isolada — é uma das quatro aplicações nativas construídas sobre a AEP, junto com Real-Time CDP, Customer Journey Analytics e Adobe Mix Modeler.</p>
+
+        <div class="arch">
+          <div class="arch-row">
+            <div class="arch-box"><strong>Fontes de dados</strong>CRM, SFMC, e-commerce, apps, eventos web, APIs</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box highlight"><strong>Adobe Experience Platform</strong>Ingestão, unificação de identidade, Real-Time Profile, governança</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box"><strong>Adobe Journey Optimizer</strong>Journeys, Campaigns, personalização, canais, relatórios</div>
+          </div>
+        </div>
+
+        <section id="perfil-unificado">
+          <h3>Real-Time Customer Profile</h3>
+          <p>O coração do AJO é o <strong>Real-Time Customer Profile</strong> da AEP. Ele agrega dados de múltiplas fontes em um único perfil unificado por contato, disponível em milissegundos para personalização e decisão em tempo real.</p>
+          <ul>
+            <li><strong>Identity Graph:</strong> une diferentes IDs do mesmo usuário (e-mail, ECID, CRM ID, ID mobile) em um único perfil</li>
+            <li><strong>XDM Schemas:</strong> esquema padronizado (Experience Data Model) que garante que dados de fontes distintas sejam interpretados de forma consistente</li>
+            <li><strong>Datasets:</strong> conjuntos de dados ingeridos na AEP — equivalente às Data Extensions do SFMC, mas com suporte nativo a streaming e batch</li>
+            <li><strong>Computed Attributes:</strong> atributos calculados a partir de comportamentos históricos (ex: soma de compras nos últimos 90 dias) persistidos no perfil</li>
+          </ul>
+        </section>
+
+        <section id="audiences">
+          <h3>Audiences e segmentos</h3>
+          <p>Os <strong>Audiences</strong> no AJO são equivalentes às listas do HubSpot ou às Data Extensions filtradas do SFMC — mas construídos sobre o perfil unificado da AEP e com suporte a avaliação em tempo real.</p>
+
+          <table class="data-table">
+            <thead><tr><th>Tipo</th><th>Como funciona</th><th>Latência</th></tr></thead>
+            <tbody>
+              <tr><td>Batch Segmentation</td><td>Avaliação agendada (diária) — ideal para campanhas de alto volume</td><td>Horas</td></tr>
+              <tr><td>Streaming Segmentation</td><td>Qualificação em tempo real conforme novos eventos chegam</td><td>Segundos</td></tr>
+              <tr><td>Edge Segmentation</td><td>Avaliação no dispositivo/edge para personalização imediata</td><td>Milissegundos</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- CANAIS -->
+      <section id="canais">
+        <h2>Canais suportados</h2>
+        <p>O AJO centraliza a criação, entrega e relatório de mensagens em múltiplos canais a partir de um único ambiente.</p>
+
+        <div class="channels">
+          <div class="channel-pill"><span class="ch-icon">📧</span><strong>E-mail</strong>Designer drag-and-drop</div>
+          <div class="channel-pill"><span class="ch-icon">📱</span><strong>Push</strong>iOS e Android</div>
+          <div class="channel-pill"><span class="ch-icon">💬</span><strong>SMS / MMS</strong>Twilio, Sinch etc.</div>
+          <div class="channel-pill"><span class="ch-icon">🌐</span><strong>In-App</strong>Notificações no app</div>
+          <div class="channel-pill"><span class="ch-icon">🖥️</span><strong>Web</strong>Personalização de site</div>
+          <div class="channel-pill"><span class="ch-icon">💻</span><strong>Code-Based</strong>JSON para qualquer surface</div>
+          <div class="channel-pill"><span class="ch-icon">📬</span><strong>Direct Mail</strong>Enriamento postal</div>
+          <div class="channel-pill"><span class="ch-icon">💚</span><strong>WhatsApp</strong>Templates aprovados</div>
+          <div class="channel-pill"><span class="ch-icon">🟢</span><strong>LINE</strong>Mercado asiático</div>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Channel Configuration</div>
+          <p>Cada canal precisa de uma <strong>Channel Configuration</strong> (superfície) configurada antes de ser usado em journeys ou campaigns — define remetente, subdomínio, provider de SMS, app mobile etc. Essa configuração é feita pela equipe de administração e é reutilizável entre campanhas.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- JOURNEYS -->
+      <section id="journeys">
+        <h2>Journeys — jornadas de clientes</h2>
+        <p>
+          As <strong>Journeys</strong> são o canvas visual do AJO onde você orquestra sequências de interações — desde jornadas simples de boas-vindas até fluxos complexos de ciclo de vida com múltiplos canais e decisões em tempo real.
+        </p>
+        <p>Existem três tipos principais de Journey:</p>
+
+        <table class="data-table">
+          <thead><tr><th>Tipo</th><th>Gatilho</th><th>Uso típico</th></tr></thead>
+          <tbody>
+            <tr><td>Event-triggered</td><td>Evento de experiência em tempo real (compra, cadastro, clique)</td><td>Triggered de abandono, boas-vindas, transacional</td></tr>
+            <tr><td>Audience-triggered</td><td>Entrada em um Audience (batch ou streaming)</td><td>Campanhas de nutrição, reengajamento, lifecycle</td></tr>
+            <tr><td>Read Audience</td><td>Leitura de um Audience em horário agendado</td><td>Newsletter semanal, campanha recorrente</td></tr>
+          </tbody>
+        </table>
+
+        <section id="eventos">
+          <h3>Eventos — triggers da jornada</h3>
+          <p>Os <strong>Eventos</strong> são sinais externos que disparam ou influenciam jornadas. No AJO, dividem-se em:</p>
+          <ul>
+            <li><strong>Unitary events:</strong> relacionados a um perfil específico — ex: compra realizada, formulário submetido. Disparados via API (Streaming Ingestion) ou conectores.</li>
+            <li><strong>Business events:</strong> não estão relacionados a um perfil individual — ex: mudança de estoque, resultado de uma partida esportiva. Podem reentrar contatos em jornadas.</li>
+            <li><strong>Audience Qualification:</strong> um perfil entra ou sai de um Audience — funciona como gatilho de evento para a jornada.</li>
+          </ul>
+        </section>
+
+        <section id="conditions">
+          <h3>Condições e branches</h3>
+          <p>As <strong>Condition activities</strong> dividem o fluxo com base em atributos de perfil, eventos ou dados contextuais. Funcionam como o Decision Split do SFMC Journey Builder.</p>
+          <ul>
+            <li><strong>Profile condition:</strong> baseada em atributos do perfil unificado ou de audiences</li>
+            <li><strong>Event condition:</strong> baseada em dados do evento que disparou a jornada</li>
+            <li><strong>Time condition:</strong> baseada em horário ou dia da semana</li>
+            <li><strong>Data source condition:</strong> consulta dados de uma fonte externa via custom action</li>
+          </ul>
+        </section>
+
+        <section id="acoes">
+          <h3>Ações e esperas</h3>
+          <p><strong>Ações</strong> executam a entrega de mensagens ou chamadas externas. <strong>Wait activities</strong> pausam o fluxo por um tempo definido ou até uma data específica.</p>
+
+          <table class="data-table">
+            <thead><tr><th>Atividade</th><th>O que faz</th></tr></thead>
+            <tbody>
+              <tr><td>Message (canal)</td><td>Envia e-mail, push, SMS, in-app etc. com personalização</td></tr>
+              <tr><td>Wait</td><td>Aguarda X horas/dias ou até data/horário específico</td></tr>
+              <tr><td>Custom Action</td><td>Chama uma API externa (CRM, DMP, sistema de pontos)</td></tr>
+              <tr><td>Update Profile</td><td>Atualiza um atributo no Real-Time Customer Profile</td></tr>
+              <tr><td>Audience (Add/Remove)</td><td>Adiciona ou remove o perfil de um Audience</td></tr>
+              <tr><td>Jump</td><td>Encaminha para outro Journey</td></tr>
+              <tr><td>End</td><td>Finaliza a jornada para o perfil</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout warning">
+            <div class="callout-title">⚠ Timeout global de Journey</div>
+            <p>Cada Journey tem um <strong>timeout global</strong> (padrão: 30 dias, máximo: 91 dias). Perfis que ainda estão na jornada após esse prazo são automaticamente saídos. Configure esse valor de acordo com o ciclo esperado da jornada.</p>
+          </div>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- CAMPAIGNS -->
+      <section id="campaigns">
+        <h2>Campaigns — envios em batch e agendados</h2>
+        <p>
+          As <strong>Campaigns</strong> são a modalidade para comunicações de marketing em massa — equivalente a um envio de e-mail para uma lista no SFMC ou HubSpot. A diferença é que mesmo em campaigns, o AJO usa o perfil unificado da AEP para personalização.
+        </p>
+
+        <table class="data-table">
+          <thead><tr><th>Tipo</th><th>Quando usar</th></tr></thead>
+          <tbody>
+            <tr><td>Scheduled Campaign</td><td>Envio único ou recorrente em data/hora definida para um Audience</td></tr>
+            <tr><td>API-triggered Campaign</td><td>Disparada via API — útil para mensagens transacionais ou com dados contextuais externos</td></tr>
+          </tbody>
+        </table>
+
+        <p>A partir de 2025, o AJO também introduziu <strong>Campaign Orchestration</strong> (Orchestrated Campaigns) — campanhas multietapas com lógica de targeting mais avançada para operações de marketing em batch de alto volume.</p>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- PERSONALIZAÇÃO -->
+      <section id="personalizacao">
+        <h2>Personalização</h2>
+
+        <section id="expression-editor">
+          <h3>Expression Editor — personalização com Handlebars</h3>
+          <p>O AJO usa uma sintaxe baseada em <strong>Handlebars</strong> (e Helper Functions proprietárias da Adobe) para personalização — bem diferente do AMPscript do SFMC. As expressões acessam o perfil unificado, dados de evento e contexto em tempo real.</p>
+
+          <table class="data-table">
+            <thead><tr><th>Tipo de expressão</th><th>Sintaxe</th><th>O que acessa</th></tr></thead>
+            <tbody>
+              <tr><td>Atributo de perfil</td><td><code>{{profile.person.name.firstName}}</code></td><td>Dados do Real-Time Profile (XDM)</td></tr>
+              <tr><td>Evento contextual</td><td><code>{{context.journey.events.purchase.amount}}</code></td><td>Dados do evento que disparou a jornada</td></tr>
+              <tr><td>Condicional inline</td><td><code>{{#if profile.segmentMembership...}}</code></td><td>Lógica if/else no conteúdo</td></tr>
+              <tr><td>Helper function</td><td><code>{{dateFormat now "dd/MM/yyyy"}}</code></td><td>Funções nativas: datas, strings, math</td></tr>
+              <tr><td>Fallback / default</td><td><code>{{profile.person.name.firstName default="cliente"}}</code></td><td>Valor quando campo está vazio</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout tip">
+            <div class="callout-title">✅ Personalization Playground</div>
+            <p>O AJO oferece um <strong>Personalization Playground</strong> onde você pode testar expressões com payloads de exemplo antes de usar em produção — equivalente ao Preview do SFMC, mas focado nas expressões de personalização.</p>
+          </div>
+        </section>
+
+        <section id="decisioning">
+          <h3>Offer Decisioning — a melhor oferta no momento certo</h3>
+          <p>
+            O <strong>Decisioning</strong> (anteriormente Offer Decisioning) é o módulo de IA do AJO para selecionar automaticamente a melhor oferta para cada perfil em cada momento, com base em regras de elegibilidade, prioridades, capping e modelos de IA de ranking.
+          </p>
+          <ul>
+            <li><strong>Offer Library:</strong> catálogo centralizado de ofertas com atributos, imagens e elegibilidade</li>
+            <li><strong>Decision Rules:</strong> filtros que determinam quem é elegível para cada oferta</li>
+            <li><strong>Ranking:</strong> prioridade manual ou modelo de IA (Auto-Optimization, Personalized Optimization)</li>
+            <li><strong>Capping:</strong> limite de quantas vezes uma oferta pode ser mostrada por perfil ou no total</li>
+            <li><strong>Placements:</strong> onde a oferta aparece (e-mail, web, in-app, push)</li>
+          </ul>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- INTEGRAÇÃO COM SFMC -->
+      <section id="integracao-sfmc">
+        <h2>Integração com Salesforce Marketing Cloud</h2>
+        <p>
+          Uma das necessidades mais comuns em projetos de migração ou coexistência é trazer dados do SFMC para o AJO/AEP — ou usar audiências criadas na AEP para executar envios no SFMC. A AEP oferece dois mecanismos nativos para isso.
+        </p>
+
+        <section id="source-connector">
+          <h3>Source Connector — SFMC → AEP</h3>
+          <p>O <strong>Salesforce Marketing Cloud Source Connector</strong> permite ingerir dados do SFMC na AEP, tornando-os disponíveis para o perfil unificado e para journeys no AJO.</p>
+
+          <div class="int-steps">
+            <div class="int-step">
+              <div class="int-step-num">1</div>
+              <div class="int-step-content">
+                <strong>Pré-requisitos no SFMC</strong>
+                <p>Criar um <strong>Installed Package</strong> no SFMC com permissões: <code>Automation Studio</code>, <code>Data Extensions</code>, <code>Email</code>, <code>List and Subscribers</code>. Obter Client ID, Client Secret e o Subdomain (MID) da BU.</p>
+              </div>
+            </div>
+            <div class="int-step">
+              <div class="int-step-num">2</div>
+              <div class="int-step-content">
+                <strong>Configurar Source na AEP</strong>
+                <p>Em <code>Sources → Marketing Automation → Salesforce Marketing Cloud</code>, criar uma <strong>base connection</strong> com as credenciais do SFMC (V2 connector recomendado). Selecionar qual Data Extension ou objeto (Contacts, Events, Emails Sent etc.) será ingerido.</p>
+              </div>
+            </div>
+            <div class="int-step">
+              <div class="int-step-num">3</div>
+              <div class="int-step-content">
+                <strong>Mapear para XDM Schema</strong>
+                <p>No mapper da AEP, relacionar os campos da DE do SFMC (ex: <code>SubscriberKey</code>, <code>EmailAddress</code>) com os campos XDM correspondentes (ex: <code>identityMap</code>, <code>personalEmail.address</code>). Esse mapeamento define como os dados entrarão no perfil unificado.</p>
+              </div>
+            </div>
+            <div class="int-step">
+              <div class="int-step-num">4</div>
+              <div class="int-step-content">
+                <strong>Definir schedule de ingestão</strong>
+                <p>Configurar ingestão incremental (delta) ou full refresh. Para dados transacionais de engajamento (opens, clicks), a ingestão incremental diária é o padrão mais comum. Dados de perfil de contato podem ter frequência menor.</p>
+              </div>
+            </div>
+            <div class="int-step">
+              <div class="int-step-num">5</div>
+              <div class="int-step-content">
+                <strong>Validar no Profile Viewer</strong>
+                <p>Após a ingestão, validar no <code>Profile Viewer</code> da AEP se os registros do SFMC estão sendo corretamente unificados com perfis existentes via Identity Graph. Verificar se o <code>SubscriberKey</code> foi configurado como namespace de identidade.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout warning">
+            <div class="callout-title">⚠ Limite de Sources concorrentes</div>
+            <p>O AJO/AEP permite até <strong>5 Sources não-Adobe concorrentes</strong> por padrão. Se você já tem outros conectores ativos (Salesforce CRM, Google Ads etc.), planeje o slot antes de adicionar o SFMC.</p>
+          </div>
+        </section>
+
+        <section id="destination">
+          <h3>Destination — AEP → SFMC</h3>
+          <p>O fluxo inverso — exportar Audiences criados na AEP para execução no SFMC — é feito via <strong>Destination</strong>. A AEP gera arquivos CSV em uma localização SFTP, que o SFMC importa via Automation Studio para uma Data Extension.</p>
+
+          <div class="int-steps">
+            <div class="int-step">
+              <div class="int-step-num">1</div>
+              <div class="int-step-content">
+                <strong>Configurar SFTP no SFMC</strong>
+                <p>No SFMC, criar ou identificar um local de <strong>Enhanced FTP</strong> onde a AEP depositará os arquivos de exportação de audiências.</p>
+              </div>
+            </div>
+            <div class="int-step">
+              <div class="int-step-num">2</div>
+              <div class="int-step-content">
+                <strong>Criar Destination na AEP</strong>
+                <p>Em <code>Destinations → Marketing → Salesforce Marketing Cloud</code>, conectar o SFTP e mapear os campos do perfil XDM para as colunas do CSV exportado.</p>
+              </div>
+            </div>
+            <div class="int-step">
+              <div class="int-step-num">3</div>
+              <div class="int-step-content">
+                <strong>Ativar o Audience para o Destination</strong>
+                <p>Selecionar o Audience desejado na AEP e ativá-lo para o Destination do SFMC. Definir frequência de exportação e atributos incluídos no arquivo.</p>
+              </div>
+            </div>
+            <div class="int-step">
+              <div class="int-step-num">4</div>
+              <div class="int-step-content">
+                <strong>Automation no SFMC para importar</strong>
+                <p>Criar uma Automation no SFMC que monitora o SFTP, importa o arquivo CSV para uma Data Extension e, opcionalmente, inicia um journey ou envio de e-mail com a audiência atualizada.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="estrategia">
+          <h3>Estratégia de coexistência SFMC + AJO</h3>
+          <p>Para empresas que estão em transição ou querem operar ambas as plataformas em paralelo, a abordagem mais comum é:</p>
+
+          <table class="data-table">
+            <thead><tr><th>Cenário</th><th>Plataforma recomendada</th><th>Motivo</th></tr></thead>
+            <tbody>
+              <tr><td>E-mail em alta escala (batch)</td><td>SFMC</td><td>Infraestrutura madura, AMPscript, custos por volume</td></tr>
+              <tr><td>Jornadas em tempo real multicanal</td><td>AJO</td><td>Real-Time Profile, eventos de experiência, decisioning</td></tr>
+              <tr><td>Dados históricos de engajamento</td><td>SFMC → AEP via Source Connector</td><td>Enriquece perfil unificado no AJO</td></tr>
+              <tr><td>Audiências enriquecidas por IA</td><td>AEP → SFMC via Destination</td><td>SFMC executa envios com audiências mais precisas</td></tr>
+              <tr><td>Personalização 1:1 por oferta</td><td>AJO Decisioning</td><td>Offer Library + modelos de IA nativos</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- SFMC VS AJO -->
+      <section id="sfmc-vs-ajo">
+        <h2>SFMC vs AJO — comparação técnica</h2>
+
+        <table class="data-table">
+          <thead><tr><th>Critério</th><th>Salesforce Marketing Cloud</th><th>Adobe Journey Optimizer</th></tr></thead>
+          <tbody>
+            <tr><td>Base de dados</td><td>Data Extensions (SQL Server)</td><td>Real-Time Customer Profile (AEP)</td></tr>
+            <tr><td>Personalização</td><td>AMPscript / SSJS</td><td>Handlebars + Helper Functions (Expression Editor)</td></tr>
+            <tr><td>Segmentação</td><td>SQL Queries + Data Filters</td><td>Segment Builder + Streaming/Edge Segmentation</td></tr>
+            <tr><td>Jornadas</td><td>Journey Builder (visual)</td><td>AJO Journey canvas (visual)</td></tr>
+            <tr><td>Campanhas batch</td><td>Email Studio + Automation Studio</td><td>Campaigns + Orchestrated Campaigns</td></tr>
+            <tr><td>Canais nativos</td><td>Email, SMS, Push, Social</td><td>Email, Push, SMS, In-App, Web, Code-Based, WhatsApp, LINE, Direct Mail</td></tr>
+            <tr><td>IA e decisioning</td><td>Einstein AI (STO, engagement scoring)</td><td>Offer Decisioning + AI Ranking + Journey Agent</td></tr>
+            <tr><td>Identidade</td><td>SubscriberKey (chave simples)</td><td>Identity Graph (múltiplos namespaces unificados)</td></tr>
+            <tr><td>Dados em tempo real</td><td>Limitado (API triggers)</td><td>Nativo — Streaming Ingestion + Edge Segmentation</td></tr>
+            <tr><td>Curva de aprendizado</td><td>Alta (AMPscript, SQL, Automation)</td><td>Alta (AEP, XDM, schemas, identidade)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- BOAS PRÁTICAS -->
+      <section id="boas-praticas">
+        <h2>Boas práticas</h2>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Projete os XDM Schemas antes de tudo</div>
+          <p>A arquitetura de dados na AEP define tudo que o AJO pode fazer. Schemas mal projetados são difíceis de corrigir depois que dados já foram ingeridos. Antes de conectar qualquer fonte, documente quais atributos são necessários para personalização e segmentação e mapeie para XDM com cuidado.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Use Sandboxes para desenvolvimento</div>
+          <p>O AJO inclui até 5 Sandboxes. Sempre desenvolva e teste jornadas em uma sandbox de dev/QA antes de publicar na produção. A partir de 2025, é possível copiar objetos de Decisioning entre sandboxes, o que acelera o processo de promoção.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Configure Frequency Capping e Quiet Hours</div>
+          <p>O AJO tem rule sets nativos para <strong>Frequency Capping</strong> (limitar quantas mensagens um perfil recebe por período) e <strong>Quiet Hours</strong> (não enviar em horários indevidos). Configure esses limites globalmente antes de ativar qualquer jornada para evitar sobrecomunicação.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Monitore Profile Discard Rate</div>
+          <p>Uma das métricas mais importantes no AJO é a <strong>Profile Discard Rate</strong> — percentual de perfis que entram na jornada mas são descartados por erro (dados inválidos, timeout, política de capping). O AJO 2026 introduziu alertas automáticos quando essa taxa excede o threshold configurado.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Não confunda Journey com Campaign</div>
+          <p>Use <strong>Journeys</strong> para orquestrações baseadas em comportamento e tempo (event-triggered, multi-step com waits). Use <strong>Campaigns</strong> para envios únicos ou agendados para um Audience estático. Usar Journey onde deveria ser Campaign gera overhead desnecessário na plataforma.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- REFERÊNCIAS -->
+      <section id="referencias">
+        <h2>Referências</h2>
+        <div class="refs-grid">
+          <a class="ref-card" href="https://experienceleague.adobe.com/en/docs/journey-optimizer/using/ajo-home" target="_blank" rel="noopener">
+            <div class="ref-source">Adobe Experience League</div>
+            <div class="ref-title">AJO Documentation Home</div>
+            <div class="ref-desc">Documentação oficial completa do Adobe Journey Optimizer</div>
+          </a>
+          <a class="ref-card" href="https://experienceleague.adobe.com/en/docs/journey-optimizer/using/get-started/essentials/understanding-ajo" target="_blank" rel="noopener">
+            <div class="ref-source">Adobe Experience League</div>
+            <div class="ref-title">Understanding Journey Optimizer</div>
+            <div class="ref-desc">Arquitetura, áreas funcionais e como AJO e AEP trabalham juntos</div>
+          </a>
+          <a class="ref-card" href="https://experienceleague.adobe.com/en/docs/experience-platform/sources/connectors/marketing-automation/salesforce-marketing-cloud" target="_blank" rel="noopener">
+            <div class="ref-source">Adobe Experience League</div>
+            <div class="ref-title">SFMC Source Connector</div>
+            <div class="ref-desc">Como conectar o Salesforce Marketing Cloud como fonte de dados na AEP</div>
+          </a>
+          <a class="ref-card" href="https://experienceleague.adobe.com/en/docs/experience-platform/destinations/catalog/email-marketing/salesforce-marketing-cloud" target="_blank" rel="noopener">
+            <div class="ref-source">Adobe Experience League</div>
+            <div class="ref-title">SFMC Destination</div>
+            <div class="ref-desc">Como exportar Audiences da AEP para execução no SFMC</div>
+          </a>
+          <a class="ref-card" href="https://experienceleague.adobe.com/en/docs/certification/program/technical-certifications/ajo/ajo-overview" target="_blank" rel="noopener">
+            <div class="ref-source">Adobe Certification</div>
+            <div class="ref-title">AJO Certification Overview</div>
+            <div class="ref-desc">Página oficial das certificações AJO Business Practitioner e Developer Expert</div>
+          </a>
+          <a class="ref-card" href="https://experienceleague.adobe.com/en/docs/journey-optimizer/using/whats-new/release-notes" target="_blank" rel="noopener">
+            <div class="ref-source">Adobe Experience League</div>
+            <div class="ref-title">AJO Release Notes</div>
+            <div class="ref-desc">Novidades e melhorias mais recentes do Adobe Journey Optimizer</div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    © 2026 · Senior Marketing Cloud Developer · Recife, PE · marcosqueirozpereira@gmail.com
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    const sections = document.querySelectorAll('section[id]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sidebarLinks.forEach(l => { l.style.color = ''; l.style.borderLeftColor = ''; });
+          const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+          if (active) { active.style.color = 'var(--accent2)'; active.style.borderLeftColor = 'var(--accent2)'; }
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach(s => obs.observe(s));
+  </script>
+
+</body>
+</html>
