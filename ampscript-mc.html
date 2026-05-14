@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMPscript no Marketing Cloud | MC · DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --bg2: #111827;
+      --bg3: #1a2235;
+      --accent: #a78bfa;
+      --accent2: #22d3ee;
+      --accent3: #10b981;
+      --text: #e2e8f0;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --border: rgba(167,139,250,0.15);
+      --code-bg: #0d1117;
+      --tag-bg: rgba(167,139,250,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--accent2);
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* HERO */
+    .hero { padding: 5rem 2rem 3rem; max-width: 900px; margin: 0 auto; }
+
+    .breadcrumb {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .breadcrumb a { color: var(--accent2); text-decoration: none; }
+    .breadcrumb span { margin: 0 0.4rem; }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+    h1 em { font-style: normal; color: var(--accent); }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      max-width: 680px;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* LAYOUT */
+    .page-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 80px; }
+    .sidebar-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+    .sidebar-nav { list-style: none; border-left: 1px solid var(--border); }
+    .sidebar-nav li a {
+      display: block;
+      padding: 0.4rem 0 0.4rem 1rem;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      margin-left: -1px;
+      transition: all 0.2s;
+      line-height: 1.4;
+    }
+    .sidebar-nav li a:hover { color: var(--accent); border-left-color: var(--accent); }
+    .sidebar-nav .sub a { padding-left: 1.8rem; font-size: 0.77rem; color: var(--text-muted); }
+    .sidebar-nav .sub a:hover { color: var(--accent); }
+
+    /* CONTENT */
+    .content { min-width: 0; }
+
+    .content h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+    }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 2rem 0 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .content p { color: var(--text-dim); margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content ul, .content ol {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      font-weight: 300;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .content li { margin-bottom: 0.4rem; }
+
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+    /* CALLOUT */
+    .callout {
+      background: var(--bg3);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .callout.warning { border-left-color: #f59e0b; }
+    .callout.tip    { border-left-color: var(--accent3); }
+    .callout.info   { border-left-color: var(--accent2); }
+    .callout-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .callout.warning .callout-title { color: #f59e0b; }
+    .callout.tip     .callout-title { color: var(--accent3); }
+    .callout.info    .callout-title { color: var(--accent2); }
+    .callout p { margin-bottom: 0; }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+    }
+    .code-lang {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .copy-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.2rem 0.6rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .copy-btn.copied { color: var(--accent3); border-color: var(--accent3); }
+
+    pre {
+      padding: 1.2rem 1.4rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    /* AMPscript syntax colors */
+    .kw  { color: #c792ea; } /* keywords: IF, SET, VAR, FOR... */
+    .fn  { color: #82aaff; } /* functions */
+    .str { color: #c3e88d; } /* strings */
+    .cm  { color: #546e7a; font-style: italic; } /* comments */
+    .num { color: #f78c6c; } /* numbers */
+    .var { color: #ffcb6b; } /* @variables */
+    .tag { color: #89ddff; } /* delimiters %%[ ]%% */
+    .op  { color: #89ddff; } /* operators */
+    .out { color: #fb923c; } /* OUTPUT/v() */
+
+    /* INLINE CODE */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(167,139,250,0.08);
+      border: 1px solid rgba(167,139,250,0.15);
+      color: var(--accent);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+
+    /* EXAMPLE CARD */
+    .example-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.8rem;
+      margin: 1.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .example-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .example-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 3px;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8rem;
+    }
+    .example-card h3 {
+      color: var(--text);
+      font-size: 1.05rem;
+      margin: 0 0 0.6rem;
+      font-family: 'Sora', sans-serif;
+    }
+    .example-card p { margin-bottom: 0; }
+
+    /* TABLE */
+    .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.87rem; }
+    .data-table th {
+      background: var(--bg3);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.8rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text-dim);
+      vertical-align: top;
+    }
+    .data-table td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: 0.82rem;
+    }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* REFS */
+    .refs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .ref-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: block;
+    }
+    .ref-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .ref-source {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .ref-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+    .ref-desc  { font-size: 0.8rem; color: var(--text-muted); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .page-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="index.html">MC · DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="exp.html">Experiência</a></li>
+      <li><a href="certs.html">Certificações</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="breadcrumb">
+      <a href="index.html">Início</a><span>/</span>
+      <a href="blog.html">Blog</a><span>/</span>
+      AMPscript no Marketing Cloud
+    </div>
+    <div class="hero-tag">Tutorial · SFMC · AMPscript</div>
+    <h1>AMPscript no <em>Marketing Cloud</em></h1>
+    <p class="hero-desc">
+      A linguagem nativa do Salesforce Marketing Cloud para personalização dinâmica, lógica condicional e consulta a Data Extensions — em e-mails, landing pages, SMS e jornadas.
+    </p>
+    <div class="hero-meta">
+      <span>📅 Mai 2026</span>
+      <span>⏱ ~20 min de leitura</span>
+      <span>🎯 Iniciante → Avançado</span>
+      <span>✍ Marcos Queiroz</span>
+    </div>
+  </div>
+
+  <div class="page-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <p class="sidebar-title">Neste artigo</p>
+      <ul class="sidebar-nav">
+        <li><a href="#o-que-e">O que é AMPscript?</a></li>
+        <li><a href="#onde-usar">Onde usar</a></li>
+        <li><a href="#sintaxe">Sintaxe base</a></li>
+        <li class="sub"><a href="#delimitadores">Delimitadores</a></li>
+        <li class="sub"><a href="#variaveis">Variáveis</a></li>
+        <li class="sub"><a href="#output">Output</a></li>
+        <li><a href="#condicional">Lógica condicional</a></li>
+        <li class="sub"><a href="#if">IF / ELSEIF / ELSE</a></li>
+        <li class="sub"><a href="#iif">IIF — inline</a></li>
+        <li><a href="#data-extensions">Data Extensions</a></li>
+        <li class="sub"><a href="#lookup">Lookup</a></li>
+        <li class="sub"><a href="#lookuprows">LookupRows + FOR</a></li>
+        <li><a href="#funcoes-texto">Funções de texto</a></li>
+        <li><a href="#funcoes-data">Funções de data</a></li>
+        <li><a href="#exemplos">Exemplos práticos</a></li>
+        <li><a href="#style-guide">Style Guide</a></li>
+        <li><a href="#boas-praticas">Boas práticas</a></li>
+        <li><a href="#referencias">Referências</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- O QUE É -->
+      <section id="o-que-e">
+        <h2>O que é AMPscript?</h2>
+        <p>
+          O <strong>AMPscript</strong> é a linguagem de script nativa do Salesforce Marketing Cloud. Ao contrário das simples personalization strings (como <code>%%FirstName%%</code>), o AMPscript permite aplicar <strong>lógica real dentro da comunicação</strong>: condicionais, loops, consultas a Data Extensions e manipulação de dados em tempo de execução.
+        </p>
+        <p>
+          Ele é executado no servidor, antes do envio — ou seja, o destinatário recebe o resultado final, sem ver nenhum código. Isso permite criar comunicações altamente personalizadas sem duplicar templates.
+        </p>
+        <div class="callout info">
+          <div class="callout-title">📌 AMPscript vs Personalization Strings</div>
+          <p><code>%%FirstName%%</code> apenas substitui o valor. O AMPscript vai além: verifica se o campo está vazio, aplica uma regra, consulta outra DE e decide o que exibir — tudo em uma só execução.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- ONDE USAR -->
+      <section id="onde-usar">
+        <h2>Onde usar AMPscript</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Canal</th><th>Uso típico</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>E-mails</td><td>Personalização de conteúdo, ofertas dinâmicas, blocos condicionais</td></tr>
+            <tr><td>Landing Pages / Cloud Pages</td><td>Formulários dinâmicos, confirmações, exibição de dados do contato</td></tr>
+            <tr><td>SMS</td><td>Personalização de mensagem de texto com dados do contato</td></tr>
+            <tr><td>Push Notifications</td><td>Título e corpo dinâmicos</td></tr>
+            <tr><td>Journey Builder</td><td>Decisões baseadas em dados, atualização de DEs via script</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- SINTAXE BASE -->
+      <section id="sintaxe">
+        <h2>Sintaxe base</h2>
+
+        <section id="delimitadores">
+          <h3>Delimitadores</h3>
+          <p>Todo bloco de AMPscript precisa estar entre delimitadores. Existem dois estilos:</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="cm">/* Bloco de lógica — executa no servidor, não exibe nada */</span>
+  <span class="kw">SET</span> <span class="var">@nome</span> <span class="op">=</span> <span class="fn">AttributeValue</span>(<span class="str">'FirstName'</span>)
+<span class="tag">]%%</span>
+
+<span class="cm">/* Exibição inline de variável */</span>
+Olá, <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@nome</span>)<span class="tag">=%%</span>
+
+<span class="cm">/* Exibição direta de atributo */</span>
+Olá, <span class="tag">%%</span><span class="var">FirstName</span><span class="tag">%%</span></pre>
+          </div>
+        </section>
+
+        <section id="variaveis">
+          <h3>Variáveis</h3>
+          <p>Variáveis são declaradas com <code>VAR</code> (opcional) e atribuídas com <code>SET</code>. Sempre precedidas de <code>@</code>.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="cm">/* Declaração explícita (recomendado para clareza) */</span>
+  <span class="kw">VAR</span> <span class="var">@nome</span>, <span class="var">@email</span>, <span class="var">@segmento</span>
+
+  <span class="cm">/* Atribuição direta */</span>
+  <span class="kw">SET</span> <span class="var">@nome</span>     <span class="op">=</span> <span class="fn">AttributeValue</span>(<span class="str">'FirstName'</span>)
+  <span class="kw">SET</span> <span class="var">@email</span>    <span class="op">=</span> <span class="fn">AttributeValue</span>(<span class="str">'EmailAddress'</span>)
+  <span class="kw">SET</span> <span class="var">@segmento</span> <span class="op">=</span> <span class="str">'VIP'</span>
+
+  <span class="cm">/* Concatenação */</span>
+  <span class="kw">SET</span> <span class="var">@saudacao</span> <span class="op">=</span> <span class="fn">Concat</span>(<span class="str">'Olá, '</span>, <span class="var">@nome</span>, <span class="str">'!'</span>)
+<span class="tag">]%%</span></pre>
+          </div>
+
+          <div class="callout tip">
+            <div class="callout-title">✅ Convenção recomendada</div>
+            <p>Use <code>camelCase</code> para variáveis (<code>@firstName</code>), <code>PascalCase</code> para funções (<code>Lookup</code>) e <code>UPPERCASE</code> para palavras-chave de controle (<code>IF</code>, <code>SET</code>, <code>FOR</code>). Isso melhora muito a legibilidade em scripts longos.</p>
+          </div>
+        </section>
+
+        <section id="output">
+          <h3>Output — exibindo valores</h3>
+          <p>Para exibir o valor de uma variável dentro do HTML, use <code>%%=v(@var)=%%</code>. Para exibir dentro de um bloco lógico, use <code>Output()</code>.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="cm">/* Exibição inline (fora do bloco %%[ ]%%) */</span>
+Seu nome: <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@nome</span>)<span class="tag">=%%</span>
+
+<span class="cm">/* Exibição dentro de bloco lógico */</span>
+<span class="tag">%%[</span>
+  <span class="kw">IF</span> <span class="var">@segmento</span> <span class="op">==</span> <span class="str">'VIP'</span> <span class="kw">THEN</span>
+    <span class="out">Output</span>(<span class="fn">Concat</span>(<span class="str">'&lt;strong&gt;Cliente VIP: &lt;/strong&gt;'</span>, <span class="var">@nome</span>))
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span></pre>
+          </div>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- LÓGICA CONDICIONAL -->
+      <section id="condicional">
+        <h2>Lógica condicional</h2>
+
+        <section id="if">
+          <h3>IF / ELSEIF / ELSE</h3>
+          <p>A estrutura condicional principal do AMPscript. Permite ramificar o conteúdo com base em qualquer condição.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="kw">SET</span> <span class="var">@genero</span> <span class="op">=</span> <span class="fn">AttributeValue</span>(<span class="str">'Genero'</span>)
+
+  <span class="kw">IF</span> <span class="var">@genero</span> <span class="op">==</span> <span class="str">'M'</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@saudacao</span> <span class="op">=</span> <span class="str">'Bem-vindo'</span>
+  <span class="kw">ELSEIF</span> <span class="var">@genero</span> <span class="op">==</span> <span class="str">'F'</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@saudacao</span> <span class="op">=</span> <span class="str">'Bem-vinda'</span>
+  <span class="kw">ELSE</span>
+    <span class="kw">SET</span> <span class="var">@saudacao</span> <span class="op">=</span> <span class="str">'Bem-vindo(a)'</span>
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span>
+
+<span class="tag">%%=</span><span class="out">v</span>(<span class="var">@saudacao</span>)<span class="tag">=%%</span>, <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@nome</span>)<span class="tag">=%%</span>!</pre>
+          </div>
+
+          <p>Operadores de comparação disponíveis:</p>
+          <table class="data-table">
+            <thead><tr><th>Operador</th><th>Significado</th><th>Exemplo</th></tr></thead>
+            <tbody>
+              <tr><td>==</td><td>Igual a</td><td><code>@status == 'ativo'</code></td></tr>
+              <tr><td>!=</td><td>Diferente de</td><td><code>@status != 'inativo'</code></td></tr>
+              <tr><td>&gt;</td><td>Maior que</td><td><code>@idade &gt; 18</code></td></tr>
+              <tr><td>&gt;=</td><td>Maior ou igual</td><td><code>@pontos &gt;= 100</code></td></tr>
+              <tr><td>&lt;</td><td>Menor que</td><td><code>@saldo &lt; 0</code></td></tr>
+              <tr><td>AND</td><td>E lógico</td><td><code>@ativo == 1 AND @opt == 1</code></td></tr>
+              <tr><td>OR</td><td>Ou lógico</td><td><code>@canal == 'email' OR @canal == 'sms'</code></td></tr>
+              <tr><td>NOT</td><td>Negação</td><td><code>NOT Empty(@nome)</code></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="iif">
+          <h3>IIF — Condicional inline</h3>
+          <p>Para condições simples de verdadeiro/falso em uma linha. Equivale ao operador ternário de outras linguagens.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="cm">/* IIF(condição, valor_se_verdadeiro, valor_se_falso) */</span>
+  <span class="kw">SET</span> <span class="var">@tratamento</span> <span class="op">=</span> <span class="fn">IIF</span>(<span class="var">@genero</span> <span class="op">==</span> <span class="str">'M'</span>, <span class="str">'Sr.'</span>, <span class="str">'Sra.'</span>)
+
+  <span class="cm">/* Tratar campo vazio */</span>
+  <span class="kw">SET</span> <span class="var">@nomeExibido</span> <span class="op">=</span> <span class="fn">IIF</span>(<span class="fn">Empty</span>(<span class="var">@nome</span>), <span class="str">'cliente'</span>, <span class="var">@nome</span>)
+<span class="tag">]%%</span></pre>
+          </div>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- DATA EXTENSIONS -->
+      <section id="data-extensions">
+        <h2>Consultando Data Extensions</h2>
+        <p>Uma das funções mais poderosas do AMPscript é a capacidade de buscar dados diretamente em Data Extensions durante o envio.</p>
+
+        <section id="lookup">
+          <h3>Lookup — busca de um registro</h3>
+          <p>Retorna o valor de um campo específico baseado em uma chave. Ideal quando você precisa de <strong>um único valor</strong> de uma DE.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="cm">/* Lookup(DE, campoRetorno, campoFiltro, valorFiltro) */</span>
+  <span class="kw">SET</span> <span class="var">@pontos</span> <span class="op">=</span> <span class="fn">Lookup</span>(<span class="str">'DE_Fidelidade'</span>, <span class="str">'Pontos'</span>, <span class="str">'SubscriberKey'</span>, <span class="var">@subscriberKey</span>)
+
+  <span class="cm">/* Usando o resultado numa condição */</span>
+  <span class="kw">IF</span> <span class="var">@pontos</span> <span class="op">&gt;=</span> <span class="num">1000</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@nivel</span> <span class="op">=</span> <span class="str">'Ouro'</span>
+  <span class="kw">ELSEIF</span> <span class="var">@pontos</span> <span class="op">&gt;=</span> <span class="num">500</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@nivel</span> <span class="op">=</span> <span class="str">'Prata'</span>
+  <span class="kw">ELSE</span>
+    <span class="kw">SET</span> <span class="var">@nivel</span> <span class="op">=</span> <span class="str">'Bronze'</span>
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span>
+
+Você tem <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@pontos</span>)<span class="tag">=%%</span> pontos — nível <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@nivel</span>)<span class="tag">=%%</span>.</pre>
+          </div>
+        </section>
+
+        <section id="lookuprows">
+          <h3>LookupRows + FOR — múltiplos registros</h3>
+          <p>Quando você precisa trazer <strong>vários registros</strong> de uma DE e iterar sobre eles — como exibir uma lista de produtos ou pedidos recentes.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="cm">/* Busca todos os pedidos do contato */</span>
+  <span class="kw">SET</span> <span class="var">@pedidos</span>    <span class="op">=</span> <span class="fn">LookupRows</span>(<span class="str">'DE_Pedidos'</span>, <span class="str">'SubscriberKey'</span>, <span class="var">@subscriberKey</span>)
+  <span class="kw">SET</span> <span class="var">@totalPedidos</span> <span class="op">=</span> <span class="fn">RowCount</span>(<span class="var">@pedidos</span>)
+
+  <span class="kw">IF</span> <span class="var">@totalPedidos</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">THEN</span>
+    <span class="out">Output</span>(<span class="fn">Concat</span>(<span class="str">'&lt;ul&gt;'</span>))
+
+    <span class="kw">FOR</span> <span class="var">@i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">TO</span> <span class="var">@totalPedidos</span> <span class="kw">DO</span>
+      <span class="kw">SET</span> <span class="var">@linha</span>    <span class="op">=</span> <span class="fn">Row</span>(<span class="var">@pedidos</span>, <span class="var">@i</span>)
+      <span class="kw">SET</span> <span class="var">@produto</span>  <span class="op">=</span> <span class="fn">Field</span>(<span class="var">@linha</span>, <span class="str">'Produto'</span>)
+      <span class="kw">SET</span> <span class="var">@valor</span>    <span class="op">=</span> <span class="fn">Field</span>(<span class="var">@linha</span>, <span class="str">'Valor'</span>)
+      <span class="out">Output</span>(<span class="fn">Concat</span>(<span class="str">'&lt;li&gt;'</span>, <span class="var">@produto</span>, <span class="str">' — R$ '</span>, <span class="var">@valor</span>, <span class="str">'&lt;/li&gt;'</span>))
+    <span class="kw">NEXT</span> <span class="var">@i</span>
+
+    <span class="out">Output</span>(<span class="fn">Concat</span>(<span class="str">'&lt;/ul&gt;'</span>))
+  <span class="kw">ELSE</span>
+    <span class="out">Output</span>(<span class="fn">Concat</span>(<span class="str">'&lt;p&gt;Nenhum pedido encontrado.&lt;/p&gt;'</span>))
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span></pre>
+          </div>
+
+          <div class="callout warning">
+            <div class="callout-title">⚠ Limite de registros</div>
+            <p><code>LookupRows</code> retorna no máximo <strong>2.000 registros</strong>. Para volumes maiores, use <code>LookupOrderedRows</code> com paginação ou pré-processe os dados via SQL no Automation Studio.</p>
+          </div>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- FUNÇÕES DE TEXTO -->
+      <section id="funcoes-texto">
+        <h2>Funções de texto</h2>
+        <p>AMPscript oferece diversas funções para manipulação de strings — úteis para padronizar dados, extrair partes de um campo ou montar mensagens dinâmicas.</p>
+
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="tag">%%[</span>
+  <span class="cm">/* Maiúsculas / minúsculas */</span>
+  <span class="kw">SET</span> <span class="var">@upper</span> <span class="op">=</span> <span class="fn">UpperCase</span>(<span class="str">'marcos'</span>)        <span class="cm">/* → MARCOS */</span>
+  <span class="kw">SET</span> <span class="var">@lower</span> <span class="op">=</span> <span class="fn">LowerCase</span>(<span class="str">'MARCOS'</span>)        <span class="cm">/* → marcos */</span>
+  <span class="kw">SET</span> <span class="var">@proper</span> <span class="op">=</span> <span class="fn">ProperCase</span>(<span class="str">'marcos queiroz'</span>) <span class="cm">/* → Marcos Queiroz */</span>
+
+  <span class="cm">/* Tamanho e busca */</span>
+  <span class="kw">SET</span> <span class="var">@tamanho</span>  <span class="op">=</span> <span class="fn">Length</span>(<span class="var">@nome</span>)
+  <span class="kw">SET</span> <span class="var">@posArroba</span> <span class="op">=</span> <span class="fn">IndexOf</span>(<span class="var">@email</span>, <span class="str">'@'</span>)
+
+  <span class="cm">/* Recorte de texto */</span>
+  <span class="kw">SET</span> <span class="var">@dominio</span> <span class="op">=</span> <span class="fn">Substring</span>(<span class="var">@email</span>, <span class="fn">Add</span>(<span class="var">@posArroba</span>, <span class="num">1</span>), <span class="fn">Length</span>(<span class="var">@email</span>))
+
+  <span class="cm">/* Substituição */</span>
+  <span class="kw">SET</span> <span class="var">@limpo</span> <span class="op">=</span> <span class="fn">Replace</span>(<span class="var">@telefone</span>, <span class="str">'-'</span>, <span class="str">''</span>)
+
+  <span class="cm">/* Trim de espaços */</span>
+  <span class="kw">SET</span> <span class="var">@semEspacos</span> <span class="op">=</span> <span class="fn">Trim</span>(<span class="var">@nome</span>)
+<span class="tag">]%%</span></pre>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>Função</th><th>Descrição</th></tr></thead>
+          <tbody>
+            <tr><td>Concat(str1, str2, ...)</td><td>Concatena múltiplas strings</td></tr>
+            <tr><td>Length(str)</td><td>Retorna o número de caracteres</td></tr>
+            <tr><td>Substring(str, inicio, tam)</td><td>Extrai trecho da string</td></tr>
+            <tr><td>IndexOf(str, busca)</td><td>Posição de uma substring (0 se não encontrar)</td></tr>
+            <tr><td>Replace(str, antigo, novo)</td><td>Substitui texto</td></tr>
+            <tr><td>Trim(str)</td><td>Remove espaços do início e fim</td></tr>
+            <tr><td>UpperCase / LowerCase</td><td>Converte caixa</td></tr>
+            <tr><td>ProperCase(str)</td><td>Primeira letra de cada palavra em maiúscula</td></tr>
+            <tr><td>Empty(str)</td><td>Retorna true se nulo ou vazio</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- FUNÇÕES DE DATA -->
+      <section id="funcoes-data">
+        <h2>Funções de data</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="tag">%%[</span>
+  <span class="cm">/* Data e hora atual */</span>
+  <span class="kw">SET</span> <span class="var">@hoje</span>    <span class="op">=</span> <span class="fn">Now</span>()
+  <span class="kw">SET</span> <span class="var">@hojeUtc</span> <span class="op">=</span> <span class="fn">Now</span>(<span class="num">1</span>)  <span class="cm">/* Now(1) = UTC */</span>
+
+  <span class="cm">/* Formatar data para exibição */</span>
+  <span class="kw">SET</span> <span class="var">@dataFormatada</span> <span class="op">=</span> <span class="fn">FormatDate</span>(<span class="var">@hoje</span>, <span class="str">'dd/MM/yyyy'</span>)
+  <span class="kw">SET</span> <span class="var">@mesAno</span>        <span class="op">=</span> <span class="fn">FormatDate</span>(<span class="var">@hoje</span>, <span class="str">'MMMM yyyy'</span>)
+
+  <span class="cm">/* Adicionar dias */</span>
+  <span class="kw">SET</span> <span class="var">@vencimento</span> <span class="op">=</span> <span class="fn">DateAdd</span>(<span class="var">@hoje</span>, <span class="num">7</span>, <span class="str">'D'</span>)  <span class="cm">/* D=dias, M=meses, Y=anos */</span>
+
+  <span class="cm">/* Diferença entre datas */</span>
+  <span class="kw">SET</span> <span class="var">@diasRestantes</span> <span class="op">=</span> <span class="fn">DateDiff</span>(<span class="var">@dataExpiracao</span>, <span class="var">@hoje</span>, <span class="str">'D'</span>)
+<span class="tag">]%%</span>
+
+Oferta válida até <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@dataFormatada</span>)<span class="tag">=%%</span>.</pre>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- EXEMPLOS PRÁTICOS -->
+      <section id="exemplos">
+        <h2>Exemplos práticos</h2>
+
+        <div class="example-card">
+          <div class="example-badge">Exemplo 1 — Básico</div>
+          <h3>Fallback para campo vazio</h3>
+          <p>Evita saudações quebradas quando o nome do contato não está preenchido.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="kw">SET</span> <span class="var">@nome</span> <span class="op">=</span> <span class="fn">AttributeValue</span>(<span class="str">'FirstName'</span>)
+
+  <span class="kw">IF</span> <span class="fn">Empty</span>(<span class="var">@nome</span>) <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@nome</span> <span class="op">=</span> <span class="str">'cliente'</span>
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span>
+
+Olá, <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@nome</span>)<span class="tag">=%%</span>! Temos novidades para você.</pre>
+          </div>
+        </div>
+
+        <div class="example-card">
+          <div class="example-badge">Exemplo 2 — Básico</div>
+          <h3>Conteúdo dinâmico por segmento</h3>
+          <p>Exibe oferta diferente com base no segmento do contato armazenado na DE.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="kw">SET</span> <span class="var">@segmento</span> <span class="op">=</span> <span class="fn">Lookup</span>(<span class="str">'DE_Clientes'</span>, <span class="str">'Segmento'</span>, <span class="str">'SubscriberKey'</span>, <span class="var">@subscriberKey</span>)
+
+  <span class="kw">IF</span> <span class="var">@segmento</span> <span class="op">==</span> <span class="str">'VIP'</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@oferta</span>   <span class="op">=</span> <span class="str">'30% de desconto exclusivo para você'</span>
+    <span class="kw">SET</span> <span class="var">@imagemUrl</span> <span class="op">=</span> <span class="str">'banner-vip.jpg'</span>
+  <span class="kw">ELSEIF</span> <span class="var">@segmento</span> <span class="op">==</span> <span class="str">'Recorrente'</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@oferta</span>   <span class="op">=</span> <span class="str">'15% na sua próxima compra'</span>
+    <span class="kw">SET</span> <span class="var">@imagemUrl</span> <span class="op">=</span> <span class="str">'banner-recorrente.jpg'</span>
+  <span class="kw">ELSE</span>
+    <span class="kw">SET</span> <span class="var">@oferta</span>   <span class="op">=</span> <span class="str">'Confira nossas novidades'</span>
+    <span class="kw">SET</span> <span class="var">@imagemUrl</span> <span class="op">=</span> <span class="str">'banner-padrao.jpg'</span>
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span>
+
+&lt;img src="<span class="tag">%%=</span><span class="out">v</span>(<span class="var">@imagemUrl</span>)<span class="tag">=%%</span>" alt="Oferta" /&gt;
+&lt;p&gt;<span class="tag">%%=</span><span class="out">v</span>(<span class="var">@oferta</span>)<span class="tag">=%%</span>&lt;/p&gt;</pre>
+          </div>
+        </div>
+
+        <div class="example-card">
+          <div class="example-badge">Exemplo 3 — Intermediário</div>
+          <h3>Carrinho abandonado com produtos dinâmicos</h3>
+          <p>Busca os últimos itens abandonados no carrinho e os lista dinamicamente no e-mail.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="kw">SET</span> <span class="var">@itens</span>      <span class="op">=</span> <span class="fn">LookupRows</span>(<span class="str">'DE_Carrinho'</span>, <span class="str">'SubscriberKey'</span>, <span class="var">@subscriberKey</span>)
+  <span class="kw">SET</span> <span class="var">@totalItens</span> <span class="op">=</span> <span class="fn">RowCount</span>(<span class="var">@itens</span>)
+
+  <span class="kw">IF</span> <span class="var">@totalItens</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">THEN</span>
+    <span class="out">Output</span>(<span class="fn">Concat</span>(<span class="str">'&lt;p&gt;Você deixou '</span>, <span class="var">@totalItens</span>, <span class="str">' item(ns) no carrinho:&lt;/p&gt;&lt;ul&gt;'</span>))
+
+    <span class="kw">FOR</span> <span class="var">@i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">TO</span> <span class="var">@totalItens</span> <span class="kw">DO</span>
+      <span class="kw">SET</span> <span class="var">@row</span>    <span class="op">=</span> <span class="fn">Row</span>(<span class="var">@itens</span>, <span class="var">@i</span>)
+      <span class="kw">SET</span> <span class="var">@produto</span> <span class="op">=</span> <span class="fn">Field</span>(<span class="var">@row</span>, <span class="str">'NomeProduto'</span>)
+      <span class="kw">SET</span> <span class="var">@preco</span>   <span class="op">=</span> <span class="fn">Field</span>(<span class="var">@row</span>, <span class="str">'Preco'</span>)
+      <span class="out">Output</span>(<span class="fn">Concat</span>(<span class="str">'&lt;li&gt;'</span>, <span class="var">@produto</span>, <span class="str">' — R$ '</span>, <span class="var">@preco</span>, <span class="str">'&lt;/li&gt;'</span>))
+    <span class="kw">NEXT</span> <span class="var">@i</span>
+
+    <span class="out">Output</span>(<span class="fn">Concat</span>(<span class="str">'&lt;/ul&gt;'</span>))
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span></pre>
+          </div>
+        </div>
+
+        <div class="example-card">
+          <div class="example-badge">Exemplo 4 — Intermediário</div>
+          <h3>Saudação por horário do dia</h3>
+          <p>Personaliza a saudação com base no horário de abertura do e-mail — bom para mensagens transacionais ou triggered.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="kw">SET</span> <span class="var">@hora</span> <span class="op">=</span> <span class="fn">SystemDateToLocalDate</span>(<span class="fn">Now</span>())
+  <span class="kw">SET</span> <span class="var">@h</span>    <span class="op">=</span> <span class="fn">FormatDate</span>(<span class="var">@hora</span>, <span class="str">'H'</span>)  <span class="cm">/* hora em 24h */</span>
+
+  <span class="kw">IF</span> <span class="var">@h</span> <span class="op">&gt;=</span> <span class="num">5</span> <span class="kw">AND</span> <span class="var">@h</span> <span class="op">&lt;</span> <span class="num">12</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@periodo</span> <span class="op">=</span> <span class="str">'Bom dia'</span>
+  <span class="kw">ELSEIF</span> <span class="var">@h</span> <span class="op">&gt;=</span> <span class="num">12</span> <span class="kw">AND</span> <span class="var">@h</span> <span class="op">&lt;</span> <span class="num">18</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@periodo</span> <span class="op">=</span> <span class="str">'Boa tarde'</span>
+  <span class="kw">ELSE</span>
+    <span class="kw">SET</span> <span class="var">@periodo</span> <span class="op">=</span> <span class="str">'Boa noite'</span>
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span>
+
+<span class="tag">%%=</span><span class="out">v</span>(<span class="var">@periodo</span>)<span class="tag">=%%</span>, <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@nome</span>)<span class="tag">=%%</span>!</pre>
+          </div>
+        </div>
+
+        <div class="example-card">
+          <div class="example-badge">Exemplo 5 — Avançado</div>
+          <h3>Nível de fidelidade com pontos e data de expiração</h3>
+          <p>Busca pontos do programa de fidelidade, classifica o nível e calcula quantos dias faltam para expirar.</p>
+          <div class="code-block" style="margin-top:1rem">
+            <div class="code-header"><span class="code-lang">AMPscript</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="tag">%%[</span>
+  <span class="kw">SET</span> <span class="var">@linha</span>      <span class="op">=</span> <span class="fn">LookupRows</span>(<span class="str">'DE_Fidelidade'</span>, <span class="str">'SubscriberKey'</span>, <span class="var">@subscriberKey</span>)
+  <span class="kw">SET</span> <span class="var">@row</span>        <span class="op">=</span> <span class="fn">Row</span>(<span class="var">@linha</span>, <span class="num">1</span>)
+  <span class="kw">SET</span> <span class="var">@pontos</span>     <span class="op">=</span> <span class="fn">Field</span>(<span class="var">@row</span>, <span class="str">'Pontos'</span>)
+  <span class="kw">SET</span> <span class="var">@expiracao</span>  <span class="op">=</span> <span class="fn">Field</span>(<span class="var">@row</span>, <span class="str">'DataExpiracao'</span>)
+
+  <span class="cm">/* Calcula dias até expirar */</span>
+  <span class="kw">SET</span> <span class="var">@diasRestantes</span> <span class="op">=</span> <span class="fn">DateDiff</span>(<span class="var">@expiracao</span>, <span class="fn">Now</span>(), <span class="str">'D'</span>)
+
+  <span class="cm">/* Classifica o nível */</span>
+  <span class="kw">SET</span> <span class="var">@nivel</span> <span class="op">=</span> <span class="fn">IIF</span>(<span class="var">@pontos</span> <span class="op">&gt;=</span> <span class="num">1000</span>, <span class="str">'Ouro'</span>,
+               <span class="fn">IIF</span>(<span class="var">@pontos</span> <span class="op">&gt;=</span> <span class="num">500</span>, <span class="str">'Prata'</span>, <span class="str">'Bronze'</span>))
+
+  <span class="cm">/* Alerta de expiração */</span>
+  <span class="kw">IF</span> <span class="var">@diasRestantes</span> <span class="op">&lt;=</span> <span class="num">30</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@alerta</span> <span class="op">=</span> <span class="fn">Concat</span>(<span class="str">'⚠️ Seus pontos expiram em '</span>, <span class="var">@diasRestantes</span>, <span class="str">' dias!'</span>)
+  <span class="kw">ENDIF</span>
+<span class="tag">]%%</span>
+
+Você tem &lt;strong&gt;<span class="tag">%%=</span><span class="out">v</span>(<span class="var">@pontos</span>)<span class="tag">=%%</span> pontos&lt;/strong&gt; — nível <span class="tag">%%=</span><span class="out">v</span>(<span class="var">@nivel</span>)<span class="tag">=%%</span>.
+<span class="tag">%%=</span><span class="out">v</span>(<span class="var">@alerta</span>)<span class="tag">=%%</span></pre>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- STYLE GUIDE -->
+      <section id="style-guide">
+        <h2>Style Guide</h2>
+        <p>Boas convenções de escrita fazem o AMPscript mais legível, fácil de manter e menos propenso a erros. As recomendações abaixo seguem o guia do Mateusz Dąbrowski, referência da comunidade SFMC.</p>
+
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">AMPscript — padrões recomendados</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="tag">%%[</span>
+  <span class="cm">/* ✅ camelCase para variáveis */</span>
+  <span class="kw">VAR</span> <span class="var">@firstName</span>, <span class="var">@isVipCustomer</span>, <span class="var">@expirationDate</span>
+
+  <span class="cm">/* ✅ PascalCase para funções */</span>
+  <span class="kw">SET</span> <span class="var">@firstName</span> <span class="op">=</span> <span class="fn">AttributeValue</span>(<span class="str">'FirstName'</span>)
+  <span class="kw">SET</span> <span class="var">@rowCount</span>  <span class="op">=</span> <span class="fn">RowCount</span>(<span class="var">@rows</span>)
+
+  <span class="cm">/* ✅ UPPERCASE para IF, SET, FOR, VAR */</span>
+  <span class="kw">IF</span> <span class="fn">Empty</span>(<span class="var">@firstName</span>) <span class="kw">THEN</span>
+    <span class="kw">SET</span> <span class="var">@firstName</span> <span class="op">=</span> <span class="str">'cliente'</span>
+  <span class="kw">ENDIF</span>
+
+  <span class="cm">/* ✅ Aspas simples consistentes */</span>
+  <span class="kw">SET</span> <span class="var">@isVipCustomer</span> <span class="op">=</span> <span class="fn">IIF</span>(<span class="var">@segmento</span> <span class="op">==</span> <span class="str">'VIP'</span>, <span class="str">'true'</span>, <span class="str">'false'</span>)
+
+  <span class="cm">/* ✅ Nome descritivo — boolean com prefixo "is" */</span>
+  <span class="cm">/* ✅ Nome descritivo — data com sufixo "Date"   */</span>
+  <span class="kw">SET</span> <span class="var">@expirationDate</span> <span class="op">=</span> <span class="fn">DateAdd</span>(<span class="fn">Now</span>(), <span class="num">30</span>, <span class="str">'D'</span>)
+<span class="tag">]%%</span></pre>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>Elemento</th><th>Convenção</th><th>Exemplo</th></tr></thead>
+          <tbody>
+            <tr><td>Variáveis</td><td>camelCase</td><td><code>@firstName</code>, <code>@totalRows</code></td></tr>
+            <tr><td>Funções</td><td>PascalCase</td><td><code>Lookup()</code>, <code>RowCount()</code></td></tr>
+            <tr><td>Palavras-chave</td><td>UPPERCASE</td><td><code>IF</code>, <code>SET</code>, <code>FOR</code>, <code>VAR</code></td></tr>
+            <tr><td>Booleanos</td><td>Prefixo <code>is</code> / <code>has</code></td><td><code>@isActive</code>, <code>@hasOrders</code></td></tr>
+            <tr><td>Datas</td><td>Sufixo <code>Date</code></td><td><code>@expirationDate</code></td></tr>
+            <tr><td>Aspas</td><td>Simples <code>'</code></td><td><code>'valor'</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- BOAS PRÁTICAS -->
+      <section id="boas-praticas">
+        <h2>Boas práticas</h2>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Sempre trate campos vazios</div>
+          <p>Use <code>Empty()</code> antes de exibir qualquer campo que possa vir nulo. Campos em branco geram saudações quebradas como "Olá, !" — um erro clássico e evitável.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Centralize a lógica no topo do e-mail</div>
+          <p>Declare variáveis e execute lookups em um único bloco <code>%%[ ]%%</code> no início do template. Isso facilita leitura, debugging e manutenção — evite espalhar lógica pelo HTML.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Use nomes descritivos</div>
+          <p><code>@isVipCustomer</code> é muito mais claro do que <code>@v</code> ou <code>@flag</code>. Em projetos que outras pessoas vão manter, ou que você vai revisitar meses depois, nomes descritivos poupam muito tempo.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Evite excesso de Lookups</div>
+          <p>Cada chamada a <code>Lookup</code> ou <code>LookupRows</code> é uma consulta ao banco durante o envio. Em bases grandes, lookups desnecessários impactam performance. Pré-processe o máximo de dados possível via SQL no Automation Studio.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ AMPscript não substitui SSJS para tudo</div>
+          <p>Para consumo de APIs REST, manipulação complexa de JSON ou operações que exigem loops acima de 2.000 registros, o <strong>SSJS</strong> é mais adequado. Use AMPscript onde ele é eficiente e SSJS onde a complexidade exige.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Teste em Preview antes de enviar</div>
+          <p>O Content Builder tem modo de Preview com dados reais. Sempre teste com múltiplos perfis — contatos com campos vazios, segmentos diferentes, valores extremos — antes de ativar qualquer envio.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- REFERÊNCIAS -->
+      <section id="referencias">
+        <h2>Referências</h2>
+        <div class="refs-grid">
+          <a class="ref-card" href="https://trailhead.salesforce.com/pt-BR/content/learn/modules/marketing-cloud-programmatic-languages/explore-ampscript" target="_blank" rel="noopener">
+            <div class="ref-source">Salesforce Trailhead</div>
+            <div class="ref-title">Explore AMPscript</div>
+            <div class="ref-desc">Módulo oficial em português — fundamentos e primeiros passos</div>
+          </a>
+          <a class="ref-card" href="https://mateuszdabrowski.pl/docs/salesforce/marketing-cloud-engagement/ampscript/ampscript-style-guide/" target="_blank" rel="noopener">
+            <div class="ref-source">Mateusz Dąbrowski</div>
+            <div class="ref-title">AMPScript Style Guide</div>
+            <div class="ref-desc">Guia de convenções e boas práticas de escrita</div>
+          </a>
+          <a class="ref-card" href="https://ampscript.xyz/" target="_blank" rel="noopener">
+            <div class="ref-source">ampscript.xyz</div>
+            <div class="ref-title">How-tos & Tips</div>
+            <div class="ref-desc">Biblioteca de exemplos práticos e tutoriais avançados</div>
+          </a>
+          <a class="ref-card" href="https://ampscript.io/" target="_blank" rel="noopener">
+            <div class="ref-source">ampscript.io</div>
+            <div class="ref-title">AMPscript Reference</div>
+            <div class="ref-desc">Referência completa de funções e sintaxe</div>
+          </a>
+          <a class="ref-card" href="https://deselect.com/blog/an-overview-of-ampscript-in-salesforce-marketing-cloud/" target="_blank" rel="noopener">
+            <div class="ref-source">DESelect</div>
+            <div class="ref-title">Overview of AMPscript in SFMC</div>
+            <div class="ref-desc">Visão geral com exemplos de uso em campanhas</div>
+          </a>
+          <a class="ref-card" href="https://www.salesforceben.com/ampscript-in-salesforce-marketing-cloud-expectations-vs-reality/" target="_blank" rel="noopener">
+            <div class="ref-source">Salesforce Ben</div>
+            <div class="ref-title">AMPscript: Expectations vs Reality</div>
+            <div class="ref-desc">Perspectiva realista sobre o uso de AMPscript no dia a dia</div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    © 2026 · Senior Marketing Cloud Developer · Recife, PE · marcosqueirozpereira@gmail.com
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.innerText).then(() => {
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const sections = document.querySelectorAll('section[id]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sidebarLinks.forEach(l => { l.style.color = ''; l.style.borderLeftColor = ''; });
+          const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+          if (active) { active.style.color = 'var(--accent)'; active.style.borderLeftColor = 'var(--accent)'; }
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach(s => obs.observe(s));
+  </script>
+
+</body>
+</html>
