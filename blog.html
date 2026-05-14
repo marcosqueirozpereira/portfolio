@@ -420,7 +420,12 @@
       const card = document.createElement("a");
       card.className = "post-card reveal";
       card.dataset.cat = article.category;
-      card.href = `artigo.html?id=${encodeURIComponent(article.id)}`;
+
+      // Se o artigo tem URL externa, aponta direto para ela.
+      // Caso contrário, usa o viewer padrão artigo.html?id=...
+      card.href = article.externalUrl
+        ? article.externalUrl
+        : `artigo.html?id=${encodeURIComponent(article.id)}`;
 
       card.innerHTML = `
         <div class="post-bar" style="background:${article.color}"></div>
