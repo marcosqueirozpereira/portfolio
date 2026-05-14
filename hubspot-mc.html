@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HubSpot Marketing Hub | MC · DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --bg2: #111827;
+      --bg3: #1a2235;
+      --accent: #ff7a59;
+      --accent2: #f5c26b;
+      --accent3: #10b981;
+      --text: #e2e8f0;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --border: rgba(255,122,89,0.15);
+      --code-bg: #0d1117;
+      --tag-bg: rgba(255,122,89,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-brand { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #ff7a59; text-decoration: none; font-size: 1rem; letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* HERO */
+    .hero { padding: 5rem 2rem 3rem; max-width: 900px; margin: 0 auto; }
+    .breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb span { margin: 0 0.4rem; }
+    .hero-tag { display: inline-block; background: var(--tag-bg); border: 1px solid var(--border); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; padding: 0.3rem 0.8rem; border-radius: 2px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.2rem; }
+    h1 em { font-style: normal; color: var(--accent); }
+    .hero-desc { font-size: 1.05rem; color: var(--text-dim); max-width: 680px; margin-bottom: 2rem; font-weight: 300; }
+    .hero-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    /* LAYOUT */
+    .page-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; display: grid; grid-template-columns: 240px 1fr; gap: 3rem; align-items: start; }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 80px; }
+    .sidebar-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .sidebar-nav { list-style: none; border-left: 1px solid var(--border); }
+    .sidebar-nav li a { display: block; padding: 0.4rem 0 0.4rem 1rem; font-size: 0.82rem; color: var(--text-dim); text-decoration: none; border-left: 2px solid transparent; margin-left: -1px; transition: all 0.2s; line-height: 1.4; }
+    .sidebar-nav li a:hover { color: var(--accent); border-left-color: var(--accent); }
+    .sidebar-nav .sub a { padding-left: 1.8rem; font-size: 0.77rem; color: var(--text-muted); }
+    .sidebar-nav .sub a:hover { color: var(--accent); }
+
+    /* CONTENT */
+    .content { min-width: 0; }
+    .content h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); margin: 3rem 0 1rem; padding-top: 1rem; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 2rem 0 0.8rem; font-family: 'JetBrains Mono', monospace; }
+    .content p { color: var(--text-dim); margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; }
+    .content strong { color: var(--text); font-weight: 600; }
+    .content ul, .content ol { color: var(--text-dim); font-size: 0.95rem; font-weight: 300; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .content li { margin-bottom: 0.4rem; }
+
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+    /* CALLOUT */
+    .callout { background: var(--bg3); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+    .callout.warning { border-left-color: #f59e0b; }
+    .callout.tip    { border-left-color: var(--accent3); }
+    .callout.info   { border-left-color: #60a5fa; }
+    .callout-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .callout.warning .callout-title { color: #f59e0b; }
+    .callout.tip     .callout-title { color: var(--accent3); }
+    .callout.info    .callout-title { color: #60a5fa; }
+    .callout p { margin-bottom: 0; }
+
+    /* INLINE CODE */
+    code { font-family: 'JetBrains Mono', monospace; background: rgba(255,122,89,0.08); border: 1px solid rgba(255,122,89,0.18); color: var(--accent); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.85em; }
+
+    /* FLOW DIAGRAM */
+    .flow { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin: 1.5rem 0; }
+    .flow-step { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.2rem; font-size: 0.83rem; color: var(--text-dim); text-align: center; min-width: 110px; }
+    .flow-step strong { display: block; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .flow-arrow { color: var(--text-muted); font-size: 1.2rem; padding: 0 0.5rem; }
+
+    /* WORKFLOW CARD */
+    .wf-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem; margin: 1.5rem 0; position: relative; overflow: hidden; }
+    .wf-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .wf-badge { display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 3px; letter-spacing: 0.08em; margin-bottom: 0.8rem; }
+    .wf-card h3 { color: var(--text); font-size: 1.05rem; margin: 0 0 0.6rem; font-family: 'Sora', sans-serif; }
+    .wf-card p { margin-bottom: 0.6rem; }
+    .wf-steps { margin-top: 1rem; }
+    .wf-step { display: flex; gap: 0.8rem; align-items: flex-start; margin-bottom: 0.6rem; }
+    .wf-step-num { background: rgba(255,122,89,0.12); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .wf-step-text { font-size: 0.88rem; color: var(--text-dim); }
+
+    /* TABLE */
+    .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.87rem; }
+    .data-table th { background: var(--bg3); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-dim); vertical-align: top; }
+    .data-table td:first-child { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.82rem; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* HUB PILLS */
+    .hubs { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.2rem 0; }
+    .hub-pill { padding: 0.35rem 0.9rem; border-radius: 100px; font-size: 0.78rem; font-weight: 500; border: 1px solid; }
+    .hub-orange  { background: rgba(255,122,89,0.1);  border-color: rgba(255,122,89,0.3);  color: #ff7a59; }
+    .hub-blue    { background: rgba(96,165,250,0.1);  border-color: rgba(96,165,250,0.3);  color: #60a5fa; }
+    .hub-green   { background: rgba(16,185,129,0.1);  border-color: rgba(16,185,129,0.3);  color: #10b981; }
+    .hub-yellow  { background: rgba(245,194,107,0.1); border-color: rgba(245,194,107,0.3); color: #f5c26b; }
+    .hub-purple  { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.3); color: #a78bfa; }
+
+    /* REFS */
+    .refs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .ref-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; text-decoration: none; transition: all 0.2s; display: block; }
+    .ref-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .ref-source { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .ref-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+    .ref-desc  { font-size: 0.8rem; color: var(--text-muted); }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .page-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .nav-links { display: none; }
+      .flow { flex-direction: column; align-items: flex-start; }
+      .flow-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="index.html">MC · DEV</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="exp.html">Experiência</a></li>
+      <li><a href="certs.html">Certificações</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="breadcrumb">
+      <a href="index.html">Início</a><span>/</span>
+      <a href="blog.html">Blog</a><span>/</span>
+      HubSpot Marketing Hub
+    </div>
+    <div class="hero-tag">Tutorial · HubSpot · Marketing Automation</div>
+    <h1><em>HubSpot</em> Marketing Hub</h1>
+    <p class="hero-desc">
+      Guia prático de HubSpot Marketing Hub em português: Workflows, segmentação com Listas, personalização com Tokens, Smart Content e boas práticas para automação orientada ao funil.
+    </p>
+    <div class="hero-meta">
+      <span>📅 Mai 2026</span>
+      <span>⏱ ~18 min de leitura</span>
+      <span>🎯 Iniciante → Avançado</span>
+      <span>✍ Marcos Queiroz</span>
+    </div>
+  </div>
+
+  <div class="page-layout">
+
+    <aside class="sidebar">
+      <p class="sidebar-title">Neste artigo</p>
+      <ul class="sidebar-nav">
+        <li><a href="#o-que-e">O que é o HubSpot?</a></li>
+        <li><a href="#hubs">Os Hubs da plataforma</a></li>
+        <li><a href="#crm">CRM — base de tudo</a></li>
+        <li class="sub"><a href="#propriedades">Propriedades de contato</a></li>
+        <li class="sub"><a href="#lifecycle">Lifecycle Stage</a></li>
+        <li><a href="#listas">Listas — segmentação</a></li>
+        <li class="sub"><a href="#listas-ativas">Listas ativas</a></li>
+        <li class="sub"><a href="#listas-estaticas">Listas estáticas</a></li>
+        <li><a href="#workflows">Workflows</a></li>
+        <li class="sub"><a href="#triggers">Triggers de entrada</a></li>
+        <li class="sub"><a href="#acoes">Ações disponíveis</a></li>
+        <li class="sub"><a href="#branches">If/Then Branches</a></li>
+        <li><a href="#emails">E-mails de marketing</a></li>
+        <li class="sub"><a href="#tokens">Personalization Tokens</a></li>
+        <li class="sub"><a href="#smart-content">Smart Content</a></li>
+        <li><a href="#lead-scoring">Lead Scoring</a></li>
+        <li><a href="#exemplos">Workflows práticos</a></li>
+        <li><a href="#sfmc-vs-hubspot">SFMC vs HubSpot</a></li>
+        <li><a href="#boas-praticas">Boas práticas</a></li>
+        <li><a href="#referencias">Referências</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+
+      <!-- O QUE É -->
+      <section id="o-que-e">
+        <h2>O que é o HubSpot?</h2>
+        <p>
+          O <strong>HubSpot</strong> é uma plataforma all-in-one de CRM, marketing, vendas e atendimento. Diferente de ferramentas pontuais, ele centraliza dados de clientes, automações, e-mails, landing pages, relatórios e pipeline de vendas em um único lugar — sem necessidade de integrações complexas entre sistemas diferentes.
+        </p>
+        <p>
+          A filosofia da plataforma é o <strong>Inbound Marketing</strong>: atrair, engajar e encantar clientes com conteúdo relevante, em vez de interromper com publicidade invasiva. O HubSpot é especialmente forte em empresas B2B, SaaS e serviços que trabalham com funis de lead nurturing de médio e longo prazo.
+        </p>
+        <div class="callout info">
+          <div class="callout-title">📌 HubSpot vs Salesforce Marketing Cloud</div>
+          <p>O SFMC é mais poderoso para operações de e-mail em escala (centenas de milhões de envios) e personalização técnica via AMPscript. O HubSpot brilha na integração nativa CRM + marketing + vendas, facilidade de uso e custo menor para equipes menores. Os dois coexistem em muitas empresas.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- HUBS -->
+      <section id="hubs">
+        <h2>Os Hubs da plataforma</h2>
+        <p>O HubSpot é modular. Cada Hub resolve um problema específico, e todos compartilham o mesmo CRM central.</p>
+
+        <div class="hubs">
+          <span class="hub-pill hub-orange">Marketing Hub</span>
+          <span class="hub-pill hub-blue">Sales Hub</span>
+          <span class="hub-pill hub-green">Service Hub</span>
+          <span class="hub-pill hub-yellow">Content Hub</span>
+          <span class="hub-pill hub-purple">Operations Hub</span>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>Hub</th><th>O que faz</th><th>Funcionalidades-chave</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Marketing Hub</td>
+              <td>Atração, nutrição e conversão de leads</td>
+              <td>E-mail, Workflows, Listas, Formulários, Landing Pages, Anúncios, SEO</td>
+            </tr>
+            <tr>
+              <td>Sales Hub</td>
+              <td>Pipeline e prospecção de vendas</td>
+              <td>Deals, Sequences, Meeting Scheduler, Quotes</td>
+            </tr>
+            <tr>
+              <td>Service Hub</td>
+              <td>Atendimento e retenção de clientes</td>
+              <td>Tickets, Knowledge Base, Chat, Customer Portal</td>
+            </tr>
+            <tr>
+              <td>Content Hub</td>
+              <td>Criação e gestão de conteúdo</td>
+              <td>CMS, Blog, Podcast, Smart Content personalizado</td>
+            </tr>
+            <tr>
+              <td>Operations Hub</td>
+              <td>Qualidade de dados e automações avançadas</td>
+              <td>Data Sync, Custom Code Actions, Data Quality</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Este guia foca no <strong>Marketing Hub</strong> — especificamente em Workflows, Listas, E-mail e Personalização.</p>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- CRM -->
+      <section id="crm">
+        <h2>CRM — a base de tudo</h2>
+        <p>
+          Toda automação no HubSpot parte do CRM. Diferente de ferramentas onde o CRM e o marketing ficam em silos, aqui os dados de contato, empresa, deal e comportamento alimentam diretamente os Workflows, Listas e e-mails em tempo real.
+        </p>
+
+        <section id="propriedades">
+          <h3>Propriedades de contato</h3>
+          <p>Cada contato no HubSpot possui <strong>propriedades</strong> — campos que armazenam dados. Existem propriedades padrão (nativas) e propriedades customizadas criadas pela sua equipe.</p>
+
+          <table class="data-table">
+            <thead><tr><th>Categoria</th><th>Exemplos de propriedades</th></tr></thead>
+            <tbody>
+              <tr><td>Identidade</td><td>First Name, Last Name, Email, Phone, Job Title</td></tr>
+              <tr><td>Empresa</td><td>Company Name, Industry, Company Size, Annual Revenue</td></tr>
+              <tr><td>Funil</td><td>Lifecycle Stage, Lead Status, Lead Score, Last Activity Date</td></tr>
+              <tr><td>Comportamento</td><td>Last Page Seen, Number of Page Views, Form Submissions</td></tr>
+              <tr><td>Marketing</td><td>Email Opt-in, Unsubscribed, Original Source, UTM Campaign</td></tr>
+              <tr><td>Customizadas</td><td>Qualquer campo que o seu negócio precise — plano, produto, região etc.</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout tip">
+            <div class="callout-title">✅ Boas práticas de propriedades</div>
+            <p>Evite criar propriedades duplicadas para a mesma informação. Defina convenções de nomenclatura desde o início — ex: prefixo por time como <code>MKT_</code> ou <code>SAL_</code> para propriedades customizadas. Dados limpos e padronizados são o que diferencia segmentações confiáveis de segmentações que "derivam".</p>
+          </div>
+        </section>
+
+        <section id="lifecycle">
+          <h3>Lifecycle Stage — estágio no funil</h3>
+          <p>O <strong>Lifecycle Stage</strong> é a propriedade central para orquestrar marketing e vendas. Indica em qual etapa do funil o contato está e quem deve agir sobre ele.</p>
+
+          <div class="flow">
+            <div class="flow-step"><strong>Subscriber</strong>Assinou newsletter</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><strong>Lead</strong>Preencheu form</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><strong>MQL</strong>Qualificado pelo Mkt</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><strong>SQL</strong>Aceito por Vendas</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><strong>Opportunity</strong>Deal aberto</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><strong>Customer</strong>Fechou</div>
+          </div>
+
+          <p>Use Workflows para avançar o Lifecycle Stage automaticamente com base em comportamento — ex: ao atingir determinado Lead Score, o contato passa automaticamente de Lead para MQL e uma tarefa é criada para o time de vendas.</p>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- LISTAS -->
+      <section id="listas">
+        <h2>Listas — segmentação de contatos</h2>
+        <p>
+          As <strong>Listas</strong> do HubSpot são a principal forma de segmentar contatos. Elas funcionam como filtros dinâmicos ou fixos sobre o CRM e alimentam Workflows, campanhas de e-mail e públicos de anúncios.
+        </p>
+
+        <section id="listas-ativas">
+          <h3>Listas Ativas (Active Lists)</h3>
+          <p>Atualizam automaticamente em tempo real. Um contato entra ou sai conforme seus dados mudam. São ideais para segmentação dinâmica que reflete o estado atual do contato.</p>
+
+          <p><strong>Exemplos de listas ativas:</strong></p>
+          <ul>
+            <li>Contatos com Lifecycle Stage = Lead E Last Activity Date nos últimos 30 dias</li>
+            <li>Contatos no setor de SaaS E com mais de 50 funcionários E sem deals abertos</li>
+            <li>Clientes com próxima data de renovação nos próximos 60 dias</li>
+            <li>Leads que visitaram a página de preços pelo menos 3 vezes no último mês</li>
+          </ul>
+
+          <div class="callout tip">
+            <div class="callout-title">✅ Listas ativas como gatilho de Workflow</div>
+            <p>Configure um Workflow para ser disparado quando um contato entra em uma lista ativa. Isso cria automações altamente responsivas — assim que o contato muda de estágio, o fluxo inicia imediatamente.</p>
+          </div>
+        </section>
+
+        <section id="listas-estaticas">
+          <h3>Listas Estáticas (Static Lists)</h3>
+          <p>Mantêm um conjunto fixo de contatos até serem editadas manualmente. Úteis para campanhas pontuais, importações ou segmentos históricos que não devem mudar.</p>
+
+          <p><strong>Quando usar listas estáticas:</strong></p>
+          <ul>
+            <li>Público de uma campanha única (envio de e-mail de evento)</li>
+            <li>Lista de participantes de um webinar já realizado</li>
+            <li>Contatos importados de uma planilha para uma ação específica</li>
+            <li>Grupos de supressão para campanhas determinadas</li>
+          </ul>
+        </section>
+
+        <p><strong>Convenção de nomenclatura recomendada para listas:</strong></p>
+        <table class="data-table">
+          <thead><tr><th>Prefixo</th><th>Uso</th><th>Exemplo</th></tr></thead>
+          <tbody>
+            <tr><td>SEG -</td><td>Segmentos para envio ou nutrição</td><td><code>SEG - SaaS - EMEA - MQL</code></td></tr>
+            <tr><td>SUP -</td><td>Listas de supressão</td><td><code>SUP - Clientes ativos</code></td></tr>
+            <tr><td>AUD -</td><td>Públicos de anúncios</td><td><code>AUD - Webinar - Mai 2026</code></td></tr>
+            <tr><td>OPS -</td><td>Listas operacionais internas</td><td><code>OPS - Leads sem dono</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- WORKFLOWS -->
+      <section id="workflows">
+        <h2>Workflows — automação de marketing</h2>
+        <p>
+          Os <strong>Workflows</strong> são o motor de automação do HubSpot. Permitem executar ações automaticamente com base em triggers (gatilhos), condições e comportamentos de contatos — sem nenhum código.
+        </p>
+        <p>Disponíveis a partir do <strong>Marketing Hub Professional</strong>. No plano Starter, há automações simples dentro de e-mails, mas sem o builder completo.</p>
+
+        <section id="triggers">
+          <h3>Triggers — o que inicia o Workflow</h3>
+          <p>O trigger define quem entra no fluxo e quando. Os principais tipos são:</p>
+
+          <table class="data-table">
+            <thead><tr><th>Tipo de trigger</th><th>Quando usar</th><th>Exemplo</th></tr></thead>
+            <tbody>
+              <tr><td>Submissão de formulário</td><td>Lead gerado por form na landing page</td><td>Formulário "Download eBook Inbound"</td></tr>
+              <tr><td>Entrada em lista ativa</td><td>Quando contato passa a atender critério</td><td>Lista "MQL - Score ≥ 50"</td></tr>
+              <tr><td>Mudança de propriedade</td><td>Ao atualizar um campo específico</td><td>Lifecycle Stage mudou para Customer</td></tr>
+              <tr><td>Visita a página</td><td>Comportamento no site</td><td>Visitou /pricing pelo menos 2 vezes</td></tr>
+              <tr><td>Clique em e-mail</td><td>Engajamento com campanha</td><td>Clicou no link do e-mail X</td></tr>
+              <tr><td>Data de propriedade</td><td>Agendamentos por data</td><td>30 dias antes de Contract Renewal Date</td></tr>
+              <tr><td>Manualmente</td><td>Enrolamento manual de um contato</td><td>Contato adicionado por um rep</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="acoes">
+          <h3>Ações disponíveis</h3>
+          <p>Após o trigger, o Workflow executa uma série de ações. As principais:</p>
+          <ul>
+            <li><strong>Send email:</strong> envia um e-mail automatizado ao contato</li>
+            <li><strong>Send internal notification:</strong> notifica um usuário interno (rep de vendas, por ex.)</li>
+            <li><strong>Create task:</strong> cria tarefa no CRM para follow-up</li>
+            <li><strong>Set property value:</strong> atualiza uma propriedade do contato (ex: Lifecycle Stage)</li>
+            <li><strong>Add to / Remove from list:</strong> controla a associação a listas estáticas</li>
+            <li><strong>Add to sequence:</strong> inicia uma Sequence de e-mails de vendas</li>
+            <li><strong>Delay:</strong> aguarda X dias, horas ou até uma data/hora específica</li>
+            <li><strong>If/Then Branch:</strong> divide o fluxo com base em condições</li>
+            <li><strong>Enroll in workflow:</strong> encaminha o contato para outro Workflow</li>
+            <li><strong>Custom code (Ops Hub Enterprise):</strong> executa JavaScript ou Python personalizado</li>
+          </ul>
+        </section>
+
+        <section id="branches">
+          <h3>If/Then Branches — lógica condicional</h3>
+          <p>Os <strong>If/Then Branches</strong> permitem criar caminhos diferentes dentro de um mesmo Workflow, com base em propriedades, comportamentos ou engajamento com e-mails anteriores.</p>
+
+          <div class="callout info">
+            <div class="callout-title">📌 Exemplo de Branch por engajamento</div>
+            <p>Envie o e-mail 1 → Aguarde 3 dias → <strong>Branch:</strong> SE clicou no e-mail 1 → envie e-mail de oferta avançada. SE NÃO clicou → envie um e-mail de reforço com abordagem diferente. Isso evita enviar a mesma sequência para todos independente do interesse demonstrado.</p>
+          </div>
+
+          <div class="callout warning">
+            <div class="callout-title">⚠ Workflow vs Sequence</div>
+            <p><strong>Workflows</strong> são para automação de marketing 1:N — campanhas para segmentos, com lógica complexa e múltiplos branches. <strong>Sequences</strong> são para vendas 1:1 — série de e-mails personalizados enviados da caixa do rep, que param automaticamente quando o prospect responde. Use cada um para o fim certo.</p>
+          </div>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- E-MAILS -->
+      <section id="emails">
+        <h2>E-mails de marketing</h2>
+        <p>
+          O HubSpot oferece um editor de e-mail drag-and-drop que gera templates responsivos sem código. Os e-mails podem ser <strong>de marketing</strong> (envios em massa para listas) ou <strong>automatizados</strong> (disparados por Workflows).
+        </p>
+
+        <section id="tokens">
+          <h3>Personalization Tokens</h3>
+          <p>Os <strong>Personalization Tokens</strong> são placeholders dinâmicos que inserem dados do CRM diretamente no conteúdo do e-mail — no assunto, no corpo ou no CTA. São simples, sem necessidade de código.</p>
+
+          <table class="data-table">
+            <thead><tr><th>Token</th><th>O que insere</th><th>Fallback recomendado</th></tr></thead>
+            <tbody>
+              <tr><td>{{ contact.firstname }}</td><td>Primeiro nome do contato</td><td>"cliente"</td></tr>
+              <tr><td>{{ contact.company }}</td><td>Nome da empresa</td><td>"sua empresa"</td></tr>
+              <tr><td>{{ contact.jobtitle }}</td><td>Cargo do contato</td><td>(vazio)</td></tr>
+              <tr><td>{{ contact.lifecyclestage }}</td><td>Estágio no funil</td><td>(vazio)</td></tr>
+              <tr><td>{{ contact.owner.firstname }}</td><td>Nome do rep responsável</td><td>"nossa equipe"</td></tr>
+              <tr><td>{{ deal.amount }}</td><td>Valor do deal (e-mails de deal)</td><td>(vazio)</td></tr>
+              <tr><td>{{ company.industry }}</td><td>Setor da empresa</td><td>(vazio)</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout tip">
+            <div class="callout-title">✅ Sempre defina um Fallback Value</div>
+            <p>Todo token deve ter um valor de fallback configurado. Se o campo estiver vazio no CRM e não houver fallback, o e-mail será enviado com o token em branco — ex: "Olá, " em vez de "Olá, cliente". O fallback garante que a experiência nunca fique quebrada.</p>
+          </div>
+        </section>
+
+        <section id="smart-content">
+          <h3>Smart Content — conteúdo dinâmico</h3>
+          <p>O <strong>Smart Content</strong> vai além dos tokens: permite exibir <em>blocos inteiros diferentes</em> para segmentos distintos dentro do mesmo e-mail ou landing page, com base em regras definidas.</p>
+
+          <p><strong>Critérios disponíveis para Smart Rules:</strong></p>
+          <ul>
+            <li><strong>Lifecycle Stage:</strong> exibe conteúdo diferente para Lead, MQL ou Cliente</li>
+            <li><strong>Membership em lista:</strong> personaliza por segmento de negócio</li>
+            <li><strong>País:</strong> via IP do visitante — útil para landing pages multilíngues</li>
+            <li><strong>Device type:</strong> mobile, tablet ou desktop</li>
+            <li><strong>Referral source:</strong> ajusta mensagem conforme canal de origem</li>
+            <li><strong>Ad source:</strong> personaliza com base em qual anúncio gerou o clique</li>
+          </ul>
+
+          <div class="callout info">
+            <div class="callout-title">📌 Smart Content disponível a partir do Marketing Hub Professional</div>
+            <p>O plano Starter tem acesso a tokens e alguma personalização básica, mas o Smart Content com múltiplas Smart Rules requer Professional ou Enterprise.</p>
+          </div>
+        </section>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- LEAD SCORING -->
+      <section id="lead-scoring">
+        <h2>Lead Scoring</h2>
+        <p>
+          O <strong>Lead Score</strong> é uma pontuação calculada automaticamente pelo HubSpot com base em comportamentos e propriedades do contato. Permite priorizar quais leads estão mais prontos para abordagem de vendas.
+        </p>
+
+        <table class="data-table">
+          <thead><tr><th>Ação/Propriedade</th><th>Pontos</th><th>Tipo</th></tr></thead>
+          <tbody>
+            <tr><td>Preencheu formulário de contato</td><td>+20</td><td>Comportamental</td></tr>
+            <tr><td>Visitou página de pricing (1x)</td><td>+10</td><td>Comportamental</td></tr>
+            <tr><td>Visitou página de pricing (3x+)</td><td>+25</td><td>Comportamental</td></tr>
+            <tr><td>Abriu e-mail de nutrição</td><td>+5</td><td>Comportamental</td></tr>
+            <tr><td>Clicou em link de e-mail</td><td>+10</td><td>Comportamental</td></tr>
+            <tr><td>Cargo = Diretor ou C-level</td><td>+15</td><td>Demográfico</td></tr>
+            <tr><td>Setor = SaaS / Tecnologia</td><td>+10</td><td>Demográfico</td></tr>
+            <tr><td>Empresa com 50+ funcionários</td><td>+10</td><td>Demográfico</td></tr>
+            <tr><td>Descadastrou-se de e-mails</td><td>-30</td><td>Negativo</td></tr>
+            <tr><td>Não abriu nenhum e-mail em 90 dias</td><td>-20</td><td>Negativo</td></tr>
+          </tbody>
+        </table>
+
+        <p>Configure um Workflow para mudar o Lifecycle Stage para MQL automaticamente quando o Lead Score atingir o threshold definido pelo seu negócio — e criar uma tarefa de follow-up para o rep responsável.</p>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- EXEMPLOS PRÁTICOS -->
+      <section id="exemplos">
+        <h2>Workflows práticos</h2>
+
+        <div class="wf-card">
+          <div class="wf-badge">Workflow 1 — Básico</div>
+          <h3>Boas-vindas após download de material</h3>
+          <p>Disparado quando um lead baixa um eBook ou material rico. Objetivo: apresentar a empresa e nutrir o interesse inicial.</p>
+          <div class="wf-steps">
+            <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text"><strong>Trigger:</strong> Formulário "Download eBook" submetido</div></div>
+            <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text"><strong>Ação:</strong> Enviar e-mail de confirmação com link para o material</div></div>
+            <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-text"><strong>Delay:</strong> Aguardar 2 dias</div></div>
+            <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text"><strong>Ação:</strong> Enviar e-mail com case study relacionado ao tema do eBook</div></div>
+            <div class="wf-step"><div class="wf-step-num">5</div><div class="wf-step-text"><strong>Delay:</strong> Aguardar 3 dias</div></div>
+            <div class="wf-step"><div class="wf-step-num">6</div><div class="wf-step-text"><strong>Ação:</strong> Enviar convite para demonstração / consulta gratuita</div></div>
+            <div class="wf-step"><div class="wf-step-num">7</div><div class="wf-step-text"><strong>Ação:</strong> Set property: Lifecycle Stage → Lead</div></div>
+          </div>
+        </div>
+
+        <div class="wf-card">
+          <div class="wf-badge">Workflow 2 — Intermediário</div>
+          <h3>Qualificação automática de MQL com Branch</h3>
+          <p>Identifica leads que atingiram o threshold de score e os encaminha para vendas com notificação e tarefa.</p>
+          <div class="wf-steps">
+            <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text"><strong>Trigger:</strong> Lead Score ≥ 50 (ou entrada em lista ativa "MQL Qualificados")</div></div>
+            <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text"><strong>Branch:</strong> Tem dono atribuído (Contact Owner)?</div></div>
+            <div class="wf-step"><div class="wf-step-num">3a</div><div class="wf-step-text"><strong>SIM →</strong> Criar tarefa para o dono: "Follow-up com MQL — {{ contact.firstname }}"</div></div>
+            <div class="wf-step"><div class="wf-step-num">3b</div><div class="wf-step-text"><strong>NÃO →</strong> Atribuir dono (round-robin) → Criar tarefa → Notificação por e-mail interno</div></div>
+            <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text"><strong>Ação:</strong> Set property: Lifecycle Stage → Marketing Qualified Lead</div></div>
+            <div class="wf-step"><div class="wf-step-num">5</div><div class="wf-step-text"><strong>Ação:</strong> Enviar e-mail de nutrição voltado para decisão de compra</div></div>
+          </div>
+        </div>
+
+        <div class="wf-card">
+          <div class="wf-badge">Workflow 3 — Intermediário</div>
+          <h3>Reengajamento de leads inativos</h3>
+          <p>Identifica contatos que não interagiram há 90 dias e tenta reengajá-los antes de mover para supressão.</p>
+          <div class="wf-steps">
+            <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text"><strong>Trigger:</strong> Entrada na lista ativa "Leads sem atividade há 90+ dias"</div></div>
+            <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text"><strong>Ação:</strong> Enviar e-mail 1 — "Ainda quer receber nossas novidades?"</div></div>
+            <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-text"><strong>Delay:</strong> Aguardar 7 dias</div></div>
+            <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text"><strong>Branch:</strong> Abriu ou clicou no e-mail 1?</div></div>
+            <div class="wf-step"><div class="wf-step-num">5a</div><div class="wf-step-text"><strong>SIM →</strong> Enviar e-mail de oferta / recurso de valor. Remover da lista de inatividade.</div></div>
+            <div class="wf-step"><div class="wf-step-num">5b</div><div class="wf-step-text"><strong>NÃO →</strong> Enviar e-mail final de despedida com proposta de valor clara</div></div>
+            <div class="wf-step"><div class="wf-step-num">6</div><div class="wf-step-text"><strong>Delay:</strong> Aguardar 7 dias → Se sem engajamento: Add to list "SUP - Inativos Confirmados", decrementar Lead Score em 20 pontos</div></div>
+          </div>
+        </div>
+
+        <div class="wf-card">
+          <div class="wf-badge">Workflow 4 — Avançado</div>
+          <h3>Onboarding de novo cliente</h3>
+          <p>Disparado quando o Lifecycle Stage muda para Customer. Coordena comunicação de boas-vindas, ativação e sucesso do cliente.</p>
+          <div class="wf-steps">
+            <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text"><strong>Trigger:</strong> Lifecycle Stage mudou para Customer</div></div>
+            <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text"><strong>Ação:</strong> Enviar e-mail de boas-vindas com kit de início</div></div>
+            <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-text"><strong>Ação:</strong> Criar tarefa para CS: "Agendar call de onboarding em 48h"</div></div>
+            <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text"><strong>Delay:</strong> Aguardar 3 dias</div></div>
+            <div class="wf-step"><div class="wf-step-num">5</div><div class="wf-step-text"><strong>Branch:</strong> Completou o setup? (property personalizada IsSetupComplete = true)</div></div>
+            <div class="wf-step"><div class="wf-step-num">6a</div><div class="wf-step-text"><strong>SIM →</strong> Enviar e-mail de dicas avançadas e recursos da plataforma</div></div>
+            <div class="wf-step"><div class="wf-step-num">6b</div><div class="wf-step-text"><strong>NÃO →</strong> Enviar e-mail de suporte ao setup + criar ticket de acompanhamento no Service Hub</div></div>
+            <div class="wf-step"><div class="wf-step-num">7</div><div class="wf-step-text"><strong>Delay:</strong> Aguardar 30 dias → Enviar pesquisa de NPS automatizada</div></div>
+          </div>
+        </div>
+
+        <div class="wf-card">
+          <div class="wf-badge">Workflow 5 — Avançado</div>
+          <h3>Renovação de contrato / Up-sell</h3>
+          <p>Aciona comunicação antecipada para clientes com contratos próximos do vencimento, abrindo oportunidade de renovação ou expansão.</p>
+          <div class="wf-steps">
+            <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text"><strong>Trigger:</strong> Contract Renewal Date = daqui a 60 dias (trigger por data)</div></div>
+            <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text"><strong>Ação:</strong> Enviar e-mail de relacionamento com resultados do ano e próximos passos</div></div>
+            <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-text"><strong>Ação:</strong> Criar tarefa para o Account Manager: "Iniciar conversa de renovação"</div></div>
+            <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text"><strong>Delay:</strong> Aguardar até 30 dias antes da data de renovação</div></div>
+            <div class="wf-step"><div class="wf-step-num">5</div><div class="wf-step-text"><strong>Branch:</strong> Deal de renovação existe no pipeline?</div></div>
+            <div class="wf-step"><div class="wf-step-num">6a</div><div class="wf-step-text"><strong>SIM →</strong> Enviar proposta personalizada por e-mail + notificação ao rep</div></div>
+            <div class="wf-step"><div class="wf-step-num">6b</div><div class="wf-step-text"><strong>NÃO →</strong> Criar deal de renovação automaticamente + notificação urgente ao AM</div></div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- SFMC VS HUBSPOT -->
+      <section id="sfmc-vs-hubspot">
+        <h2>SFMC vs HubSpot — quando usar cada um</h2>
+        <p>As duas plataformas têm forças distintas. Muitas empresas usam ambas em conjunto, com o HubSpot gerenciando o funil de marketing e vendas e o SFMC executando comunicações em alta escala.</p>
+
+        <table class="data-table">
+          <thead><tr><th>Critério</th><th>HubSpot Marketing Hub</th><th>Salesforce Marketing Cloud</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Integração CRM</td>
+              <td>Nativa e bidirecional — CRM é parte do mesmo sistema</td>
+              <td>Integração via Marketing Cloud Connect ou API (setup necessário)</td>
+            </tr>
+            <tr>
+              <td>Volume de envios</td>
+              <td>Médio porte (até dezenas de milhões/mês)</td>
+              <td>Alta escala (centenas de milhões/mês)</td>
+            </tr>
+            <tr>
+              <td>Personalização técnica</td>
+              <td>Tokens + Smart Content (sem código)</td>
+              <td>AMPscript + SSJS (alto controle técnico)</td>
+            </tr>
+            <tr>
+              <td>Facilidade de uso</td>
+              <td>Alta — interface intuitiva, curva suave</td>
+              <td>Moderada — requer especialização técnica</td>
+            </tr>
+            <tr>
+              <td>Custo</td>
+              <td>Menor — escalável por plano</td>
+              <td>Maior — licenciamento por volume/módulo</td>
+            </tr>
+            <tr>
+              <td>Automação</td>
+              <td>Workflows drag-and-drop com branches</td>
+              <td>Journey Builder visual + Automation Studio (SQL)</td>
+            </tr>
+            <tr>
+              <td>Alinhamento vendas</td>
+              <td>Excelente — Sales Hub no mesmo CRM</td>
+              <td>Requer Salesforce CRM integrado (outra plataforma)</td>
+            </tr>
+            <tr>
+              <td>Melhor para</td>
+              <td>B2B, SaaS, empresas menores/médias, funil de leads</td>
+              <td>B2C em escala, retail, telco, e-commerce de alto volume</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- BOAS PRÁTICAS -->
+      <section id="boas-praticas">
+        <h2>Boas práticas</h2>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Defina convenções antes de criar listas e Workflows</div>
+          <p>Naming conventions evitam o "portal caótico" — dezenas de listas com nomes sem padrão que ninguém sabe para que servem. Use prefixos (<code>SEG -</code>, <code>WF -</code>, <code>SUP -</code>) e inclua o objetivo no nome. Um portal organizado é mais fácil de auditar e escalar.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Configure Fallback em todos os tokens</div>
+          <p>Nenhum token deve ser inserido sem um valor de fallback. Contatos com campos vazios no CRM são comuns — e um e-mail com "Olá, " no assunto é uma experiência ruim que prejudica a entregabilidade e a percepção da marca.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">✅ Use listas ativas para governar entradas em Workflows</div>
+          <p>Em vez de disparar Workflows por trigger único, combine triggers com critérios de lista ativa como pré-filtro. Isso garante que apenas contatos que atendem todos os critérios entrem — e reduz retrabalho de suppressão manual.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Cuidado com re-enrollment</div>
+          <p>Por padrão, um contato só entra em um Workflow uma vez. Se o seu caso exige re-enrollment (ex: Workflow de renovação acionado a cada ano), ative essa opção explicitamente e garanta que o fluxo esteja preparado para múltiplos ciclos sem duplicar e-mails ou tarefas.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Audite Workflows inativos regularmente</div>
+          <p>Workflows que foram pausados mas não desativados ainda contam contra os limites do plano e podem ser reativados por acidente. Faça auditorias trimestrais — desative o que não é mais necessário e documente o histórico de alterações.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">⚠ Teste sempre com contatos de teste antes de publicar</div>
+          <p>O HubSpot permite enrolar contatos manualmente em um Workflow para validação. Crie um contato de teste com dados variados (campo vazio, lifecycle diferente, sem dono) e percorra todos os caminhos do fluxo antes de ativar para o público real.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <!-- REFERÊNCIAS -->
+      <section id="referencias">
+        <h2>Referências</h2>
+        <div class="refs-grid">
+          <a class="ref-card" href="https://knowledge.hubspot.com/marketing-email/use-automation-with-marketing-emails" target="_blank" rel="noopener">
+            <div class="ref-source">HubSpot Knowledge Base</div>
+            <div class="ref-title">Use automation with emails</div>
+            <div class="ref-desc">Documentação oficial sobre automação de e-mails no Marketing Hub</div>
+          </a>
+          <a class="ref-card" href="https://knowledge.hubspot.com/marketing-email/use-personalization-tokens" target="_blank" rel="noopener">
+            <div class="ref-source">HubSpot Knowledge Base</div>
+            <div class="ref-title">Use personalization tokens</div>
+            <div class="ref-desc">Guia oficial de tokens de personalização em e-mails e páginas</div>
+          </a>
+          <a class="ref-card" href="https://academy.hubspot.com" target="_blank" rel="noopener">
+            <div class="ref-source">HubSpot Academy</div>
+            <div class="ref-title">HubSpot Academy</div>
+            <div class="ref-desc">Cursos gratuitos e certificações — Marketing Hub, Inbound, Email Marketing</div>
+          </a>
+          <a class="ref-card" href="https://blog.hubspot.com/marketing/email-marketing-automation-examples" target="_blank" rel="noopener">
+            <div class="ref-source">HubSpot Blog</div>
+            <div class="ref-title">Email Automation: Step-by-Step</div>
+            <div class="ref-desc">Exemplos práticos de automação de e-mail com workflows</div>
+          </a>
+          <a class="ref-card" href="https://www.martechnotes.com/how-to-segment-contacts-in-hubspot-crm/" target="_blank" rel="noopener">
+            <div class="ref-source">MarTech Notes</div>
+            <div class="ref-title">How to Segment Contacts in HubSpot</div>
+            <div class="ref-desc">Guia prático de segmentação com listas ativas e naming conventions</div>
+          </a>
+          <a class="ref-card" href="https://www.pixcell.io/blog/hubspot-automations" target="_blank" rel="noopener">
+            <div class="ref-source">Pixcell</div>
+            <div class="ref-title">HubSpot Automations: The Complete Guide</div>
+            <div class="ref-desc">15+ templates de Workflow prontos para usar por departamento</div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    © 2026 · Senior Marketing Cloud Developer · Recife, PE · marcosqueirozpereira@gmail.com
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const sections = document.querySelectorAll('section[id]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sidebarLinks.forEach(l => { l.style.color = ''; l.style.borderLeftColor = ''; });
+          const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+          if (active) { active.style.color = 'var(--accent)'; active.style.borderLeftColor = 'var(--accent)'; }
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach(s => obs.observe(s));
+  </script>
+
+</body>
+</html>
