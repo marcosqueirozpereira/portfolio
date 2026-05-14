@@ -11,6 +11,17 @@ const ARTICLES = [
     externalUrl: "ampscript-mc.html"
   },
   {
+    id: "adobe-journey-optimizer",
+    title: "Adobe Journey Optimizer: Guia Prático",
+    category: "Técnico",
+    categoryLabel: "Técnico · AJO · AEP",
+    date: "Mai 2026",
+    type: "Tutorial",
+    description: "Arquitetura sobre AEP, Journeys, Campaigns, personalização com Handlebars, canais suportados, integração com Salesforce Marketing Cloud e coexistência SFMC + AJO.",
+    color: "linear-gradient(90deg,#eb1000,#fa6400)",
+    externalUrl: "ajo-mc.html"
+  },
+  {
     id: "hubspot-marketing-hub",
     title: "HubSpot Marketing Hub: Guia Prático",
     category: "Tutorial",
