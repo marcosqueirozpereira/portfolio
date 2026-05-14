@@ -205,36 +205,6 @@
       color: var(--accent);
     }
 
-    .upload-zone {
-      border: 2px dashed rgba(34,211,238,0.15);
-      border-radius: 16px;
-      padding: 2.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      background: rgba(34,211,238,0.02);
-      margin-bottom: 2.5rem;
-    }
-
-    .upload-zone:hover,
-    .upload-zone.drag {
-      border-color: var(--accent);
-      background: rgba(34,211,238,0.05);
-    }
-
-    .up-icon {
-      font-size: 2.4rem;
-      margin-bottom: 0.7rem;
-    }
-
-    .upload-zone p {
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .upload-zone strong { color: var(--accent); }
-    #fileinput { display: none; }
-
     .posts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
@@ -321,11 +291,6 @@
       transform: translateY(0);
     }
 
-    @keyframes up {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
     footer {
       padding: 2rem 5%;
       text-align: center;
@@ -369,7 +334,7 @@
     <div class="section-label">Conhecimento</div>
     <h1 class="page-title">Blog &amp; <em>Conteúdo</em></h1>
     <p class="page-sub">
-      Tutoriais, guias e artigos técnicos sobre Salesforce Marketing Cloud, Hubspot, outros CRMs,  automação de marketing e IA aplicada.
+      Tutoriais, guias e artigos técnicos sobre Salesforce Marketing Cloud, automação de marketing e IA aplicada.
     </p>
   </div>
 
@@ -382,13 +347,6 @@
       <button class="filter-btn" onclick="filterPosts('Técnico', this)">Técnico</button>
     </div>
 
-    <div class="upload-zone reveal" id="dropzone" onclick="document.getElementById('fileinput').click()">
-      <div class="up-icon">📁</div>
-      <p><strong>Clique para fazer upload</strong> ou arraste arquivos aqui</p>
-      <p style="margin-top:6px;font-size:0.78rem;">PDF, DOCX, PPTX, MD — Tutoriais, guias e artigos técnicos</p>
-      <input type="file" id="fileinput" multiple accept=".pdf,.doc,.docx,.pptx,.md,.txt">
-    </div>
-
     <div class="posts-grid" id="posts-grid"></div>
   </div>
 
@@ -399,18 +357,9 @@
 
   <script src="artigos.js"></script>
   <script>
-    const uploadGradients = [
-      "linear-gradient(90deg,#22d3ee,#a78bfa)",
-      "linear-gradient(90deg,#a78bfa,#fb923c)",
-      "linear-gradient(90deg,#fb923c,#22d3ee)",
-      "linear-gradient(90deg,#22c55e,#22d3ee)"
-    ];
-
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in");
-        }
+        if (entry.isIntersecting) entry.target.classList.add("in");
       });
     }, { threshold: 0.08 });
 
@@ -420,9 +369,6 @@
       const card = document.createElement("a");
       card.className = "post-card reveal";
       card.dataset.cat = article.category;
-
-      // Se o artigo tem URL externa, aponta direto para ela.
-      // Caso contrário, usa o viewer padrão artigo.html?id=...
       card.href = article.externalUrl
         ? article.externalUrl
         : `artigo.html?id=${encodeURIComponent(article.id)}`;
@@ -443,43 +389,9 @@
       return card;
     }
 
-    function createUploadCard(file, index) {
-      const ext = file.name.split(".").pop().toUpperCase();
-      const dateLabel = new Date().toLocaleDateString("pt-BR", {
-        month: "short",
-        year: "numeric"
-      });
-      const name = file.name.replace(/\.[^/.]+$/, "");
-      const fileUrl = URL.createObjectURL(file);
-
-      const card = document.createElement("a");
-      card.className = "post-card reveal";
-      card.dataset.cat = "Upload";
-      card.href = fileUrl;
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
-      card.style.animation = "up 0.5s ease both";
-
-      card.innerHTML = `
-        <div class="post-bar" style="background:${uploadGradients[index % uploadGradients.length]}"></div>
-        <div class="post-body">
-          <div class="post-cat">Conteúdo Enviado</div>
-          <div class="post-title">${name}</div>
-          <div class="post-desc">Arquivo ${ext} enviado em ${dateLabel}.</div>
-          <div class="post-foot">
-            <span class="post-date">${dateLabel}</span>
-            <span class="post-type">${ext}</span>
-          </div>
-        </div>
-      `;
-
-      return card;
-    }
-
     function renderPosts(list) {
       const grid = document.getElementById("posts-grid");
       grid.innerHTML = "";
-
       list.forEach(article => {
         const card = createArticleCard(article);
         grid.appendChild(card);
@@ -490,48 +402,14 @@
     function filterPosts(category, button) {
       document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
-
       if (category === "all") {
         renderPosts(ARTICLES);
         return;
       }
-
-      const filtered = ARTICLES.filter(article => article.category === category);
-      renderPosts(filtered);
+      renderPosts(ARTICLES.filter(a => a.category === category));
     }
 
     renderPosts(ARTICLES);
-
-    const dropzone = document.getElementById("dropzone");
-    const fileinput = document.getElementById("fileinput");
-    const postsGrid = document.getElementById("posts-grid");
-
-    dropzone.addEventListener("dragover", event => {
-      event.preventDefault();
-      dropzone.classList.add("drag");
-    });
-
-    dropzone.addEventListener("dragleave", () => {
-      dropzone.classList.remove("drag");
-    });
-
-    dropzone.addEventListener("drop", event => {
-      event.preventDefault();
-      dropzone.classList.remove("drag");
-      handleFiles(event.dataTransfer.files);
-    });
-
-    fileinput.addEventListener("change", () => {
-      handleFiles(fileinput.files);
-    });
-
-    function handleFiles(files) {
-      Array.from(files).forEach((file, index) => {
-        const card = createUploadCard(file, index);
-        postsGrid.prepend(card);
-        obs.observe(card);
-      });
-    }
   </script>
 </body>
 </html>
