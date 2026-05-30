@@ -6,46 +6,24 @@
 <title>Portfolio | Senior Marketing Cloud Developer</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #06060f;
-  --surface: #0e0e1a;
-  --surface2: #161624;
-  --accent: #00d4ff;
-  --accent2: #8b5cf6;
-  --accent3: #f97316;
-  --text: #e2e2f0;
-  --muted: #64648a;
-  --border: rgba(255,255,255,0.06);
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
-
-/* NAV */
+:root{--bg:#06060f;--surface:#0e0e1a;--surface2:#161624;--accent:#00d4ff;--accent2:#8b5cf6;--accent3:#f97316;--text:#e2e2f0;--muted:#64648a;--border:rgba(255,255,255,0.06);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
 nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:-0.01em;text-decoration:none;}
+.nav-logo{font-family:"Syne",sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:-0.01em;text-decoration:none;}
 .nav-links{display:flex;gap:1.8rem;list-style:none;}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.07em;text-transform:uppercase;transition:color 0.3s;}
 .nav-links a:hover{color:var(--accent);}
-
-/* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;padding:130px 5% 80px;position:relative;overflow:hidden;}
 .glow1{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,0.06) 0%,transparent 65%);top:-200px;right:-200px;animation:breathe 8s ease-in-out infinite;}
 .glow2{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,0.06) 0%,transparent 65%);bottom:-100px;left:5%;animation:breathe 10s ease-in-out infinite reverse;}
 @keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
-
 .hero-content{max-width:860px;position:relative;z-index:1;}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.18);border-radius:100px;padding:7px 18px;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;animation:up 0.5s ease both;}
-.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 2s ease-in-out infinite;}
+.hero-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 2s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5.5vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-0.03em;margin-bottom:1.5rem;animation:up 0.5s 0.1s ease both;}
-.hero h1 em{
-  font-style:normal;
-  background:linear-gradient(130deg,#67e8f9,#a78bfa);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  filter:brightness(1.3);
-}
+.hero h1{font-family:"Syne",sans-serif;font-size:clamp(2.8rem,5.5vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-0.03em;margin-bottom:1.5rem;animation:up 0.5s 0.1s ease both;}
+.hero h1 em{font-style:normal;background:linear-gradient(130deg,#67e8f9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:brightness(1.3);}
 .hero-sub{font-size:1.08rem;color:var(--muted);max-width:580px;margin-bottom:1.5rem;animation:up 0.5s 0.15s ease both;}
 .hero-langs{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:2.5rem;animation:up 0.5s 0.2s ease both;}
 .lang-pill{padding:4px 14px;border:1px solid var(--border);border-radius:100px;font-size:0.76rem;color:var(--muted);}
@@ -56,15 +34,32 @@ nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;jus
 .btn-o{padding:13px 26px;background:transparent;border:1px solid var(--border);color:var(--text);font-size:0.88rem;border-radius:8px;text-decoration:none;transition:all 0.3s;display:inline-flex;align-items:center;gap:7px;}
 .btn-o:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
 .hero-stats{display:flex;gap:3rem;margin-top:4rem;padding-top:3rem;border-top:1px solid var(--border);animation:up 0.5s 0.3s ease both;}
-.stat-n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent);}
+.stat-n{font-family:"Syne",sans-serif;font-size:2rem;font-weight:800;color:var(--accent);}
 .stat-l{font-size:0.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;}
 @keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
-
-/* SECTION LABEL */
 .section-label{display:flex;align-items:center;gap:10px;font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
-.section-label::before{content:'';width:24px;height:1px;background:var(--accent);display:block;}
+.section-label::before{content:"";width:24px;height:1px;background:var(--accent);display:block;}
 
-/* RESUMO */
+.clients-section{padding:80px 5%;position:relative;}
+.clients-section::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),transparent);}
+.clients-header{text-align:center;margin-bottom:2.5rem;}
+.clients-header .section-label{justify-content:center;}
+.clients-header .section-label::before{display:none;}
+.clients-header h2{font-family:"Syne",sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:0.4rem;}
+.clients-header p{color:var(--muted);font-size:0.88rem;}
+.clients-track-wrap{position:relative;overflow:hidden;}
+.clients-track-wrap::before,.clients-track-wrap::after{content:"";position:absolute;top:0;bottom:0;width:160px;z-index:2;pointer-events:none;}
+.clients-track-wrap::before{left:0;background:linear-gradient(90deg,var(--bg) 40%,transparent);}
+.clients-track-wrap::after{right:0;background:linear-gradient(-90deg,var(--bg) 40%,transparent);}
+.clients-track{display:flex;gap:1.2rem;width:max-content;animation:marquee 45s linear infinite;padding:6px 0;}
+.clients-track:hover{animation-play-state:paused;}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%)}}
+.client-logo{flex-shrink:0;width:190px;height:74px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;padding:0 18px;gap:12px;transition:all 0.3s;cursor:default;}
+.client-logo img,.client-logo svg{width:44px;height:44px;object-fit:contain;border-radius:8px;flex-shrink:0;}
+.client-logo:hover{border-color:rgba(0,212,255,0.28);background:var(--surface);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.35);}
+.client-name{font-family:"Syne",sans-serif;font-size:0.67rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;text-align:left;line-height:1.35;transition:color 0.3s;}
+.client-logo:hover .client-name{color:var(--text);}
+.clients-note{text-align:center;margin-top:1.6rem;font-size:0.76rem;color:var(--muted);opacity:0.6;}
 .summary-section{padding:100px 5%;}
 .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
 .summary-text p{color:var(--muted);font-size:0.97rem;margin-bottom:1rem;line-height:1.8;}
@@ -72,62 +67,38 @@ nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 5%;display:flex;jus
 .summary-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 .s-stat{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:1.4rem;text-align:center;transition:all 0.3s;}
 .s-stat:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-2px);}
-.s-stat-n{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent);display:block;}
+.s-stat-n{font-family:"Syne",sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent);display:block;}
 .s-stat-l{font-size:0.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;}
-
-/* QUICK NAV */
 .quick-nav{padding:100px 5%;background:var(--surface);}
 .quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2.5rem;}
 .quick-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:1.8rem;text-decoration:none;color:var(--text);transition:all 0.3s;display:flex;flex-direction:column;gap:0.8rem;position:relative;overflow:hidden;}
-.quick-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-grad,linear-gradient(90deg,var(--accent),var(--accent2)));transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
+.quick-card::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-grad,linear-gradient(90deg,var(--accent),var(--accent2)));transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
 .quick-card:hover::after{transform:scaleX(1);}
 .quick-card:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
-.qc-icon{font-size:2rem;}
-.qc-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;}
+.qc-icon{font-size:2rem;}.qc-title{font-family:"Syne",sans-serif;font-weight:800;font-size:1rem;}
 .qc-desc{font-size:0.82rem;color:var(--muted);line-height:1.7;flex:1;}
 .qc-arrow{font-size:0.82rem;color:var(--muted);transition:color 0.3s,transform 0.3s;align-self:flex-end;}
 .quick-card:hover .qc-arrow{color:var(--accent);transform:translateX(4px);}
-
-/* REVEAL */
 .reveal{opacity:0;transform:translateY(28px);transition:all 0.7s ease;}
 .reveal.in{opacity:1;transform:translateY(0);}
-
 footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem;}
 footer a{color:var(--accent);text-decoration:none;}
-
-@media(max-width:700px){
-  .nav-links{display:none;}
-  .hero-stats{flex-direction:column;gap:1.5rem;}
-  .summary-grid{grid-template-columns:1fr;}
-  .quick-grid{grid-template-columns:1fr;}
-}
+@media(max-width:700px){.nav-links{display:none;}.hero-stats{flex-direction:column;gap:1.5rem;}.summary-grid{grid-template-columns:1fr;}.quick-grid{grid-template-columns:1fr;}.client-logo{width:160px;height:64px;}.client-logo img,.client-logo svg{width:36px;height:36px;}}
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="nav-logo">MC · DEV</a>
   <ul class="nav-links">
-    <li><a href="index.html">Início</a></li>
-    <li><a href="sobre.html">Sobre</a></li>
-    <li><a href="skills.html">Skills</a></li>
-    <li><a href="exp.html">Experiência</a></li>
-    <li><a href="certs.html">Certificações</a></li>
-    <li><a href="blog.html">Blog</a></li>
-    <li><a href="contato.html">Contato</a></li>
+    <li><a href="index.html">Início</a></li><li><a href="sobre.html">Sobre</a></li><li><a href="skills.html">Skills</a></li><li><a href="exp.html">Experiência</a></li><li><a href="certs.html">Certificações</a></li><li><a href="blog.html">Blog</a></li><li><a href="contato.html">Contato</a></li>
   </ul>
 </nav>
-
-<!-- HERO -->
 <section class="hero">
-  <div class="glow1"></div>
-  <div class="glow2"></div>
+  <div class="glow1"></div><div class="glow2"></div>
   <div class="hero-content">
     <div class="hero-badge">Disponível para novas oportunidades</div>
     <h1>Senior Marketing<br>Cloud <em>Developer</em><br>&amp; Analista Funcional</h1>
-    <p class="hero-sub">
-      Especialista Salesforce Marketing Cloud com sólida formação em ADS e pós-graduação em Inteligência Artificial &amp; Análise de Dados. Transformo dados em jornadas que convertem.
-    </p>
+    <p class="hero-sub">Especialista Salesforce Marketing Cloud com sólida formação em ADS e pós-graduação em Inteligência Artificial &amp; Análise de Dados. Transformo dados em jornadas que convertem.</p>
     <div class="hero-langs">
       <span class="lang-pill highlight">🇧🇷 Português — Nativo</span>
       <span class="lang-pill highlight">🇪🇸 Espanhol — Fluente</span>
@@ -145,8 +116,74 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
   </div>
 </section>
-
-<!-- RESUMO RÁPIDO -->
+<section class="clients-section reveal">
+  <div class="clients-header">
+    <div class="section-label">Clientes Atendidos</div>
+    <h2>Empresas em que atuei como consultor</h2>
+    <p>Projetos e entregas realizados via consultoria — Everymind &amp; CI&amp;T</p>
+  </div>
+  <div class="clients-track-wrap">
+    <div class="clients-track">
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=itau.com.br&sz=256" alt="Logo Itaú" onerror="this.style.display='none'"><span class="client-name">Itaú</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=bradesco.com.br&sz=256" alt="Logo Bradesco Private" onerror="this.style.display='none'"><span class="client-name">Bradesco Private</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=portoseguro.com.br&sz=256" alt="Logo Porto Bank" onerror="this.style.display='none'"><span class="client-name">Porto Bank</span></div>
+        <div class="client-logo">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="44" height="44" rx="10" fill="url(#aleg)"/>
+            <defs><linearGradient id="aleg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#FFD600"/><stop offset="1" stop-color="#FF7A00"/></linearGradient></defs>
+            <text x="22" y="30" text-anchor="middle" font-family="Arial Black" font-weight="900" font-size="26" fill="white">a</text>
+          </svg>
+          <span class="client-name">Alelo</span>
+        </div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=amil.com.br&sz=256" alt="Logo UHG · Amil" onerror="this.style.display='none'"><span class="client-name">UHG · Amil</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=dasa.com.br&sz=256" alt="Logo Dasa" onerror="this.style.display='none'"><span class="client-name">Dasa</span></div>
+        <div class="client-logo">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="44" height="44" rx="10" fill="#1E1B4B"/>
+            <text x="8" y="26" font-family="Arial Black" font-weight="900" font-size="15" fill="#7C3AED">LG</text>
+            <rect x="8" y="29" width="28" height="3" rx="1.5" fill="url(#lgg)"/>
+            <defs><linearGradient id="lgg" x1="8" y1="0" x2="36" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#7C3AED"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs>
+          </svg>
+          <span class="client-name">LG · Lugar de Gente</span>
+        </div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=sek.io&sz=256" alt="Logo SEK" onerror="this.style.display='none'"><span class="client-name">SEK</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=oneinnovation.com.br&sz=256" alt="Logo One Innovation" onerror="this.style.display='none'"><span class="client-name">One Innovation</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=totalpass.com.mx&sz=256" alt="Logo TotalPass MX" onerror="this.style.display='none'"><span class="client-name">TotalPass MX</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=igua.com.br&sz=256" alt="Logo Iguá" onerror="this.style.display='none'"><span class="client-name">Iguá</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=claseazul.com&sz=256" alt="Logo Clase Azul" onerror="this.style.display='none'"><span class="client-name">Clase Azul</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=lightera.com&sz=256" alt="Logo Lightera" onerror="this.style.display='none'"><span class="client-name">Lightera</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=itau.com.br&sz=256" alt="Logo Itaú" onerror="this.style.display='none'"><span class="client-name">Itaú</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=bradesco.com.br&sz=256" alt="Logo Bradesco Private" onerror="this.style.display='none'"><span class="client-name">Bradesco Private</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=portoseguro.com.br&sz=256" alt="Logo Porto Bank" onerror="this.style.display='none'"><span class="client-name">Porto Bank</span></div>
+        <div class="client-logo">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="44" height="44" rx="10" fill="url(#aleg)"/>
+            <defs><linearGradient id="aleg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#FFD600"/><stop offset="1" stop-color="#FF7A00"/></linearGradient></defs>
+            <text x="22" y="30" text-anchor="middle" font-family="Arial Black" font-weight="900" font-size="26" fill="white">a</text>
+          </svg>
+          <span class="client-name">Alelo</span>
+        </div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=amil.com.br&sz=256" alt="Logo UHG · Amil" onerror="this.style.display='none'"><span class="client-name">UHG · Amil</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=dasa.com.br&sz=256" alt="Logo Dasa" onerror="this.style.display='none'"><span class="client-name">Dasa</span></div>
+        <div class="client-logo">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="44" height="44" rx="10" fill="#1E1B4B"/>
+            <text x="8" y="26" font-family="Arial Black" font-weight="900" font-size="15" fill="#7C3AED">LG</text>
+            <rect x="8" y="29" width="28" height="3" rx="1.5" fill="url(#lgg)"/>
+            <defs><linearGradient id="lgg" x1="8" y1="0" x2="36" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#7C3AED"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs>
+          </svg>
+          <span class="client-name">LG · Lugar de Gente</span>
+        </div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=sek.io&sz=256" alt="Logo SEK" onerror="this.style.display='none'"><span class="client-name">SEK</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=oneinnovation.com.br&sz=256" alt="Logo One Innovation" onerror="this.style.display='none'"><span class="client-name">One Innovation</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=totalpass.com.mx&sz=256" alt="Logo TotalPass MX" onerror="this.style.display='none'"><span class="client-name">TotalPass MX</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=igua.com.br&sz=256" alt="Logo Iguá" onerror="this.style.display='none'"><span class="client-name">Iguá</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=claseazul.com&sz=256" alt="Logo Clase Azul" onerror="this.style.display='none'"><span class="client-name">Clase Azul</span></div>
+        <div class="client-logo"><img src="https://www.google.com/s2/favicons?domain=lightera.com&sz=256" alt="Logo Lightera" onerror="this.style.display='none'"><span class="client-name">Lightera</span></div>
+    </div>
+  </div>
+  <p class="clients-note">Financeiro · Saúde · Tecnologia · RH · Bem-estar · LATAM</p>
+</section>
 <section class="summary-section">
   <div class="section-label reveal">Quem sou eu</div>
   <div class="summary-grid reveal">
@@ -157,90 +194,30 @@ footer a{color:var(--accent);text-decoration:none;}
       <a href="sobre.html" class="btn-o" style="margin-top:1.5rem;">Conhecer mais sobre mim →</a>
     </div>
     <div class="summary-stats">
-      <div class="s-stat">
-        <span class="s-stat-n">5+</span>
-        <span class="s-stat-l">Anos em SFMC</span>
-      </div>
-      <div class="s-stat">
-        <span class="s-stat-n">1M+</span>
-        <span class="s-stat-l">Contatos em jornadas</span>
-      </div>
-      <div class="s-stat">
-        <span class="s-stat-n">🏅</span>
-        <span class="s-stat-l">SF Associate</span>
-      </div>
-      <div class="s-stat">
-        <span class="s-stat-n">BR·ES</span>
-        <span class="s-stat-l">Idiomas</span>
-      </div>
+      <div class="s-stat"><span class="s-stat-n">5+</span><span class="s-stat-l">Anos em SFMC</span></div>
+      <div class="s-stat"><span class="s-stat-n">1M+</span><span class="s-stat-l">Contatos em jornadas</span></div>
+      <div class="s-stat"><span class="s-stat-n">🏅</span><span class="s-stat-l">SF Associate</span></div>
+      <div class="s-stat"><span class="s-stat-n">BR·ES</span><span class="s-stat-l">Idiomas</span></div>
     </div>
   </div>
 </section>
-
-<!-- NAVEGAÇÃO RÁPIDA -->
 <section class="quick-nav">
   <div class="section-label reveal">Explore o portfólio</div>
   <h2 class="reveal" style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-0.02em;">Tudo que você precisa saber</h2>
   <p class="reveal" style="color:var(--muted);font-size:0.95rem;margin-top:0.5rem;">Navegue pelas seções para conhecer minha trajetória completa.</p>
-
   <div class="quick-grid reveal">
-
-    <a href="sobre.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#00d4ff,#8b5cf6);">
-      <div class="qc-icon">👤</div>
-      <div class="qc-title">Sobre Mim</div>
-      <div class="qc-desc">Formação acadêmica, diferenciais competitivos e o que me torna um profissional único no mercado de Marketing Cloud.</div>
-      <div class="qc-arrow">Ver mais →</div>
-    </a>
-
-    <a href="skills.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#8b5cf6,#f97316);">
-      <div class="qc-icon">⚡</div>
-      <div class="qc-title">Skills &amp; Tecnologias</div>
-      <div class="qc-desc">Stack técnica completa: SFMC Core, AMPscript, SQL, APIs, integrações e tecnologias em formação como Python e IA.</div>
-      <div class="qc-arrow">Ver mais →</div>
-    </a>
-
-    <a href="exp.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#f97316,#00d4ff);">
-      <div class="qc-icon">💼</div>
-      <div class="qc-title">Experiência</div>
-      <div class="qc-desc">Histórico profissional com entregas em projetos de grande porte, jornadas para +1M contatos e liderança técnica.</div>
-      <div class="qc-arrow">Ver mais →</div>
-    </a>
-
-    <a href="certs.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#00c4ff,#0080ff);">
-      <div class="qc-icon">🏅</div>
-      <div class="qc-title">Certificações</div>
-      <div class="qc-desc">Salesforce Associate certificado e roadmap estruturado: Email Specialist → Developer → Consultant.</div>
-      <div class="qc-arrow">Ver mais →</div>
-    </a>
-
-    <a href="blog.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#8b5cf6,#00d4ff);">
-      <div class="qc-icon">📚</div>
-      <div class="qc-title">Blog &amp; Conteúdo</div>
-      <div class="qc-desc">Tutoriais e artigos técnicos sobre AMPscript, Journey Builder, SQL em Data Extensions e Einstein AI.</div>
-      <div class="qc-arrow">Ver mais →</div>
-    </a>
-
-    <a href="contato.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#10b981,#00d4ff);">
-      <div class="qc-icon">📩</div>
-      <div class="qc-title">Contato</div>
-      <div class="qc-desc">Disponível para oportunidades CLT. Entre em contato por e-mail, LinkedIn ou WhatsApp.</div>
-      <div class="qc-arrow">Falar agora →</div>
-    </a>
-
+    <a href="sobre.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#00d4ff,#8b5cf6);"><div class="qc-icon">👤</div><div class="qc-title">Sobre Mim</div><div class="qc-desc">Formação acadêmica, diferenciais competitivos e o que me torna um profissional único no mercado de Marketing Cloud.</div><div class="qc-arrow">Ver mais →</div></a>
+    <a href="skills.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#8b5cf6,#f97316);"><div class="qc-icon">⚡</div><div class="qc-title">Skills &amp; Tecnologias</div><div class="qc-desc">Stack técnica completa: SFMC Core, AMPscript, SQL, APIs, integrações e tecnologias em formação como Python e IA.</div><div class="qc-arrow">Ver mais →</div></a>
+    <a href="exp.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#f97316,#00d4ff);"><div class="qc-icon">💼</div><div class="qc-title">Experiência</div><div class="qc-desc">Histórico profissional com entregas em projetos de grande porte, jornadas para +1M contatos e liderança técnica.</div><div class="qc-arrow">Ver mais →</div></a>
+    <a href="certs.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#00c4ff,#0080ff);"><div class="qc-icon">🏅</div><div class="qc-title">Certificações</div><div class="qc-desc">Salesforce Associate certificado e roadmap estruturado: Email Specialist → Developer → Consultant.</div><div class="qc-arrow">Ver mais →</div></a>
+    <a href="blog.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#8b5cf6,#00d4ff);"><div class="qc-icon">📚</div><div class="qc-title">Blog &amp; Conteúdo</div><div class="qc-desc">Tutoriais e artigos técnicos sobre AMPscript, Journey Builder, SQL em Data Extensions e Einstein AI.</div><div class="qc-arrow">Ver mais →</div></a>
+    <a href="contato.html" class="quick-card" style="--card-grad:linear-gradient(90deg,#10b981,#00d4ff);"><div class="qc-icon">📩</div><div class="qc-title">Contato</div><div class="qc-desc">Disponível para oportunidades CLT. Entre em contato por e-mail, LinkedIn ou WhatsApp.</div><div class="qc-arrow">Falar agora →</div></a>
   </div>
 </section>
-
-<footer>
-  © 2026 · Senior Marketing Cloud Developer · Recife, PE · ADS + Pós IA &amp; Dados · 🇧🇷🇪🇸
-  &nbsp;·&nbsp;
-  <a href="mailto:marcosqueirozpereira@gmail.com">marcosqueirozpereira@gmail.com</a>
-</footer>
-
+<footer>© 2026 · Senior Marketing Cloud Developer · Recife, PE · ADS + Pós IA &amp; Dados · 🇧🇷🇪🇸 &nbsp;·&nbsp; <a href="mailto:marcosqueirozpereira@gmail.com">marcosqueirozpereira@gmail.com</a></footer>
 <script>
-const obs = new IntersectionObserver(es => es.forEach(e => {
-  if(e.isIntersecting) e.target.classList.add('in');
-}), {threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("in");}),{threshold:0.1});
+document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
