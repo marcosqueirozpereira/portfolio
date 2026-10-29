@@ -1,5 +1,16 @@
 const ARTICLES = [
   {
+  id: "experimentos-ajo-lift",
+  title: "Experimentos no AJO: do Teste A/B ao Lift",
+  category: "Técnico",
+  categoryLabel: "Técnico · AJO · Experimentação",
+  date: "Out 2026",
+  type: "Artigo",
+  description: "Content e path experiments no Adobe Journey Optimizer, grupo de holdout e cálculo de lift incremental: como escolher a peça vencedora e medir o impacto real da jornada no mesmo teste.",
+  color: "linear-gradient(90deg,#a78bfa,#10b981)",
+  externalUrl: "experimentos-ajo-lift.html"
+},
+  {
     id: "ampscript-personalizacao",
     title: "AMPscript: Personalização Dinâmica no SFMC",
     category: "Tutorial",
