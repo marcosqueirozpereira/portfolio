@@ -461,6 +461,7 @@
       <ul class="sidebar-nav">
         <li><a href="#problema">O problema</a></li>
         <li><a href="#tipos">Experimentos no AJO</a></li>
+        <li class="sub"><a href="#automatico">Automático × manual</a></li>
         <li class="sub"><a href="#leitura">Como o AJO lê o resultado</a></li>
         <li class="sub"><a href="#scale-winner">Scale the winner</a></li>
         <li><a href="#lift">Do A/B ao lift</a></li>
@@ -511,6 +512,25 @@
         <p>
           O sorteio é determinístico. A Adobe aplica um hash à identidade do perfil e distribui os perfis em 10.000 <em>buckets</em>. O mesmo cliente sempre cai no mesmo tratamento enquanto o experimento durar. No path experiment, a atribuição muda quando você publica uma nova versão da jornada.
         </p>
+
+        <section id="automatico">
+          <h3>O que é automático e o que você define</h3>
+          <p>O AJO não monta o experimento sozinho. Você desenha a divisão, e ele executa o sorteio e a leitura do resultado.</p>
+          <table class="data-table">
+            <thead><tr><th>Você define</th><th>O AJO faz automaticamente</th></tr></thead>
+            <tbody>
+              <tr><td>Percentual de cada grupo</td><td>Sorteia cada cliente para um grupo, respeitando os percentuais definidos (ou divide igualmente, com <em>Distribute evenly</em>)</td></tr>
+              <tr><td>Holdout</td><td>Vem <strong>desligado</strong>. Ao ativar, o AJO sugere 10%, você ajusta, e ele sorteia essa fatia</td></tr>
+              <tr><td>Métrica de sucesso</td><td>Calcula o lift e a confiança no relatório do experimento</td></tr>
+              <tr><td>A/B ou multi-armed bandit</td><td>Reajusta os pesos a cada 7 dias, só no <em>multi-armed bandit</em>. No A/B, os percentuais ficam fixos</td></tr>
+              <tr><td>Rollout do vencedor</td><td>Dispara o vencedor sozinho (<em>Scale the winner</em>), só nos cenários suportados</td></tr>
+            </tbody>
+          </table>
+          <div class="callout warning">
+            <div class="callout-title">⚠ Percentage split não é experimento</div>
+            <p>A condição de jornada do tipo <strong>Percentage split</strong> também divide clientes aleatoriamente entre caminhos, mas não gera relatório de lift nem tem opção de holdout. Se for esse o recurso usado, crie um caminho sem mensagem para servir de controle e compare a conversão fora do AJO, com SQL ou no Customer Journey Analytics.</p>
+          </div>
+        </section>
 
         <section id="leitura">
           <h3>Como o AJO lê o resultado</h3>
@@ -619,8 +639,8 @@
 
         <ol>
           <li><strong>Defina a métrica de negócio antes de disparar.</strong> Compra, depósito, ativação ou o objetivo da jornada, com uma janela fixa. Sete dias é um bom ponto de partida, porque coincide com a janela de atribuição de conversão do AJO.</li>
-          <li><strong>Ative o holdout nativo.</strong> Uma fatia pequena e sorteada, de 2% a 5%, que não recebe nada durante o ciclo.</li>
-          <li><strong>Teste as variantes numa fração da base,</strong> como os 40%, com divisão igual entre elas.</li>
+          <li><strong>Ative o holdout nativo.</strong> Ele vem desligado: ative a opção Holdout no experimento e ajuste o percentual sugerido de 10% para algo entre 2% e 5%. O AJO sorteia essa fatia, que não recebe nada durante o ciclo.</li>
+          <li><strong>Teste as variantes numa fração da base,</strong> como os 40%. Os percentuais de cada variante são você quem define; o AJO só faz o sorteio.</li>
           <li><strong>Segure o grupo de rollout durante a janela de medição.</strong> Enquanto os 60% esperam, eles também funcionam como um controle temporário, sem custo adicional.</li>
           <li><strong>Escolha o vencedor pela métrica de negócio,</strong> com confiança acima de 95%. Abertura e clique ajudam a explicar o resultado, mas não devem decidir sozinhos.</li>
           <li><strong>Faça o rollout e mantenha o holdout de fora</strong> até o fim do ciclo.</li>
